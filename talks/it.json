@@ -1,1 +1,22 @@
-{}
+{
+    "aExample": {
+        "default": [
+            "This is a example {1}",
+            "Here is another test"
+        ],
+        "short": [
+            "A short test",
+            "Here is another short test"
+        ]
+    },
+    "startTranslate": {
+        "default": [
+            "Doing that for you now. NOTE. I'll be using google translate, and currently i cant do markdown files ",
+            "No problem. Pro tip. Dont translate to many skills at once or google will block your IP for 24 hours"
+        ],
+        "short": [
+            "ok",
+            "done"
+        ]
+    }
+}

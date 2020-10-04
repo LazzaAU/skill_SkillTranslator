@@ -1,7 +1,5 @@
 {
     "skill": "SkillTranslator",
-    "icon": "time",
-    "description": "Translate your skill into other languages",
     "slotTypes": [],
     "intents": []
 }

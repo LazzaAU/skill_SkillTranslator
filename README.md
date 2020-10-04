@@ -13,3 +13,4 @@ Translate your skill into other languages
     de
     it
 
+A skill used for translating a existing skill

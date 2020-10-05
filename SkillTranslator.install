@@ -1,9 +1,9 @@
 {
     "name": "SkillTranslator",
     "version": "0.0.1",
-    "icon": "fab fa-battle-net",
-    "category": "undefined",
-    "author": "LazzaAU",
+    "icon": "fas fa-language",
+    "category": "assistance",
+    "author": "Lazza",
     "maintainers": [],
     "desc": "Translate your skill into other languages",
     "aliceMinVersion": "1.0.0-b3",

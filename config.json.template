@@ -1,11 +1,11 @@
 {
-	"skillLanguage": {
+	"skillLang": {
 		"defaultValue": "en",
 		"dataType": "string",
 		"isSensitive": false,
 		"description": "Denotes default language skill was written in"
 	},
-	"skillName": {
+	"skillTitle": {
 		"defaultValue": "",
 		"dataType": "string",
 		"isSensitive": false,

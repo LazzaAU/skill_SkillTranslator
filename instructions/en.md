@@ -4,29 +4,29 @@ So you've written a skill and want to translate it ? Good job, lets get into it 
 
 On this skill's settings..
 
-##**skillLanguage field**
+##**skillLang field**
 
  Enter the language abbreviation that the skill was initially coded in. 
  
  - EG: de = German, it for Italian etc 
 
-##**skillName** 
+##**skillTitle** 
 
 Enter the name of the directory of the skill you want to translate
 
  - EG: HomeAssistant or Reminder etc 
     
     NOTE: to test translation on this skillTranslator skill.... delete all or some of the dialog and talk language files that ARN'T "en.json"
-     then leave the skillName field blank and ask alice to "translate my skill" she will translate 
+     then leave the skillTitle field blank and ask alice to "translate my skill" she will translate 
      this SkillTranslator skill 
  
  ##**skillPath** (optional)
  
  Add the path to the directory of the skill manually. Exclude the skill name in this path but include
-   it in- skillName 
+   it in- skillTitle 
  
  - EG: SkillPath field = C:/Documents/ProjectFiles/Skills
-    and skillName field = Reminder  
+    and skillTitle field = Reminder  
     
 NOTE: If this path is not set then it defaults to the Alice skills directory 
 

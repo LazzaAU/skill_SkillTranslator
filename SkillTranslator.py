@@ -28,19 +28,19 @@ class SkillTranslator(AliceSkill):
 
 	@IntentHandler('TranslateSkill')
 	def translateSkill(self, session: DialogSession, **_kwargs):
-		if not self.getConfig('skillLanguage') or not self.getConfig('skillLanguage') in self._supportedLanguages:
+		if not self.getConfig('skillLang') or not self.getConfig('skillLang') in self._supportedLanguages:
 			self.logWarning(f'Skill Language in settings is not valid')
 			return
 
 		# get the default language of the skill from config
-		self._skillLanguage = self.getConfig('skillLanguage')
+		self._skillLanguage = self.getConfig('skillLang')
 		# list of supported languages
 		self._supportedLanguages.remove(self._skillLanguage)
 
-		if not self.getConfig('skillName'):
+		if not self.getConfig('skillTitle'):
 			self._skillName = self.name
 		else:
-			self._skillName = self.getConfig('skillName')
+			self._skillName = self.getConfig('skillTitle')
 
 		# Set the path of the skill folder to translate
 		if self.getConfig('skillPath'):
@@ -48,7 +48,7 @@ class SkillTranslator(AliceSkill):
 		else:
 			self._translationPath = Path(self.Commons.rootDir(), f'skills/{self._skillName}')
 
-		if self.getConfig('skillName') and not self._translationPath.exists():
+		if self.getConfig('skillTitle') and not self._translationPath.exists():
 			self.logWarning(f'Can\'t find {self._skillName}. Please check your spelling')
 			return
 
@@ -68,7 +68,7 @@ class SkillTranslator(AliceSkill):
 			self.translateTalksfile(activeLanguage)
 			self.translateDialogFile(activeLanguage)
 			self.translateSynonyms(activeLanguage)
-		# self.writeInstallConditions()
+		self.writeInstallConditions()
 		self.logInfo(f'Completed Translation of the {self._skillName} skill. Please restart Alice')
 
 

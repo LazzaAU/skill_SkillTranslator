@@ -100,12 +100,6 @@ class SkillTranslator(AliceSkill):
 			self._precheckTrigger += 1
 
 			self.translateTalksfile(activeLanguage)
-			self.translateSynonyms(activeLanguage)
-			# Wait 15 seconds so dialogTemplate file has been written and closed before opening it again
-			if not self.getConfig('preCheck'):
-				self.logInfo(f'Waiting 15 seconds for write access to dialogTemplate file....')
-				time.sleep(15)
-
 			self.translateDialogFile(activeLanguage)
 		self.writeInstallConditions()
 
@@ -199,12 +193,11 @@ class SkillTranslator(AliceSkill):
 		# The Language file that the skill was written in
 		file = Path(f'{self._translationPath}/dialogTemplate/{self._skillLanguage}.json')
 		# The file we are going to translate into
-		translatedFile = Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json')
 
 		dialogData = json.loads(file.read_text())
 		# create a new instance
-		translator = Translator()
-		translated = translator.__class__
+		translatorUtterance = Translator()
+		translated = translatorUtterance.__class__
 
 		for i, item in enumerate(dialogData['intents']):
 
@@ -214,7 +207,7 @@ class SkillTranslator(AliceSkill):
 				self.requestLimitChecker()
 
 				if not self.getConfig('preCheck'):
-					translated = translator.translate(utterance, dest=activeLanguage)
+					translated = translatorUtterance.translate(utterance, dest=activeLanguage)
 
 				if self._precheckTrigger == 1:
 					self._dialogCount += len(utterance)
@@ -226,24 +219,20 @@ class SkillTranslator(AliceSkill):
 					dialogList.append(utterance)
 			item['utterances'] = dialogList
 
-		if not self.getConfig('preCheck'):
-			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
+		self.translateSynonyms(activeLanguage=activeLanguage, dialogData=dialogData)
 
 
-	def translateSynonyms(self, activeLanguage):
+	def translateSynonyms(self, activeLanguage, dialogData):
 		self.logDebug(self.randomTalk(text='translateSyn', replace=[self._languageNames[activeLanguage]]))
-		# The Language file the skill was written in
-		file = Path(f'{self._translationPath}/dialogTemplate/{self._skillLanguage}.json')
 
-		# The language dile we are going to translate into
+		# The language file we are going to translate into
 		translatedFile = Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json')
 
-		synonymData = json.loads(file.read_text())
 		# create a new instance
-		translator = Translator()
-		translated = translator.__class__
+		translatorSyn = Translator()
+		translated = translatorSyn.__class__
 
-		for i, item in enumerate(synonymData['slotTypes']):
+		for i, item in enumerate(dialogData['slotTypes']):
 
 			synList = list()
 			for slotValue in item['values']:
@@ -254,7 +243,7 @@ class SkillTranslator(AliceSkill):
 						self.requestLimitChecker()
 
 						if not self.getConfig('preCheck'):
-							translated = translator.translate(synonym, dest=activeLanguage)
+							translated = translatorSyn.translate(synonym, dest=activeLanguage)
 
 						if self._precheckTrigger == 1:
 							self._synonymCount += len(synonym)
@@ -271,7 +260,7 @@ class SkillTranslator(AliceSkill):
 					continue
 
 				if not self.getConfig('preCheck'):
-					translatedFile.write_text(json.dumps(synonymData, ensure_ascii=False, indent=4))
+					translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
 
 
 	def writeInstallConditions(self):

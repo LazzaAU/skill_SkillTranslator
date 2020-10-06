@@ -1,89 +1,89 @@
 {
 	"sayCompleted": {
 		"default": [
-			"Completed Translation of the {0} skill totalling {1} characters translated. Advise NOT translating another skill for at least a hour to reduce chances of google Blocking your IP for 24 hours",
-			"{0} skill translation finished with a total of {1} characters processed. Please wait at least an hour before attempting another translation, or google might block your Ip for 24 hours "
+			"Traduction complète de {0} caractères {compétences totalisant 1} traduit. Conseille de ne pas traduire une autre compétence pendant au moins une heure pour réduire les risques de blocage google votre IP pendant 24 heures",
+			"{0} traduction d'adresse terminé avec un total de caractères {1} transformés. S'il vous plaît attendre au moins une heure avant de tenter une autre traduction, ou Google pourrait bloquer votre IP pendant 24 heures"
 		],
 		"short": [
-			"all completed",
-			"Translation finished"
+			"tout complété",
+			"traduction terminée"
 		]
 	},
 	"startTranslate": {
 		"default": [
-			"Doing that for you now. NOTE. I'll be using google translate, and currently i cant do markdown files ",
-			"No problem. Pro tip. Dont translate to many skills consecutively or google will block your IP for 24 hours"
+			"Faire cela pour vous maintenant. REMARQUE. Je vais utiliser google traduire, et actuellement je ne peux pas faire les fichiers Markdown",
+			"Aucun problème. Pro pointe. Ne pas traduire à de nombreuses compétences consécutivement ou Google bloquera votre adresse IP pendant 24 heures"
 		],
 		"short": [
-			"ok",
-			"done"
+			"D'accord",
+			"terminé"
 		]
 	},
 	"translateTalks": {
 		"default": [
-			"Translating talks file in {0}",
-			"I'm now translating the talks file to {0} "
+			"Traduire fichier parle dans {0}",
+			"Je traduis maintenant le dossier de pourparlers à {0}"
 		],
 		"short": [
-			"translating {0} talks file"
+			"translating {0} fichier parle"
 		]
 	},
 	"breather": {
 		"default": [
-			"Just taking a break for {0} seconds to catch my breath. Will resume shortly",
-			"Delaying translation for {0} seconds to help reduce API limits"
+			"Il suffit de prendre une pause pour {0} secondes pour reprendre mon souffle. Reprendra bientôt",
+			"Retarder la traduction de {0} secondes pour aider à réduire les limites de l'API"
 		],
 		"short": [
-			"delaying process for a minute"
+			"Procédé retarder pendant une minute"
 		]
 	},
 	"translateDialog": {
 		"default": [
-			"Translating utterances in the dialog file into {0}",
-			"I'm now translating the dialog file utterances to {0} "
+			"Traduire énoncés dans le fichier de dialogue dans {0}",
+			"Je traduis maintenant les déclarations de fichiers de dialogue à {0}"
 		],
 		"short": [
-			"translating {0} dialog file"
+			"Translating {0} fichier de dialogue"
 		]
 	},
 	"dialogNotExist": {
 		"default": [
-			"Dialog file {0}.json did not exist. So I created it"
+			"fichier de dialogue {0} .json n'existait pas. Donc, je l'ai créé"
 		],
 		"short": [
-			"Created {0}.json"
+			"Créé {0} .json"
 		]
 	},
 	"talkNotExist": {
 		"default": [
-			"Talk file {0}.json did not exist. So I created it"
+			"fichier de conversation {0} .json n'existait pas. Donc, je l'ai créé"
 		],
 		"short": [
-			"Created {0}.json"
+			"Créé {0} .json"
 		]
 	},
 	"missingSkill": {
 		"default": [
-			"Can't find {0}. Please check your spelling",
-			"{0} doesn't appear to be valid, Please check your spelling"
+			"Vous ne trouvez pas {0}. S'il vous plaît vérifier votre orthographe",
+			"{0} ne semble pas être valide, S'il vous plaît vérifier votre orthographe"
 		],
 		"short": [
-			"can't find {0} ",
-			"Can't locate {0}"
+			"ne peut pas trouver {0}",
+			"Impossible de localiser {0}"
 		]
 	},
 	"invalidLang": {
 		"default": [
-			"Skill Language in settings is not valid. Choices are either en, de, fr or it"
+			"Langue de compétence dans les paramètres ne sont pas valides. Les choix sont soit en, de, fr ou il"
 		],
 		"short": [
-			"Invalid language choice"
+			"choix de la langue non valide"
 		]
 	},
 	"path": {
 		"default": [
-			"Using the path {0}",
-			"Translation path is {0}"
+			"En utilisant le chemin {0}",
+			"chemin de traduction est {0}"
 		],
 		"short": [
 			"Path = {0}"
@@ -91,38 +91,34 @@
 	},
 	"translatingSkill": {
 		"default": [
-			"Translating {0} skill...."
+			"compétence {0} Translating ...."
 		],
 		"short": [
-			"Translating {0} skill..."
+			"compétence {0} Translating ..."
 		]
 	},
 	"translateSyn": {
 		"default": [
-			"Translating synonyms in the dialog file into {0}",
-			"I'm now translating the dialog file synonyms to {0} "
-		],
-		"short": [
-			"",
-			""
+			"Traduire des synonymes dans le fichier de dialogue dans {0}",
+			"Je traduis maintenant les synonymes de fichier de dialogue à {0}"
 		]
 	},
 	"updateInstall": {
 		"default": [
-			"Now updating the install file",
-			"Updating install file"
+			"Maintenant, la mise à jour le fichier d'installation",
+			"Mise à jour de fichier d'installation"
 		],
 		"short": [
-			"updating install file"
+			"la mise à jour fichier d'installation"
 		]
 	},
 	"majorLimit": {
 		"default": [
-			"Woooah. Processed {1} characters is near the google quota. I need to stop processing for {0} seconds or Google will block your IP",
-			"Pausing translation as you're almost at the character quota of 15k with a count of {1}. Pausing for {0} seconds"
+			"Woooah. caractères traités {1} est proche du quota de Google. Je dois arrêter le traitement pour {0} secondes ou Google bloque votre adresse IP",
+			"Traduction comme vous faisant une pause êtes presque au quota de caractère de 15k avec un nombre de {1}. {0 pour une pause} secondes"
 		],
 		"short": [
-			"pausing for {0} seconds"
+			"pause pour {0} secondes"
 		]
 	}
 }

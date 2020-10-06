@@ -39,18 +39,18 @@
 			"name": "TranslateSkill",
 			"enabledByDefault": true,
 			"utterances": [
-				"translate my skill",
-				"translate a known skill"
+				"tradurre il mio skill",
+				"tradurre un'abilità noto"
 			]
 		},
 		{
 			"name": "transTestIntent",
-			"enabledByDefault": true,
+			"enabledByDefault": false,
 			"utterances": [
-				"what's up in the hood",
-				"hows things in the dungeon",
-				"who said that ",
-				"give me {more:=>more} utterances"
+				"cosa succede nella cappa",
+				"hows cose nel dungeon",
+				"chi ha detto questo",
+				"dammi {più: => più} esternazioni"
 			],
 			"slots": [
 				{

@@ -35,6 +35,7 @@ class SkillTranslator(AliceSkill):
 		self._dialogCount = 0
 		self._synonymCount = 0
 		self._precheckTrigger = 0
+		self._error = 0
 
 		super().__init__()
 
@@ -132,55 +133,58 @@ class SkillTranslator(AliceSkill):
 		for key, value in talksData.items():
 			defaultList = list()
 			shortList = list()
+			try:
+				for i, defaultTalk in enumerate(value['default']):
+					# do safe guards
+					self.characterCountor(text=defaultTalk)
+					self.requestLimitChecker()
+					# If not doing a preCheck then request the translation
+					if not self.getConfig('preCheck'):
+						translated = translator.translate(defaultTalk, dest=activeLanguage)
+					# Start counting talks file characters
+					if self._precheckTrigger == 1:
+						self._talkDefaultCount += len(defaultTalk)
+					# Start counting requests
+					self._requestLimiter += 1
 
-			for i, defaultTalk in enumerate(value['default']):
-				# do safe guards
-				self.characterCountor(text=defaultTalk)
-				self.requestLimitChecker()
-				# If not doing a preCheck then request the translation
-				if not self.getConfig('preCheck'):
-					translated = translator.translate(defaultTalk, dest=activeLanguage)
-				# Start counting talks file characters
-				if self._precheckTrigger == 1:
-					self._talkDefaultCount += len(defaultTalk)
-				# Start counting requests
-				self._requestLimiter += 1
+					# If not preChecks then add translations to a list
+					if not self.getConfig('preCheck'):
+						defaultList.append(translated.text)
+					else:
+						defaultList.append(defaultTalk)
 
-				# If not preChecks then add translations to a list
-				if not self.getConfig('preCheck'):
-					defaultList.append(translated.text)
+				for i, shortTalk in enumerate(value['short']):
+					self.characterCountor(text=shortTalk)
+					self.requestLimitChecker()
+
+					if not self.getConfig('preCheck'):
+						translated = translator.translate(shortTalk, dest=activeLanguage)
+
+					if self._precheckTrigger == 1:
+						self._talkShortCount += len(shortTalk)
+					self._requestLimiter += 1
+
+					if not self.getConfig('preCheck'):
+						shortList.append(translated.text)
+					else:
+						shortList.append(shortTalk)
+
+				if defaultList[0] and shortList[0]:
+
+					temp = {
+						'default': defaultList,
+						'short'  : shortList
+					}
 				else:
-					defaultList.append(defaultTalk)
+					temp = {
+						'default': defaultList
+					}
 
-			for i, shortTalk in enumerate(value['short']):
-				self.characterCountor(text=shortTalk)
-				self.requestLimitChecker()
-
-				if not self.getConfig('preCheck'):
-					translated = translator.translate(shortTalk, dest=activeLanguage)
-
-				if self._precheckTrigger == 1:
-					self._talkShortCount += len(shortTalk)
-				self._requestLimiter += 1
-
-				if not self.getConfig('preCheck'):
-					shortList.append(translated.text)
-				else:
-					shortList.append(shortTalk)
-
-			if defaultList[0] and shortList[0]:
-
-				temp = {
-					'default': defaultList,
-					'short'  : shortList
-				}
-			else:
-				temp = {
-					'default': defaultList
-				}
-
-			self._translatedData[f'{key}'] = temp
-
+				self._translatedData[f'{key}'] = temp
+			except:
+				self.logError(f' If you see this, chances are the talk file is missing "default" or "short" keys. Ammend and re run translation ')
+				self._error = 1
+				break
 		if not self.getConfig('preCheck'):
 			translatedFile.write_text(json.dumps(self._translatedData, ensure_ascii=False, indent=4))
 
@@ -293,6 +297,9 @@ class SkillTranslator(AliceSkill):
 		if self.getConfig('preCheck'):
 			totalTalk = self._talkDefaultCount + self._talkShortCount
 			self.logInfo(f' Pre check\'s completed.... Satistics are as follows')
+			if self._error == 1:
+				self.logWarning(f'There are errors in the talk file. Please ammend them before translating (refer syslog)')
+				self._error = 0
 			self.logInfo("")
 			self.logInfo(f'Talks file is {totalTalk} characters long on one instance')
 			self.logInfo(f'Utterances  are {self._dialogCount} characters long on another instance')

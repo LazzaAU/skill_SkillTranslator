@@ -37,3 +37,13 @@ Click Save
 Then ask Alice "translate my skill"
 
 and that's it :)
+
+##**preChecks**
+
+The preeChecks button in the skill settings will allow you to analyze the files in the skill you want to translate.
+
+It'll give feedback on errors, request count, character count etc so that you can make a informed decision
+before trying to actually translate the file.
+
+If preCheck is enabled it will NOT overwrite or translate anything so it is Google friendly and won't change any files
+Once happy turn it off and translate the skill.

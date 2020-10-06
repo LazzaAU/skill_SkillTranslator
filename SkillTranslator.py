@@ -13,8 +13,9 @@ class SkillTranslator(AliceSkill):
 	"""
 	Author: Lazza
 	Description: Translates your skill into other languages
-	There is a time.sleep() function in the code set for 70 seconds
-	to reduce chances of google IP blocking
+
+	There is 3 time.sleep() function in the code. 2 of them are to help
+	reduce the chances of google IP blocking
 	"""
 
 
@@ -29,13 +30,12 @@ class SkillTranslator(AliceSkill):
 		self._languageNames = dict()
 		self._requestLimiter = 0
 		self._characterCounter = 0
-		self._preCheck = False
 		self._talkDefaultCount = 0
 		self._talkShortCount = 0
 		self._dialogCount = 0
 		self._synonymCount = 0
-		self._counterTrigger = 0
-		self._translator = dict()
+		self._precheckTrigger = 0
+
 		super().__init__()
 
 
@@ -44,15 +44,17 @@ class SkillTranslator(AliceSkill):
 		if not self.getConfig('skillLanguage') or not self.getConfig('skillLanguage') in self._supportedLanguages:
 			self.logWarning(self.randomTalk(text='invalidLang'))
 			return
+
+		# convert language abbreviations
 		self._languageNames = {
 			'en': 'English',
 			'de': 'German',
 			'fr': 'French',
 			'it': 'Italian'
 		}
+
 		# do prechecks if this is enabled
 		if self.getConfig('preCheck'):
-			self._preCheck = True
 			self.logWarning(f'PreChecks are enabled. NOTE: No file writing will occur.')
 
 		# get the default language of the skill from config
@@ -60,6 +62,7 @@ class SkillTranslator(AliceSkill):
 		# list of supported languages
 		self._supportedLanguages.remove(self._skillLanguage)
 
+		# set the skill to process as this skill if nothing configured in settings
 		if not self.getConfig('skillTitle'):
 			self._skillName = self.name
 		else:
@@ -90,13 +93,18 @@ class SkillTranslator(AliceSkill):
 
 	def iterateActiveLanguage(self):
 		self.logInfo(self.randomTalk(text='translatingSkill', replace=[self._skillName]))
+
 		for activeLanguage in self._supportedLanguages:
-			self._counterTrigger += 1
+			# precheck Trigger used so counter later on only triggers for first file
+			self._precheckTrigger += 1
+
 			self.translateTalksfile(activeLanguage)
 			self.translateSynonyms(activeLanguage)
-			if not self._preCheck:
-				self.logInfo(f'Waiting 35 seconds for write access to dialogTemplate file....')
+			# Wait 15 seconds so dialogTemplate file has been written and closed before opening it again
+			if not self.getConfig('preCheck'):
+				self.logInfo(f'Waiting 15 seconds for write access to dialogTemplate file....')
 				time.sleep(15)
+
 			self.translateDialogFile(activeLanguage)
 		self.writeInstallConditions()
 
@@ -111,7 +119,8 @@ class SkillTranslator(AliceSkill):
 
 		# create instance of translator
 		translator = Translator()
-		translated = translator.__class__
+		translated = translator.__class__  # i'm guessing this is correct
+
 		# Check if we have all the language files. If not make them
 		if not os.path.isfile(Path(f'{self._translationPath}/talks/{activeLanguage}.json')):
 			with open(Path(f'{self._translationPath}/talks/{activeLanguage}.json'), 'x'):
@@ -119,41 +128,44 @@ class SkillTranslator(AliceSkill):
 
 		# choose the file to be translated
 		translatedFile = Path(f'{self._translationPath}/talks/{activeLanguage}.json')
+
 		for key, value in talksData.items():
 			defaultList = list()
 			shortList = list()
 
 			for i, defaultTalk in enumerate(value['default']):
-
+				# do safe guards
 				self.characterCountor(text=defaultTalk)
 				self.requestLimitChecker()
-
-				if not self._preCheck:
+				# If not doing a preCheck then request the translation
+				if not self.getConfig('preCheck'):
 					translated = translator.translate(defaultTalk, dest=activeLanguage)
-				if self._counterTrigger == 1:
+				# Start counting talks file characters
+				if self._precheckTrigger == 1:
 					self._talkDefaultCount += len(defaultTalk)
+				# Start counting requests
 				self._requestLimiter += 1
 
-				if not self._preCheck:
+				# If not preChecks then add translations to a list
+				if not self.getConfig('preCheck'):
 					defaultList.append(translated.text)
-
-				if self._preCheck:
+				else:
 					defaultList.append(defaultTalk)
 
 			for i, shortTalk in enumerate(value['short']):
 				self.characterCountor(text=shortTalk)
 				self.requestLimitChecker()
 
-				if not self._preCheck:
+				if not self.getConfig('preCheck'):
 					translated = translator.translate(shortTalk, dest=activeLanguage)
 
-				if self._counterTrigger == 1:
+				if self._precheckTrigger == 1:
 					self._talkShortCount += len(shortTalk)
 				self._requestLimiter += 1
 
-				if not self._preCheck:
+				if not self.getConfig('preCheck'):
 					shortList.append(translated.text)
-				if self._preCheck:
+				else:
 					shortList.append(shortTalk)
 
 			if defaultList[0] and shortList[0]:
@@ -169,7 +181,7 @@ class SkillTranslator(AliceSkill):
 
 			self._translatedData[f'{key}'] = temp
 
-		if not self._preCheck:
+		if not self.getConfig('preCheck'):
 			translatedFile.write_text(json.dumps(self._translatedData, ensure_ascii=False, indent=4))
 
 
@@ -186,42 +198,47 @@ class SkillTranslator(AliceSkill):
 		translatedFile = Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json')
 
 		dialogData = json.loads(file.read_text())
+		# create a new instance
 		translator = Translator()
 		translated = translator.__class__
+
 		for i, item in enumerate(dialogData['intents']):
 
 			dialogList = list()
 			for utterance in item['utterances']:
 				self.characterCountor(text=utterance)
 				self.requestLimitChecker()
-				if not self._preCheck:
+
+				if not self.getConfig('preCheck'):
 					translated = translator.translate(utterance, dest=activeLanguage)
-				if self._counterTrigger == 1:
+
+				if self._precheckTrigger == 1:
 					self._dialogCount += len(utterance)
 				self._requestLimiter += 1
 
-				if not self._preCheck:
+				if not self.getConfig('preCheck'):
 					dialogList.append(translated.text)
 				else:
 					dialogList.append(utterance)
 			item['utterances'] = dialogList
 
-		if not self._preCheck:
+		if not self.getConfig('preCheck'):
 			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
-
-
 
 
 	def translateSynonyms(self, activeLanguage):
 		self.logDebug(self.randomTalk(text='translateSyn', replace=[self._languageNames[activeLanguage]]))
 		# The Language file the skill was written in
 		file = Path(f'{self._translationPath}/dialogTemplate/{self._skillLanguage}.json')
+
 		# The language dile we are going to translate into
 		translatedFile = Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json')
 
 		synonymData = json.loads(file.read_text())
+		# create a new instance
 		translator = Translator()
 		translated = translator.__class__
+
 		for i, item in enumerate(synonymData['slotTypes']):
 
 			synList = list()
@@ -231,20 +248,25 @@ class SkillTranslator(AliceSkill):
 					for synonym in slotValue['synonyms']:
 						self.characterCountor(text=synonym)
 						self.requestLimitChecker()
-						if not self._preCheck:
+
+						if not self.getConfig('preCheck'):
 							translated = translator.translate(synonym, dest=activeLanguage)
-						if self._counterTrigger == 1:
+
+						if self._precheckTrigger == 1:
 							self._synonymCount += len(synonym)
 						self._requestLimiter += 1
-						if not self._preCheck:
+
+						if not self.getConfig('preCheck'):
 							synList.append(translated.text)
 						else:
 							synList.append(synonym)
+
 					item['values'][0]['synonyms'] = synList
+
 				except:
 					continue
 
-				if not self._preCheck:
+				if not self.getConfig('preCheck'):
 					translatedFile.write_text(json.dumps(synonymData, ensure_ascii=False, indent=4))
 
 
@@ -258,27 +280,29 @@ class SkillTranslator(AliceSkill):
 		for i, item in enumerate(installData['conditions']):
 			if 'lang' in item:
 				installData['conditions']['lang'] = supportedLanguages
-				if not self._preCheck:
+
+				if not self.getConfig('preCheck'):
 					file.write_text(json.dumps(installData, ensure_ascii=False, indent=4))
 
-		if not self._preCheck:
+		if not self.getConfig('preCheck'):
 			self.logInfo(self.randomTalk(text='sayCompleted', replace=[self._skillName, self._characterCounter]))
 			self.say(
 				text=self.randomTalk(text='sayCompleted', replace=[self._skillName, self._characterCounter])
 			)
-		if self._preCheck:
+
+		if self.getConfig('preCheck'):
 			totalTalk = self._talkDefaultCount + self._talkShortCount
-			self.logInfo(f' Pre check\'s completed.... info is as follows')
+			self.logInfo(f' Pre check\'s completed.... Satistics are as follows')
 			self.logInfo("")
-			self.logInfo(f'Talks file is {totalTalk} characters long')
-			self.logInfo(f'Utterances  are {self._dialogCount} characters long')
-			self.logInfo(f'Synonyms were {self._synonymCount} characters long')
+			self.logInfo(f'Talks file is {totalTalk} characters long on one instance')
+			self.logInfo(f'Utterances  are {self._dialogCount} characters long on another instance')
+			self.logInfo(f'Synonyms are {self._synonymCount} characters long on another instance')
 			self.logInfo('')
-			self.logInfo(f'so a character count total of {self._characterCounter}')
+			self.logInfo(f'there\'s a character count total of {self._characterCounter}')
 			self.logInfo(f' and there would be {self._requestLimiter} requests made')
-			self.logInfo(f'Limits are 15k for characters and 600 for requests per minute')
+			self.logInfo(f'Limits are 15k for characters (per instance ?) and maximum of 600 requests per minute')
 			self.logInfo('')
-			self.logInfo(f'Please turn off prehecks in skill Settings to start Translating')
+			self.logInfo(f'Please turn off preChecks in skill Settings to start Translating')
 
 
 	def requestLimitChecker(self):

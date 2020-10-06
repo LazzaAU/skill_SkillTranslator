@@ -16,5 +16,11 @@
 		"dataType": "string",
 		"isSensitive": false,
 		"description": "The skill Directory. If blank alice skill directory used"
+	},
+	"preCheck": {
+		"defaultValue": true,
+		"dataType": "boolean",
+		"isSensitive": false,
+		"description": "Allows pre checks on the file"
 	}
 }

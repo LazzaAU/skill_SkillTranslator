@@ -29,6 +29,13 @@ class SkillTranslator(AliceSkill):
 		self._languageNames = dict()
 		self._requestLimiter = 0
 		self._characterCounter = 0
+		self._preCheck = False
+		self._talkDefaultCount = 0
+		self._talkShortCount = 0
+		self._dialogCount = 0
+		self._synonymCount = 0
+		self._counterTrigger = 0
+		self._translator = dict()
 		super().__init__()
 
 
@@ -43,9 +50,11 @@ class SkillTranslator(AliceSkill):
 			'fr': 'French',
 			'it': 'Italian'
 		}
-		if self._languageNames:
-			self.logInfo(self.randomTalk(text='translateDialog', replace=[self._languageNames['en']]))
-			return
+		# do prechecks if this is enabled
+		if self.getConfig('preCheck'):
+			self._preCheck = True
+			self.logWarning(f'PreChecks are enabled. NOTE: No file writing will occur.')
+
 		# get the default language of the skill from config
 		self._skillLanguage = self.getConfig('skillLanguage')
 		# list of supported languages
@@ -82,9 +91,14 @@ class SkillTranslator(AliceSkill):
 	def iterateActiveLanguage(self):
 		self.logInfo(self.randomTalk(text='translatingSkill', replace=[self._skillName]))
 		for activeLanguage in self._supportedLanguages:
+			self._counterTrigger += 1
 			self.translateTalksfile(activeLanguage)
 			self.translateSynonyms(activeLanguage)
+			if not self._preCheck:
+				self.logInfo(f'Waiting 35 seconds for write access to dialogTemplate file....')
+				time.sleep(15)
 			self.translateDialogFile(activeLanguage)
+		self.writeInstallConditions()
 
 
 	def translateTalksfile(self, activeLanguage):
@@ -94,8 +108,10 @@ class SkillTranslator(AliceSkill):
 
 		# load the contents of the active language file
 		talksData = json.loads(file.read_text())
+
 		# create instance of translator
 		translator = Translator()
+		translated = translator.__class__
 		# Check if we have all the language files. If not make them
 		if not os.path.isfile(Path(f'{self._translationPath}/talks/{activeLanguage}.json')):
 			with open(Path(f'{self._translationPath}/talks/{activeLanguage}.json'), 'x'):
@@ -108,18 +124,37 @@ class SkillTranslator(AliceSkill):
 			shortList = list()
 
 			for i, defaultTalk in enumerate(value['default']):
+
 				self.characterCountor(text=defaultTalk)
 				self.requestLimitChecker()
-				translated = translator.translate(defaultTalk, dest=activeLanguage)
+
+				if not self._preCheck:
+					translated = translator.translate(defaultTalk, dest=activeLanguage)
+				if self._counterTrigger == 1:
+					self._talkDefaultCount += len(defaultTalk)
 				self._requestLimiter += 1
-				defaultList.append(translated.text)
+
+				if not self._preCheck:
+					defaultList.append(translated.text)
+
+				if self._preCheck:
+					defaultList.append(defaultTalk)
 
 			for i, shortTalk in enumerate(value['short']):
 				self.characterCountor(text=shortTalk)
 				self.requestLimitChecker()
-				translated = translator.translate(shortTalk, dest=activeLanguage)
+
+				if not self._preCheck:
+					translated = translator.translate(shortTalk, dest=activeLanguage)
+
+				if self._counterTrigger == 1:
+					self._talkShortCount += len(shortTalk)
 				self._requestLimiter += 1
-				shortList.append(translated.text)
+
+				if not self._preCheck:
+					shortList.append(translated.text)
+				if self._preCheck:
+					shortList.append(shortTalk)
 
 			if defaultList[0] and shortList[0]:
 
@@ -134,7 +169,8 @@ class SkillTranslator(AliceSkill):
 
 			self._translatedData[f'{key}'] = temp
 
-		translatedFile.write_text(json.dumps(self._translatedData, ensure_ascii=False, indent=4))
+		if not self._preCheck:
+			translatedFile.write_text(json.dumps(self._translatedData, ensure_ascii=False, indent=4))
 
 
 	def translateDialogFile(self, activeLanguage):
@@ -151,22 +187,29 @@ class SkillTranslator(AliceSkill):
 
 		dialogData = json.loads(file.read_text())
 		translator = Translator()
-
+		translated = translator.__class__
 		for i, item in enumerate(dialogData['intents']):
 
 			dialogList = list()
 			for utterance in item['utterances']:
 				self.characterCountor(text=utterance)
 				self.requestLimitChecker()
-				translated = translator.translate(utterance, dest=activeLanguage)
+				if not self._preCheck:
+					translated = translator.translate(utterance, dest=activeLanguage)
+				if self._counterTrigger == 1:
+					self._dialogCount += len(utterance)
 				self._requestLimiter += 1
-				dialogList.append(translated.text)
 
+				if not self._preCheck:
+					dialogList.append(translated.text)
+				else:
+					dialogList.append(utterance)
 			item['utterances'] = dialogList
-		# print(f' dialog utterances are now ->> {item["utterances"]}')
-		translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
 
-		self.writeInstallConditions()
+		if not self._preCheck:
+			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
+
+
 
 
 	def translateSynonyms(self, activeLanguage):
@@ -178,7 +221,7 @@ class SkillTranslator(AliceSkill):
 
 		synonymData = json.loads(file.read_text())
 		translator = Translator()
-
+		translated = translator.__class__
 		for i, item in enumerate(synonymData['slotTypes']):
 
 			synList = list()
@@ -188,15 +231,21 @@ class SkillTranslator(AliceSkill):
 					for synonym in slotValue['synonyms']:
 						self.characterCountor(text=synonym)
 						self.requestLimitChecker()
-						translated = translator.translate(synonym, dest=activeLanguage)
+						if not self._preCheck:
+							translated = translator.translate(synonym, dest=activeLanguage)
+						if self._counterTrigger == 1:
+							self._synonymCount += len(synonym)
 						self._requestLimiter += 1
-						synList.append(translated.text)
-						synList.append(synonym)
-
+						if not self._preCheck:
+							synList.append(translated.text)
+						else:
+							synList.append(synonym)
 					item['values'][0]['synonyms'] = synList
 				except:
 					continue
-				translatedFile.write_text(json.dumps(synonymData, ensure_ascii=False, indent=4))
+
+				if not self._preCheck:
+					translatedFile.write_text(json.dumps(synonymData, ensure_ascii=False, indent=4))
 
 
 	def writeInstallConditions(self):
@@ -209,12 +258,27 @@ class SkillTranslator(AliceSkill):
 		for i, item in enumerate(installData['conditions']):
 			if 'lang' in item:
 				installData['conditions']['lang'] = supportedLanguages
-				file.write_text(json.dumps(installData, ensure_ascii=False, indent=4))
+				if not self._preCheck:
+					file.write_text(json.dumps(installData, ensure_ascii=False, indent=4))
 
-		self.logInfo(self.randomTalk(text='sayCompleted', replace=[self._skillName, self._characterCounter]))
-		self.say(
-			text=self.randomTalk(text='sayCompleted', replace=[self._skillName, self._characterCounter])
-		)
+		if not self._preCheck:
+			self.logInfo(self.randomTalk(text='sayCompleted', replace=[self._skillName, self._characterCounter]))
+			self.say(
+				text=self.randomTalk(text='sayCompleted', replace=[self._skillName, self._characterCounter])
+			)
+		if self._preCheck:
+			totalTalk = self._talkDefaultCount + self._talkShortCount
+			self.logInfo(f' Pre check\'s completed.... info is as follows')
+			self.logInfo("")
+			self.logInfo(f'Talks file is {totalTalk} characters long')
+			self.logInfo(f'Utterances  are {self._dialogCount} characters long')
+			self.logInfo(f'Synonyms were {self._synonymCount} characters long')
+			self.logInfo('')
+			self.logInfo(f'so a character count total of {self._characterCounter}')
+			self.logInfo(f' and there would be {self._requestLimiter} requests made')
+			self.logInfo(f'Limits are 15k for characters and 600 for requests per minute')
+			self.logInfo('')
+			self.logInfo(f'Please turn off prehecks in skill Settings to start Translating')
 
 
 	def requestLimitChecker(self):

@@ -1,5 +1,5 @@
 {
-	"skillLang": {
+	"skillLanguage": {
 		"defaultValue": "en",
 		"dataType": "string",
 		"isSensitive": false,

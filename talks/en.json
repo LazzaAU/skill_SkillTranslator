@@ -1,22 +1,119 @@
 {
-	"aExample": {
+	"sayCompleted": {
 		"default": [
-			"This is a example {1}",
-			"Here is another test"
+			"Completed Translation of the {0} skill. Advise NOT translating another skill for at least a hour to reduce chances of google Blocking your IP for 24 hours",
+			"{0} skill translation finished. Please wait at least an hour before attempting another translation, or google might block your Ip for 24 hours "
 		],
 		"short": [
-			"A short test",
-			"Here is another short test"
+			"all completed",
+			"Translation finished"
 		]
 	},
 	"startTranslate": {
 		"default": [
 			"Doing that for you now. NOTE. I'll be using google translate, and currently i cant do markdown files ",
-			"No problem. Pro tip. Dont translate to many skills at once or google will block your IP for 24 hours"
+			"No problem. Pro tip. Dont translate to many skills consecutively or google will block your IP for 24 hours"
 		],
 		"short": [
 			"ok",
 			"done"
+		]
+	},
+	"translateTalks": {
+		"default": [
+			"Translating talks file in {0}",
+			"I'm now translating the talks file to {0} "
+		],
+		"short": [
+			"translating {0} talks file"
+		]
+	},
+	"breather": {
+		"default": [
+			"Just taking a minute to breath. Will resume shortly",
+			"Delaying translation for 60 seconds to help reduce API limits"
+		],
+		"short": [
+			"delaying process for a minute"
+		]
+	},
+	"translateDialog": {
+		"default": [
+			"Translating utterances in the dialog file into {0}",
+			"I'm now translating the dialog file utterances to {0} "
+		],
+		"short": [
+			"translating {0} dialog file"
+		]
+	},
+	"dialogNotExist": {
+		"default": [
+			"Dialog file {0}.json did not exist. So I created it"
+		],
+		"short": [
+			"Created {0}.json"
+		]
+	},
+	"talkNotExist": {
+		"default": [
+			"Talk file {0}.json did not exist. So I created it"
+		],
+		"short": [
+			"Created {0}.json"
+		]
+	},
+	"missingSkill": {
+		"default": [
+			"Can't find {0}. Please check your spelling",
+			"{0} doesn't appear to be valid, Please check your spelling"
+		],
+		"short": [
+			"can't find {0} ",
+			"Can't locate {0}"
+		]
+	},
+	"invalidLang": {
+		"default": [
+			"Skill Language in settings is not valid. Choices are either en, de, fr or it"
+		],
+		"short": [
+			"Invalid language choice"
+		]
+	},
+	"path": {
+		"default": [
+			"Using the path {0}",
+			"Translation path is {0}"
+		],
+		"short": [
+			"Path = {0}"
+		]
+	},
+	"translatingSkill": {
+		"default": [
+			"Translating {0} skill...."
+		],
+		"short": [
+			"Translating {0} skill..."
+		]
+	},
+	"translateSyn": {
+		"default": [
+			"Translating synonyms in the dialog file into {0}",
+			"I'm now translating the dialog file synonyms to {0} "
+		],
+		"short": [
+			"",
+			""
+		]
+	},
+	"updateInstall": {
+		"default": [
+			"Now updating the install file",
+			"Updating install file"
+		],
+		"short": [
+			"updating install file"
 		]
 	}
 }

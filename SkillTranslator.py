@@ -10,7 +10,7 @@ from core.util.Decorators import IntentHandler
 
 class SkillTranslator(AliceSkill):
 	"""
-	Author: LazzaAU
+	Author: Lazza
 	Description: Translate your skill into other languages
 	"""
 
@@ -23,17 +23,26 @@ class SkillTranslator(AliceSkill):
 		self._skillName = ""
 		self._translationPath = Path
 		self._manualPath = Path
+		self._languageNames = dict()
 		super().__init__()
 
 
 	@IntentHandler('TranslateSkill')
 	def translateSkill(self, session: DialogSession, **_kwargs):
-		if not self.getConfig('skillLang') or not self.getConfig('skillLang') in self._supportedLanguages:
-			self.logWarning(f'Skill Language in settings is not valid')
+		if not self.getConfig('skillLanguage') or not self.getConfig('skillLanguage') in self._supportedLanguages:
+			self.logWarning(self.randomTalk(text='invalidLang'))
 			return
-
+		self._languageNames = {
+			'en': 'English',
+			'de': 'German',
+			'fr': 'French',
+			'it': 'Italian'
+		}
+		if self._languageNames:
+			self.logInfo(self.randomTalk(text='translateDialog', replace=[self._languageNames['en']]))
+			return
 		# get the default language of the skill from config
-		self._skillLanguage = self.getConfig('skillLang')
+		self._skillLanguage = self.getConfig('skillLanguage')
 		# list of supported languages
 		self._supportedLanguages.remove(self._skillLanguage)
 
@@ -48,8 +57,10 @@ class SkillTranslator(AliceSkill):
 		else:
 			self._translationPath = Path(self.Commons.rootDir(), f'skills/{self._skillName}')
 
+		self.logDebug(self.randomTalk(text='path', replace=[self._translationPath]))
+
 		if self.getConfig('skillTitle') and not self._translationPath.exists():
-			self.logWarning(f'Can\'t find {self._skillName}. Please check your spelling')
+			self.logWarning(self.randomTalk(text='missingSkill', replace=[self._skillName]))
 			return
 
 		# triggers the main code process
@@ -63,17 +74,20 @@ class SkillTranslator(AliceSkill):
 
 
 	def iterateActiveLanguage(self):
-		self.logInfo(f'Translating {self._skillName} skill....')
+		self.logInfo(self.randomTalk(text='translatingSkill', replace=[self._skillName]))
 		for activeLanguage in self._supportedLanguages:
 			self.translateTalksfile(activeLanguage)
-			self.translateDialogFile(activeLanguage)
 			self.translateSynonyms(activeLanguage)
-		self.writeInstallConditions()
-		self.logInfo(f'Completed Translation of the {self._skillName} skill. Please restart Alice')
+			self.logDebug(self.randomTalk(text='breather'))
+			self.ThreadManager.doLater(
+				interval=62,
+				func=self.translateDialogFile,
+				args=activeLanguage
+			)
 
 
 	def translateTalksfile(self, activeLanguage):
-		self.logDebug(f'Translating Talks file in {activeLanguage}')
+		self.logDebug(self.randomTalk(text='translateTalks', replace=[self._languageNames[activeLanguage]]), )
 		# Path to the active language talks file
 		file = Path(f'{self._translationPath}/talks/{self._skillLanguage}.json')
 
@@ -81,11 +95,10 @@ class SkillTranslator(AliceSkill):
 		talksData = json.loads(file.read_text())
 		# create instance of translator
 		translator = Translator()
-
 		# Check if we have all the language files. If not make them
 		if not os.path.isfile(Path(f'{self._translationPath}/talks/{activeLanguage}.json')):
 			with open(Path(f'{self._translationPath}/talks/{activeLanguage}.json'), 'x'):
-				self.logInfo(f'File {activeLanguage}.json did not exist. So I created it')
+				self.logInfo(self.randomTalk(text='talkNotExist', replace=[activeLanguage]))
 
 		# choose the file to be translated
 		translatedFile = Path(f'{self._translationPath}/talks/{activeLanguage}.json')
@@ -94,7 +107,6 @@ class SkillTranslator(AliceSkill):
 			shortList = list()
 
 			for i, defaultTalk in enumerate(value['default']):
-
 				translated = translator.translate(defaultTalk, dest=activeLanguage)
 				defaultList.append(translated.text)
 
@@ -119,11 +131,11 @@ class SkillTranslator(AliceSkill):
 
 
 	def translateDialogFile(self, activeLanguage):
-		self.logDebug(f'Translating utterances in dialogTemplate file in {activeLanguage}')
+		self.logDebug(self.randomTalk(text='translateDialog', replace=[self._languageNames[activeLanguage]]), )
 		# Check for the language file. if not then create them
 		if not os.path.isfile(Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json')):
 			with open(Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json'), 'x'):
-				self.logInfo(f'Dialog file {activeLanguage}.json did not exist. So I created it')
+				self.logInfo(self.randomTalk(text='dialogNotExist', replace=[activeLanguage]))
 
 		# The Language file that the skill was written in
 		file = Path(f'{self._translationPath}/dialogTemplate/{self._skillLanguage}.json')
@@ -141,12 +153,14 @@ class SkillTranslator(AliceSkill):
 				dialogList.append(translated.text)
 
 			item['utterances'] = dialogList
-
+		# print(f' dialog utterances are now ->> {item["utterances"]}')
 		translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
+
+		self.writeInstallConditions()
 
 
 	def translateSynonyms(self, activeLanguage):
-		self.logDebug(f'Translating synonyms in {activeLanguage}')
+		self.logDebug(self.randomTalk(text='translateSyn', replace=[self._languageNames[activeLanguage]]))
 		# The Language file the skill was written in
 		file = Path(f'{self._translationPath}/dialogTemplate/{self._skillLanguage}.json')
 		# The language dile we are going to translate into
@@ -165,7 +179,7 @@ class SkillTranslator(AliceSkill):
 						translated = translator.translate(synonym, dest=activeLanguage)
 						synList.append(translated.text)
 						synList.append(synonym)
-						print(f' synlist is {synList}')
+
 					item['values'][0]['synonyms'] = synList
 				except:
 					continue
@@ -173,7 +187,7 @@ class SkillTranslator(AliceSkill):
 
 
 	def writeInstallConditions(self):
-		self.logDebug(f'Updating the install file')
+		self.logDebug(self.randomTalk(text='updateInstall'))
 		# Lets update the install file language conditions
 		file = Path(f'{self._translationPath}/{self._skillName}.install')
 		installData = json.loads(file.read_text())
@@ -183,3 +197,8 @@ class SkillTranslator(AliceSkill):
 			if 'lang' in item:
 				installData['conditions']['lang'] = supportedLanguages
 				file.write_text(json.dumps(installData, ensure_ascii=False, indent=4))
+
+		self.logInfo(self.randomTalk(text='sayCompleted', replace=[self._skillName]))
+		self.say(
+			text=self.randomTalk(text='sayCompleted', replace=[self._skillName])
+		)

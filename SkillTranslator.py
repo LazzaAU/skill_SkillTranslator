@@ -1,7 +1,8 @@
 import json
 import os.path
-from pathlib import Path
+import time
 
+from pathlib import Path
 from googletrans import Translator
 from core.base.model.AliceSkill import AliceSkill
 from core.dialog.model.DialogSession import DialogSession
@@ -11,7 +12,9 @@ from core.util.Decorators import IntentHandler
 class SkillTranslator(AliceSkill):
 	"""
 	Author: Lazza
-	Description: Translate your skill into other languages
+	Description: Translates your skill into other languages
+	There is a time.sleep() function in the code set for 70 seconds
+	to reduce chances of google IP blocking
 	"""
 
 
@@ -24,6 +27,8 @@ class SkillTranslator(AliceSkill):
 		self._translationPath = Path
 		self._manualPath = Path
 		self._languageNames = dict()
+		self._requestLimiter = 0
+		self._characterCounter = 0
 		super().__init__()
 
 
@@ -64,6 +69,7 @@ class SkillTranslator(AliceSkill):
 			return
 
 		# triggers the main code process
+		self._requestLimiter = 0
 		self.iterateActiveLanguage()
 
 		self.endDialog(
@@ -78,12 +84,7 @@ class SkillTranslator(AliceSkill):
 		for activeLanguage in self._supportedLanguages:
 			self.translateTalksfile(activeLanguage)
 			self.translateSynonyms(activeLanguage)
-			self.logDebug(self.randomTalk(text='breather'))
-			self.ThreadManager.doLater(
-				interval=62,
-				func=self.translateDialogFile,
-				args=activeLanguage
-			)
+			self.translateDialogFile(activeLanguage)
 
 
 	def translateTalksfile(self, activeLanguage):
@@ -107,11 +108,17 @@ class SkillTranslator(AliceSkill):
 			shortList = list()
 
 			for i, defaultTalk in enumerate(value['default']):
+				self.characterCountor(text=defaultTalk)
+				self.requestLimitChecker()
 				translated = translator.translate(defaultTalk, dest=activeLanguage)
+				self._requestLimiter += 1
 				defaultList.append(translated.text)
 
 			for i, shortTalk in enumerate(value['short']):
+				self.characterCountor(text=shortTalk)
+				self.requestLimitChecker()
 				translated = translator.translate(shortTalk, dest=activeLanguage)
+				self._requestLimiter += 1
 				shortList.append(translated.text)
 
 			if defaultList[0] and shortList[0]:
@@ -149,7 +156,10 @@ class SkillTranslator(AliceSkill):
 
 			dialogList = list()
 			for utterance in item['utterances']:
+				self.characterCountor(text=utterance)
+				self.requestLimitChecker()
 				translated = translator.translate(utterance, dest=activeLanguage)
+				self._requestLimiter += 1
 				dialogList.append(translated.text)
 
 			item['utterances'] = dialogList
@@ -176,7 +186,10 @@ class SkillTranslator(AliceSkill):
 				# Using try in case user has empty Synonym lists (index out of range errors)
 				try:
 					for synonym in slotValue['synonyms']:
+						self.characterCountor(text=synonym)
+						self.requestLimitChecker()
 						translated = translator.translate(synonym, dest=activeLanguage)
+						self._requestLimiter += 1
 						synList.append(translated.text)
 						synList.append(synonym)
 
@@ -198,7 +211,31 @@ class SkillTranslator(AliceSkill):
 				installData['conditions']['lang'] = supportedLanguages
 				file.write_text(json.dumps(installData, ensure_ascii=False, indent=4))
 
-		self.logInfo(self.randomTalk(text='sayCompleted', replace=[self._skillName]))
+		self.logInfo(self.randomTalk(text='sayCompleted', replace=[self._skillName, self._characterCounter]))
 		self.say(
-			text=self.randomTalk(text='sayCompleted', replace=[self._skillName])
+			text=self.randomTalk(text='sayCompleted', replace=[self._skillName, self._characterCounter])
 		)
+
+
+	def requestLimitChecker(self):
+		"""
+		Used to prevent google blocking your Ip from exceeding 600
+		 requests per minute
+		"""
+		seconds: float = 70
+		if self._requestLimiter == 550:
+			self.logDebug(self.randomTalk(text='breather', replace=[seconds]))
+			time.sleep(seconds)
+			self._requestLimiter = 0
+
+
+	def characterCountor(self, text):
+		"""
+		Used as a last resort if the character count is about to hit the Google quota
+		"""
+		seconds: float = 3660
+		self._characterCounter += len(text)
+
+		if self._characterCounter == 14900:
+			self.logDebug(self.randomTalk(text='majorLimit', replace=[seconds, self._characterCounter]))
+			time.sleep(seconds)

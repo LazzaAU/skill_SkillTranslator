@@ -1,8 +1,8 @@
 {
 	"sayCompleted": {
 		"default": [
-			"Completed Translation of the {0} skill. Advise NOT translating another skill for at least a hour to reduce chances of google Blocking your IP for 24 hours",
-			"{0} skill translation finished. Please wait at least an hour before attempting another translation, or google might block your Ip for 24 hours "
+			"Completed Translation of the {0} skill totalling {1} characters translated. Advise NOT translating another skill for at least a hour to reduce chances of google Blocking your IP for 24 hours",
+			"{0} skill translation finished with a total of {1} characters processed. Please wait at least an hour before attempting another translation, or google might block your Ip for 24 hours "
 		],
 		"short": [
 			"all completed",
@@ -30,8 +30,8 @@
 	},
 	"breather": {
 		"default": [
-			"Just taking a minute to breath. Will resume shortly",
-			"Delaying translation for 60 seconds to help reduce API limits"
+			"Just taking a break for {0} seconds to catch my breath. Will resume shortly",
+			"Delaying translation for {0} seconds to help reduce API limits"
 		],
 		"short": [
 			"delaying process for a minute"
@@ -114,6 +114,15 @@
 		],
 		"short": [
 			"updating install file"
+		]
+	},
+	"majorLimit": {
+		"default": [
+			"Woooah. Processed {1} characters is near the google quota. I need to stop processing for {0} seconds or Google will block your IP",
+			"Pausing translation as you're almost at the character quota of 15k with a count of {1}. Pausing for {0} seconds"
+		],
+		"short": [
+			"pausing for {0} seconds"
 		]
 	}
 }

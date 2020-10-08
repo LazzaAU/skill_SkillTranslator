@@ -34,6 +34,7 @@ class SkillTranslator(AliceSkill):
 		self._dialogCount = 0
 		self._synonymCount = 0
 		self._precheckTrigger = 0
+		self._requestTotal = 0
 
 		super().__init__()
 
@@ -130,7 +131,7 @@ class SkillTranslator(AliceSkill):
 				self._talkDefaultCount += len(message)
 			# Start counting requests
 			self._requestLimiter += 1
-
+			self._requestTotal += 1
 			# If not preChecks then add translations to a list
 			if not self.getConfig('preCheck'):
 				defaultList.append(translated.text)
@@ -161,7 +162,7 @@ class SkillTranslator(AliceSkill):
 			if self._precheckTrigger == 1:
 				self._talkShortCount += len(message)
 			self._requestLimiter += 1
-
+			self._requestTotal += 1
 			if not self.getConfig('preCheck'):
 				shortList.append(translated.text)
 			else:
@@ -186,7 +187,7 @@ class SkillTranslator(AliceSkill):
 			if self._precheckTrigger == 1:
 				self._talkShortCount += len(message)
 			self._requestLimiter += 1
-
+			self._requestTotal += 1
 			if not self.getConfig('preCheck'):
 				talkList.append(translated.text)
 			else:
@@ -260,7 +261,7 @@ class SkillTranslator(AliceSkill):
 				if self._precheckTrigger == 1:
 					self._dialogCount += len(utterance)
 				self._requestLimiter += 1
-
+				self._requestTotal += 1
 				if not self.getConfig('preCheck'):
 					dialogList.append(translated.text)
 				else:
@@ -296,7 +297,7 @@ class SkillTranslator(AliceSkill):
 						if self._precheckTrigger == 1:
 							self._synonymCount += len(synonym)
 						self._requestLimiter += 1
-
+						self._requestTotal += 1
 						if not self.getConfig('preCheck'):
 							synList.append(translated.text)
 						else:
@@ -343,7 +344,7 @@ class SkillTranslator(AliceSkill):
 			self.logInfo(self.randomTalk(text='results3', replace=[self._synonymCount]))
 			self.logInfo('')
 			self.logInfo(self.randomTalk(text='results4', replace=[self._characterCounter]))
-			self.logInfo(self.randomTalk(text='results5', replace=[self._requestLimiter]))
+			self.logInfo(self.randomTalk(text='results5', replace=[self._requestTotal]))
 			self.logInfo(self.randomTalk(text='results6'))
 			self.logInfo('')
 			self.logInfo(self.randomTalk(text='results7'))
@@ -355,7 +356,9 @@ class SkillTranslator(AliceSkill):
 		 requests per minute
 		"""
 		seconds: float = 70
+
 		if self._requestLimiter == 550:
+
 			self.logDebug(self.randomTalk(text='breather', replace=[seconds]))
 			time.sleep(seconds)
 			self._requestLimiter = 0

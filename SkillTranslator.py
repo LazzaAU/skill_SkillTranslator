@@ -45,6 +45,13 @@ class SkillTranslator(AliceSkill):
 			self.logWarning(self.randomTalk(text='invalidLang'))
 			return
 
+		# give user feedback that shes doing it
+		self.endDialog(
+			sessionId=session.sessionId,
+			text=self.randomTalk(text='startTranslate'),
+			siteId=session.siteId
+		)
+
 		# convert language abbreviations
 		self._languageNames = {
 			'en': 'English',
@@ -84,11 +91,6 @@ class SkillTranslator(AliceSkill):
 		self._requestLimiter = 0
 		self.iterateActiveLanguage()
 
-		self.endDialog(
-			sessionId=session.sessionId,
-			text=self.randomTalk(text='startTranslate'),
-			siteId=session.siteId
-		)
 
 
 	def iterateActiveLanguage(self):
@@ -234,10 +236,8 @@ class SkillTranslator(AliceSkill):
 
 	def translateDialogFile(self, activeLanguage):
 		self.logDebug(self.randomTalk(text='translateDialog', replace=[self._languageNames[activeLanguage]]), )
-		# Check for the language file. if not then create them
-		if not Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json'):
-			with open(Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json'), 'x'):
-				self.logInfo(self.randomTalk(text='dialogNotExist', replace=[activeLanguage]))
+		# Check if we have all the language files. If not make them
+		self.checkFileExists(activeLanguage=activeLanguage, path='dialogTemplate', talkFile='dialogNotExist')
 
 		# The Language file that the skill was written in
 		file = Path(f'{self._translationPath}/dialogTemplate/{self._skillLanguage}.json')
@@ -337,7 +337,11 @@ class SkillTranslator(AliceSkill):
 				text='Please check your system log for pre check results'
 			)
 			totalTalk = self._talkDefaultCount + self._talkShortCount
-			self.logInfo(self.randomTalk(text='resultsHeading'))
+			if self._requestTotal > 550:
+				self.logWarning(self.randomTalk(text='expectDelays'))
+			if totalTalk >= 14900 or self._dialogCount >= 14900 or self._synonymCount >= 14900:
+				self.logWarning(self.randomTalk(text='expectMajorDelays'))
+			self.logInfo(self.randomTalk(text='resultsHeading', replace=[self._skillName]))
 			self.logInfo(f'')
 			self.logInfo(self.randomTalk(text='results1', replace=[totalTalk]))
 			self.logInfo(self.randomTalk(text='results2', replace=[self._dialogCount]))
@@ -359,7 +363,7 @@ class SkillTranslator(AliceSkill):
 
 		if self._requestLimiter == 550:
 
-			self.logDebug(self.randomTalk(text='breather', replace=[seconds]))
+			self.logWarning(self.randomTalk(text='breather', replace=[seconds]))
 			time.sleep(seconds)
 			self._requestLimiter = 0
 

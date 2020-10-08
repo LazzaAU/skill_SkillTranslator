@@ -2,7 +2,7 @@
 	"sayCompleted": {
 		"default": [
 			"Completed Translation of the {0} skill totalling {1} characters translated. Advise NOT translating another skill for at least a hour to reduce chances of Google blocking your IP for 24 hours",
-			"{0} skill translation finished with a total of {1} characters processed. Please wait at least an hour before attempting another translation, or google might block your Ip for 24 hours "
+			"{0} skill translation finished with a total of {1} characters processed. Please wait at least an hour, for bigger skills. before attempting another translation, or google might block your Ip for 24 hours "
 		],
 		"short": [
 			"all completed",
@@ -94,7 +94,7 @@
 	],
 	"resultsHeading": {
 		"default": [
-			"Pre check's completed.... Satistics are as follows"
+			"Pre check's completed for {0} skill.... Satistics are as follows"
 		]
 	},
 	"results1": {
@@ -130,6 +130,16 @@
 	"results7": {
 		"default": [
 			"Please turn off preChecks in skill Settings to start Translating"
+		]
+	},
+	"expectDelays": {
+		"default": [
+			"Based on these results, the code will purposely trigger 1 minute delays as required to reduce API blocking from google"
+		]
+	},
+	"expectMajorDelays": {
+		"default": [
+			"Based on these results that skill will exceed Googles charactor count allowance per  hour. Therefore the code will force a delay of 1 hour during translating"
 		]
 	}
 }

@@ -2,7 +2,7 @@
 	"sayCompleted": {
 		"default": [
 			"Traduction complète de {0} caractères {compétences totalisant 1} traduit. DECONSEILLONS d'traduire une autre compétence pendant au moins une heure pour réduire les chances de Google bloquer votre IP pendant 24 heures",
-			"{0} traduction d'adresse terminé avec un total de caractères {1} transformés. S'il vous plaît attendre au moins une heure avant de tenter une autre traduction, ou Google pourrait bloquer votre IP pendant 24 heures"
+			"{0} traduction d'adresse terminé avec un total de caractères {1} transformés. S'il vous plaît attendre au moins une heure, pour de plus grandes compétences. avant de tenter une autre traduction, ou Google pourrait bloquer votre IP pendant 24 heures"
 		],
 		"short": [
 			"tout complété",
@@ -93,7 +93,7 @@
 	],
 	"resultsHeading": {
 		"default": [
-			"Les vérifications avant terminés .... Les statistiques sont les suivantes"
+			"contrôles pré remplis pour {0} compétences .... Les statistiques sont les suivantes"
 		]
 	},
 	"results1": {
@@ -129,6 +129,16 @@
 	"results7": {
 		"default": [
 			"S'il vous plaît désactiver précontrôles dans Paramètres de compétence pour commencer à traduire"
+		]
+	},
+	"expectDelays": {
+		"default": [
+			"Sur la base de ces résultats, le code déclenche volontairement 1 minute retards au besoin pour réduire le blocage des API de Google"
+		]
+	},
+	"expectMajorDelays": {
+		"default": [
+			"Sur la base de ces résultats que les compétences dépassera l'allocation de nombre de caractères lunettes par heure. Par conséquent, le code forcera un délai de 1 heure au cours de la traduction"
 		]
 	}
 }

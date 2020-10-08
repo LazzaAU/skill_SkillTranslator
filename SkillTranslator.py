@@ -1,5 +1,6 @@
 import json
 import time
+import re
 
 from pathlib import Path
 from googletrans import Translator
@@ -92,7 +93,6 @@ class SkillTranslator(AliceSkill):
 		self.iterateActiveLanguage()
 
 
-
 	def iterateActiveLanguage(self):
 		self.logInfo(self.randomTalk(text='translatingSkill', replace=[self._skillName]))
 
@@ -107,95 +107,13 @@ class SkillTranslator(AliceSkill):
 
 	def checkFileExists(self, activeLanguage, path, talkFile):
 		# If language file doesnt exists and preCheck is not enabled then create it
-		if not Path(f'{self._translationPath}/talks/{activeLanguage}.json').exists() and not self.getConfig('preChecks'):
+		if not Path(f'{self._translationPath}/{path}/{activeLanguage}.json').exists() and not self.getConfig('preCheck'):
 			with open(Path(f'{self._translationPath}/{path}/{activeLanguage}.json'), 'x'):
 				self.logInfo(self.randomTalk(text=talkFile, replace=[activeLanguage]))
 
 		# if language file doesn't exist and preCheck is on, then just tell the user it will be created but don't create it (prevents later error)
-		elif not Path(f'{self._translationPath}/talks/{activeLanguage}.json').exists() and self.getConfig('preChecks'):
-			self.logInfo(self.randomTalk(text='talkNotExist', replace=[activeLanguage]))
-
-
-	def processTalksFileDictionary(self, talkValue, translator, activeLanguage, defaultList):
-		translated = translator.__class__  # i'm guessing this is correct, just want to decalre it
-		talkDictionary = dict(talkValue[1])
-
-		for i, message in enumerate(talkDictionary['default']):
-			# do safe guard checks
-			self.characterCountor(text=message)
-			self.requestLimitChecker()
-			# If not doing a preCheck then request the translation
-			if not self.getConfig('preCheck'):
-				translated = translator.translate(message, dest=activeLanguage)
-
-			# Start counting talks file characters
-			if self._precheckTrigger == 1:
-				self._talkDefaultCount += len(message)
-			# Start counting requests
-			self._requestLimiter += 1
-			self._requestTotal += 1
-			# If not preChecks then add translations to a list
-			if not self.getConfig('preCheck'):
-				defaultList.append(translated.text)
-			else:
-				defaultList.append(message)
-
-		if not 'short' in dict(talkDictionary).keys():
-			self._translatedData = {
-				'default': defaultList
-			}
-
-		else:
-			self.processTalksFileShortKey(value=talkDictionary, translator=translator, activeLanguage=activeLanguage, defaultList=defaultList)
-
-
-	def processTalksFileShortKey(self, value, translator, activeLanguage, defaultList):
-		translated = translator.__class__  # i'm guessing this is correct, just want to decalre it
-		shortList = list()
-
-		for message in value['short']:
-
-			self.characterCountor(text=message)
-			self.requestLimitChecker()
-
-			if not self.getConfig('preCheck'):
-				translated = translator.translate(message, dest=activeLanguage)
-
-			if self._precheckTrigger == 1:
-				self._talkShortCount += len(message)
-			self._requestLimiter += 1
-			self._requestTotal += 1
-			if not self.getConfig('preCheck'):
-				shortList.append(translated.text)
-			else:
-				shortList.append(message)
-
-		self._translatedData = {
-			'default': defaultList,
-			'short'  : shortList
-		}
-
-
-	def processTalksFileLists(self, talk, translator, activeLanguage):
-		translated = translator.__class__  # i'm guessing this is correct, just want to decalre it
-		talkList = list()
-
-		for message in talk[1]:
-			self.characterCountor(text=message)
-			self.requestLimitChecker()
-
-			if not self.getConfig('preCheck'):
-				translated = translator.translate(message, dest=activeLanguage)
-			if self._precheckTrigger == 1:
-				self._talkShortCount += len(message)
-			self._requestLimiter += 1
-			self._requestTotal += 1
-			if not self.getConfig('preCheck'):
-				talkList.append(translated.text)
-			else:
-				talkList.append(message)
-
-		return talkList
+		elif not Path(f'{self._translationPath}/{path}/{activeLanguage}.json').exists() and self.getConfig('preCheck'):
+			self.logInfo(self.randomTalk(text=talkFile, replace=[activeLanguage]))
 
 
 	# There are three options to account for in the talks file.
@@ -234,6 +152,91 @@ class SkillTranslator(AliceSkill):
 			translatedFile.write_text(json.dumps(talksData, ensure_ascii=False, indent=4))
 
 
+	def processTalksFileDictionary(self, talkValue, translator, activeLanguage, defaultList):
+		translated = translator.__class__  # i'm guessing this is correct, just want to decalre it ?
+		talkDictionary = dict(talkValue[1])
+
+		for i, message in enumerate(talkDictionary['default']):
+			# do safe guard checks
+			self.characterCountor(text=message)
+			self.requestLimitChecker()
+			# If not doing a preCheck then request the translation
+			if not self.getConfig('preCheck'):
+				translated = translator.translate(message, dest=activeLanguage)
+
+			# Start counting talks file characters
+			if self._precheckTrigger == 1:
+				self._talkDefaultCount += len(message)
+			# Start counting requests
+			self._requestLimiter += 1
+			self._requestTotal += 1
+			# If not preChecks then add translations to a list
+			if not self.getConfig('preCheck'):
+				defaultList.append(translated.text)
+			else:
+				defaultList.append(message)
+
+		if not 'short' in dict(talkDictionary).keys():
+			self._translatedData = {
+				'default': defaultList
+			}
+
+		else:
+			self.processTalksFileShortKey(value=talkDictionary, translator=translator, activeLanguage=activeLanguage, defaultList=defaultList)
+
+
+	def processTalksFileShortKey(self, value, translator, activeLanguage, defaultList):
+		translated = translator.__class__  # i'm guessing this is correct, just want to decalre it ?
+		shortList = list()
+
+		for message in value['short']:
+
+			self.characterCountor(text=message)
+			self.requestLimitChecker()
+
+			if not self.getConfig('preCheck'):
+				translated = translator.translate(message, dest=activeLanguage)
+
+			if self._precheckTrigger == 1:
+				self._talkShortCount += len(message)
+			self._requestLimiter += 1
+			self._requestTotal += 1
+			if not self.getConfig('preCheck'):
+				shortList.append(translated.text)
+			else:
+				shortList.append(message)
+
+		self._translatedData = {
+			'default': defaultList,
+			'short'  : shortList
+		}
+
+
+	# if the talks file item is a list not a dictionary
+	def processTalksFileLists(self, talk, translator, activeLanguage):
+		translated = translator.__class__  # i'm guessing this is correct, just want to decalre it ?
+		talkList = list()
+
+		for message in talk[1]:
+			self.characterCountor(text=message)
+			self.requestLimitChecker()
+
+			if not self.getConfig('preCheck'):
+				translated = translator.translate(message, dest=activeLanguage)
+
+			if self._precheckTrigger == 1:
+				self._talkShortCount += len(message)
+			self._requestLimiter += 1
+			self._requestTotal += 1
+
+			if not self.getConfig('preCheck'):
+				talkList.append(translated.text)
+			else:
+				talkList.append(message)
+
+		return talkList
+
+
 	def translateDialogFile(self, activeLanguage):
 		self.logDebug(self.randomTalk(text='translateDialog', replace=[self._languageNames[activeLanguage]]), )
 		# Check if we have all the language files. If not make them
@@ -254,14 +257,38 @@ class SkillTranslator(AliceSkill):
 			for utterance in item['utterances']:
 				self.characterCountor(text=utterance)
 				self.requestLimitChecker()
+				storeCodeSnippet = list()
+				# make a copy of utterance to manipulate, just coz
+				copyOfUtterance = utterance
+
+				### Extract dialog code ":=>keyValue}" so it doesnt get translated
+
+				# Remove the code string and store in a list
+				for word in copyOfUtterance.split(" "):
+					removedCode = re.search(':=>(.*)}', word)
+					if removedCode:
+						storeCodeSnippet.append(removedCode.group())
+
+				# replace the code in the utterance with :==>
+				for code in storeCodeSnippet:
+					copyOfUtterance = str(copyOfUtterance).replace(code, ':==>')
 
 				if not self.getConfig('preCheck'):
-					translated = translatorUtterance.translate(utterance, dest=activeLanguage)
+					translated = translatorUtterance.translate(copyOfUtterance, dest=activeLanguage)
+
+				# put the codedSnippet back in the string
+				while storeCodeSnippet:
+					copyOfUtterance = str(copyOfUtterance).replace(":==>", storeCodeSnippet[0], 1)
+					storeCodeSnippet.pop(0)
+
+				# make utterance the translated string
+				utterance = copyOfUtterance
 
 				if self._precheckTrigger == 1:
 					self._dialogCount += len(utterance)
 				self._requestLimiter += 1
 				self._requestTotal += 1
+
 				if not self.getConfig('preCheck'):
 					dialogList.append(translated.text)
 				else:

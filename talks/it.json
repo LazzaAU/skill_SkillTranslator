@@ -2,7 +2,7 @@
 	"sayCompleted": {
 		"default": [
 			"Completato Traduzione del {0} abilità per un totale di {1} caratteri tradotto. Consigliamo di non tradurre un'altra abilità per almeno un'ora per ridurre la probabilità di Google bloccando il tuo IP per 24 ore",
-			"{0} traduzione giocata finito con un totale di {1} caratteri trasformati. Si prega di attendere almeno un'ora prima di tentare un'altra traduzione, o Google potrebbe bloccare il vostro IP per 24 ore"
+			"{0} traduzione giocata finito con un totale di {1} caratteri trasformati. Si prega di attendere almeno un'ora, per le abilità più grandi. prima di tentare un'altra traduzione, o Google potrebbe bloccare il vostro IP per 24 ore"
 		],
 		"short": [
 			"tutto completato",
@@ -93,7 +93,7 @@
 	],
 	"resultsHeading": {
 		"default": [
-			"I controlli prima completato .... Le statistiche sono i seguenti"
+			"Controlli pre completati per {0} abilità .... Le statistiche sono le seguenti"
 		]
 	},
 	"results1": {
@@ -129,6 +129,16 @@
 	"results7": {
 		"default": [
 			"Si prega di spegnere preChecks in Impostazioni di abilità per iniziare a tradurre"
+		]
+	},
+	"expectDelays": {
+		"default": [
+			"Sulla base di questi risultati, il codice sarà volutamente innescare 1 minuto ritardi, come richiesto per ridurre i blocchi API di Google"
+		]
+	},
+	"expectMajorDelays": {
+		"default": [
+			"Sulla base di questi risultati che l'abilità supererà Goggles conteggio dei caratteri assegno per ora. Pertanto il codice forzerà un ritardo di 1 ora durante traduzione"
 		]
 	}
 }

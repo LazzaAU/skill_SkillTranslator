@@ -2,7 +2,7 @@
 	"sayCompleted": {
 		"default": [
 			"Abgeschlossene Übersetzung der {0} Geschick in Höhe von {1} Zeichen übersetzt. Abraten für mindestens eine Stunde eine andere Fähigkeit übersetzen zu reduzieren Chancen auf Google Ihre IP für 24 Stunden blockiert",
-			"{0} Fähigkeit Übersetzung fertig mit insgesamt {1} Zeichen verarbeitet. Bitte warten Sie mindestens eine Stunde, bevor eine weitere Übersetzung versucht, oder wird Google Ihre IP für 24 Stunden blockiert"
+			"{0} Fähigkeit Übersetzung fertig mit insgesamt {1} Zeichen verarbeitet. Bitte warten Sie mindestens eine Stunde, für größere Fähigkeiten. bevor Sie eine andere Übersetzung versucht, oder Google könnte Ihre Ip für 24 Stunden blockiert"
 		],
 		"short": [
 			"alle abgeschlossen",
@@ -93,7 +93,7 @@
 	],
 	"resultsHeading": {
 		"default": [
-			"Pre Prüfungen abgeschlossen .... Statistiken sind wie folgt"
+			"Pre Prüfungen abgeschlossen für {0} Geschick .... Statistiken sind wie folgt"
 		]
 	},
 	"results1": {
@@ -129,6 +129,16 @@
 	"results7": {
 		"default": [
 			"Bitte schalten Sie nun vor dem Tauchgang in Geschicklichkeit Einstellungen off Translating zu starten"
+		]
+	},
+	"expectDelays": {
+		"default": [
+			"Basierend auf diesen Ergebnissen, wird der Code absichtlich 1 Minute Verzögerungen auslösen wie erforderlich API Blockierung von Google zu reduzieren,"
+		]
+	},
+	"expectMajorDelays": {
+		"default": [
+			"Basierend auf diesen Ergebnissen wird die Fähigkeit Goggles Zeichenzahl Zulage pro Stunde nicht überschreiten. Daher wird der Code eine Verzögerung von 1 Stunde zwingen, während übersetzen"
 		]
 	}
 }

@@ -294,7 +294,7 @@ class SkillTranslator(AliceSkill):
 				else:
 					dialogList.append(utterance)
 			item['utterances'] = dialogList
-
+			print(f'dialogList is {dialogList}')
 		self.translateSynonyms(activeLanguage=activeLanguage, dialogData=dialogData)
 
 
@@ -335,8 +335,8 @@ class SkillTranslator(AliceSkill):
 				except:
 					continue
 
-				if not self.getConfig('preCheck'):
-					translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
+		if not self.getConfig('preCheck'):
+			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
 
 
 	def writeInstallConditions(self):

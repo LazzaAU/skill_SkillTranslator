@@ -1,7 +1,65 @@
 {
-    "skill": "SkillTranslator",
-    "icon": "time",
-    "description": "Translate your skill into other languages",
-    "slotTypes": [],
-    "intents": []
+	"skill": "SkillTranslator",
+	"slotTypes": [
+		{
+			"name": "More",
+			"matchingStrictness": null,
+			"automaticallyExtensible": true,
+			"useSynonyms": true,
+			"values": [
+				{
+					"value": "more",
+					"synonyms": [
+						"more",
+						"much more",
+						"mega more"
+					]
+				}
+			]
+		},
+		{
+			"name": "less",
+			"matchingStrictness": null,
+			"automaticallyExtensible": true,
+			"useSynonyms": true,
+			"values": [
+				{
+					"value": "less",
+					"synonyms": [
+						"little less",
+						"just a bit less",
+						"alot less"
+					]
+				}
+			]
+		}
+	],
+	"intents": [
+		{
+			"name": "TranslateSkill",
+			"enabledByDefault": true,
+			"utterances": [
+				"translate my skill",
+				"translate a known skill"
+			]
+		},
+		{
+			"name": "transTestIntent",
+			"enabledByDefault": false,
+			"utterances": [
+				"what's up in the hood",
+				"hows things in the dungeon",
+				"who said that ",
+				"give me {more:=>more} utterances"
+			],
+			"slots": [
+				{
+					"name": "more",
+					"required": false,
+					"type": "More",
+					"missingQuestion": ""
+				}
+			]
+		}
+	]
 }

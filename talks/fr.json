@@ -1,1 +1,134 @@
-{}
+{
+	"sayCompleted": {
+		"default": [
+			"Traduction complète de {0} caractères {compétences totalisant 1} traduit. DECONSEILLONS d'traduire une autre compétence pendant au moins une heure pour réduire les chances de Google bloquer votre IP pendant 24 heures",
+			"{0} traduction d'adresse terminé avec un total de caractères {1} transformés. S'il vous plaît attendre au moins une heure avant de tenter une autre traduction, ou Google pourrait bloquer votre IP pendant 24 heures"
+		],
+		"short": [
+			"tout complété",
+			"traduction terminée"
+		]
+	},
+	"startTranslate": {
+		"default": [
+			"Faire cela pour vous maintenant. REMARQUE. Je vais utiliser google traduire, et actuellement je ne peux pas faire les fichiers Markdown",
+			"Aucun problème. Pro pointe. Ne pas traduire à de nombreuses compétences consécutivement ou Google bloquera votre adresse IP pendant 24 heures"
+		],
+		"short": [
+			"D'accord",
+			"terminé"
+		]
+	},
+	"translateTalks": {
+		"default": [
+			"Traduire fichier parle dans {0}",
+			"Je traduis maintenant le dossier de pourparlers à {0}"
+		]
+	},
+	"breather": {
+		"default": [
+			"Il suffit de prendre une pause pour {0} secondes pour reprendre mon souffle. Reprendra bientôt",
+			"Retarder la traduction de {0} secondes pour aider à réduire les limites de l'API"
+		]
+	},
+	"translateDialog": {
+		"default": [
+			"Traduire énoncés dans le fichier de dialogue dans {0}",
+			"Je traduis maintenant les déclarations de fichiers de dialogue à {0}"
+		]
+	},
+	"dialogNotExist": {
+		"default": [
+			"fichier de dialogue {0} .json n'existait pas. Donc, je l'ai créé"
+		]
+	},
+	"talkNotExist": {
+		"default": [
+			"fichier de conversation {0} .json n'existait pas. Donc, je l'ai créé"
+		]
+	},
+	"missingSkill": {
+		"default": [
+			"Vous ne trouvez pas {0}. S'il vous plaît vérifier votre orthographe",
+			"{0} ne semble pas être valide, S'il vous plaît vérifier votre orthographe"
+		]
+	},
+	"invalidLang": {
+		"default": [
+			"Langue de compétence dans les paramètres ne sont pas valides. Les choix sont soit en, de, fr ou il"
+		]
+	},
+	"path": {
+		"default": [
+			"En utilisant le chemin {0}",
+			"chemin de traduction est {0}"
+		]
+	},
+	"translatingSkill": {
+		"default": [
+			"compétence {0} Translating ...."
+		]
+	},
+	"translateSyn": {
+		"default": [
+			"Traduire des synonymes dans le fichier de dialogue dans {0}",
+			"Je traduis maintenant les synonymes de fichier de dialogue à {0}"
+		],
+		"short": []
+	},
+	"updateInstall": {
+		"default": [
+			"Maintenant, la mise à jour le fichier d'installation",
+			"Mise à jour de fichier d'installation"
+		]
+	},
+	"majorLimit": {
+		"default": [
+			"Woooah. caractères traités {1} est proche du quota Google. Je dois arrêter le traitement pour {0} secondes ou Google bloque votre adresse IP",
+			"Traduction comme vous faisant une pause êtes presque au quota de caractère de 15k avec un nombre de {1}. {0 pour une pause} secondes"
+		]
+	},
+	"precheckHeading": [
+		"Précontrôles sont activés. REMARQUE: Aucun écriture de fichiers se produira."
+	],
+	"resultsHeading": {
+		"default": [
+			"Les vérifications avant terminés .... Les statistiques sont les suivantes"
+		]
+	},
+	"results1": {
+		"default": [
+			"fichier discussions est {0} caractères sur une instance"
+		]
+	},
+	"results2": {
+		"default": [
+			"Sont Utterances {0} caractères sur une autre instance"
+		]
+	},
+	"results3": {
+		"default": [
+			"Les synonymes sont {0} caractères sur une autre instance"
+		]
+	},
+	"results4": {
+		"default": [
+			"il y a un nombre de caractères total de {0}"
+		]
+	},
+	"results5": {
+		"default": [
+			"et il y aurait {0} demandes"
+		]
+	},
+	"results6": {
+		"default": [
+			"Les limites sont 15k pour les caractères (par exemple?) Et un maximum de 600 demandes par minute"
+		]
+	},
+	"results7": {
+		"default": [
+			"S'il vous plaît désactiver précontrôles dans Paramètres de compétence pour commencer à traduire"
+		]
+	}
+}

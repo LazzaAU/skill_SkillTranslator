@@ -4,7 +4,7 @@
 
 Translate your skill into other languages
 
-- Author: LazzaAU
+- Author: Lazza
 - Maintainers: 
 - Alice minimum Version: 1.0.0-b3
 - Languages:
@@ -13,3 +13,4 @@ Translate your skill into other languages
     de
     it
 
+A skill used for translating a existing skill

@@ -1,0 +1,26 @@
+{
+	"skillLanguage": {
+		"defaultValue": "en",
+		"dataType": "string",
+		"isSensitive": false,
+		"description": "Denotes default language skill was written in"
+	},
+	"skillTitle": {
+		"defaultValue": "",
+		"dataType": "string",
+		"isSensitive": false,
+		"description": "The skill Directory name you want to translate"
+	},
+	"skillPath": {
+		"defaultValue": "",
+		"dataType": "string",
+		"isSensitive": false,
+		"description": "The skill Directory. If blank alice skill directory used"
+	},
+	"preCheck": {
+		"defaultValue": true,
+		"dataType": "boolean",
+		"isSensitive": false,
+		"description": "Allows pre checks on the file"
+	}
+}

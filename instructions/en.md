@@ -78,7 +78,7 @@ For this field...
 - Enter one of the following to translate ONLY that folder (optional)
  - talks
  - dialog
- -instructions_______________________
+ - instructions_______________________
 
 #Known Bugs
 

@@ -175,5 +175,15 @@
 		"short": [
 			"Check your logs"
 		]
+	},
+	"notValidFolder": {
+		"default": [
+			"{0} is not a valid folder. please use a value of either 'talks', 'dialog' or 'instructions'  "
+		]
+	},
+	"translatingOnlyThis": {
+		"default": [
+			"Translating ONLY the {0} directory....."
+		]
 	}
 }

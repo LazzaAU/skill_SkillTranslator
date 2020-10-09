@@ -22,5 +22,11 @@
 		"dataType": "boolean",
 		"isSensitive": false,
 		"description": "Allows pre checks on the file"
+	},
+	"translateOnlyThis": {
+		"defaultValue": "",
+		"dataType": "string",
+		"isSensitive": false,
+		"description": "Allows translation of only one folder"
 	}
 }

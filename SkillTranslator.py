@@ -38,6 +38,7 @@ class SkillTranslator(AliceSkill):
 		self._requestTotal = 0
 		self._instructionCount = 0
 		self._developerUse = False
+		self._translateThis = ""
 
 		super().__init__()
 
@@ -111,16 +112,47 @@ class SkillTranslator(AliceSkill):
 		self.iterateActiveLanguage()
 
 
+	def translateOnlySelectedfolder(self, activeLanguage) -> bool:
+		if self._translateThis.lower() == 'talks':
+			self.translateTalksfile(activeLanguage)
+			self.logInfo(self.randomTalk(text='translatingOnlyThis', replace=[self._translateThis]), )
+			return True
+		elif self._translateThis.lower() == 'dialog':
+			self.translateDialogFile(activeLanguage)
+			self.logInfo(self.randomTalk(text='translatingOnlyThis', replace=[self._translateThis]), )
+			return True
+		elif self._translateThis.lower() == 'instructions':
+			self.translateInstructions(activeLanguage)
+			self.logInfo(self.randomTalk(text='translatingOnlyThis', replace=[self._translateThis]), )
+			return True
+		else:
+			self.logError(self.randomTalk(text='notValidFolder', replace=[self._translateThis]), )
+			return False
+
+
 	def iterateActiveLanguage(self):
 		self.logInfo(self.randomTalk(text='translatingSkill', replace=[self._skillName]))
+
+		self._translateThis = self.getConfig('translateOnlyThis')
 
 		for activeLanguage in self._supportedLanguages:
 			# precheck Trigger used so counter later on only triggers for first file
 			self._precheckTrigger += 1
-			self.translateTalksfile(activeLanguage)
-			self.translateDialogFile(activeLanguage)
-			self.translateInstructions(activeLanguage)
-		self.writeInstallConditions()
+			if self._translateThis and not self.getConfig('precheck'):
+				valid = self.translateOnlySelectedfolder(activeLanguage=activeLanguage)
+				if not valid:
+					self.say(
+						text=self.randomTalk(text='notValidFolder', replace=[self._translateThis]),
+					)
+					return
+			else:
+				self.translateDialogFile(activeLanguage)
+				self.translateInstructions(activeLanguage)
+
+		if not self._translateThis:
+			self.writeInstallConditions()
+		else:
+			self.endOfprocessing()
 
 
 	def checkFileExists(self, activeLanguage, path, talkFile, fileType):
@@ -387,7 +419,10 @@ class SkillTranslator(AliceSkill):
 
 				if not self.getConfig('preCheck'):
 					file.write_text(json.dumps(installData, ensure_ascii=False, indent=4))
+		self.endOfprocessing()
 
+
+	def endOfprocessing(self):
 		if not self.getConfig('preCheck'):
 			self.logInfo(self.randomTalk(text='sayCompleted', replace=[self._skillName, self._characterCounter]))
 			self.say(

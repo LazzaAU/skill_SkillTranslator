@@ -174,5 +174,15 @@
 		"short": [
 			"Überprüfen Sie Ihre Protokolle"
 		]
+	},
+	"notValidFolder": {
+		"default": [
+			"{0} ist kein gültiger Ordner. bitte entweder den Wert ‚spricht‘, ‚Dialog‘ oder ‚Anweisungen‘ verwenden"
+		]
+	},
+	"translatingOnlyThis": {
+		"default": [
+			"Übersetzen Sie NUR das Verzeichnis {0}, aber immer noch voller Ergebnisse angezeigt"
+		]
 	}
 }

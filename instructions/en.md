@@ -1,4 +1,4 @@
-#<span style="color: # ff0000;"><strong>Instructions </ span></ strong>
+#<span style="color: #ff0000;"><strong>Instructions </span></strong>
 
 So you've written a skill and want to translate it ? Good job, lets get into it then.
 
@@ -14,7 +14,7 @@ So you've written a skill and want to translate it ? Good job, lets get into it 
 
 Ask alice to " translate my skill"
 
-#<span style="color: #0000FF;"><strong>Skill Overview </ span></ strong>
+#<span style="color: #0000FF;"><strong>Skill Overview </span></strong>
 
 - Precheck mode
  
@@ -68,7 +68,17 @@ This field denotes the skill you want to translate
 
 - With this field filled and **NOT** the *skillPath* field as well then the path defaults to the ProjectAlice/skills folder
 - With this field and skillPath field **NOT** filled in then you will translate this skill by default..
-________________________
+_
+##**translateOnlyThis**
+
+For this field...
+
+- Empty = Will translate all required files (default)
+
+- Enter one of the following to translate ONLY that folder (optional)
+ - talks
+ - dialog
+ -instructions_______________________
 
 #Known Bugs
 
@@ -88,12 +98,17 @@ To fix:
 
 - Side note:
 
- if you do happen to get this error..
+ if you do happen to get this error consistently ..
  
  ```json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)```
  
- Then Goggle has just blocked your IP from translating files and you'll have to wait until the following midnight pacific time for it t to be unblocked  
+ Then potentially, Goggle has just blocked your IP from translating files and you'll have to wait until the following midnight pacific time for it t to be unblocked  
 
+------------------
+
+Google translate tends to love adding whitespace where whitespace wasn't before. Although this skill trys to capture
+some of these occasions you may find that when translating the instructions folder that if you have tags in the markdown
+that you may have to manually take out some white spaces to have it display properly.
 
 **What the skill won't do**
 

@@ -174,5 +174,15 @@
 		"short": [
 			"Controlla i log"
 		]
+	},
+	"notValidFolder": {
+		"default": [
+			"{0} non è una cartella valida. si prega di utilizzare un valore di entrambi i 'colloqui', 'dialogo' o 'istruzioni'"
+		]
+	},
+	"translatingOnlyThis": {
+		"default": [
+			"Traducendo solo la directory {0} ma ancora visualizzare i risultati completi"
+		]
 	}
 }

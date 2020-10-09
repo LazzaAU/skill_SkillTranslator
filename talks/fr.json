@@ -174,5 +174,15 @@
 		"short": [
 			"Vérifiez vos journaux"
 		]
+	},
+	"notValidFolder": {
+		"default": [
+			"{0} n'est pas un dossier valide. s'il vous plaît utiliser une valeur de soit « pourparlers », « dialogue » ou « instructions »"
+		]
+	},
+	"translatingOnlyThis": {
+		"default": [
+			"Traduire uniquement le répertoire {0} mais toujours afficher les résultats complets"
+		]
 	}
 }

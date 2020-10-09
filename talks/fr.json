@@ -11,7 +11,7 @@
 	},
 	"startTranslate": {
 		"default": [
-			"Faire cela pour vous maintenant. REMARQUE. Je vais utiliser google traduire, et actuellement je ne peux pas faire les fichiers Markdown",
+			"Faire cela pour vous maintenant. REMARQUE. Je vais utiliser google traduire",
 			"Aucun problème. Pro pointe. Ne pas traduire à de nombreuses compétences consécutivement ou Google bloquera votre adresse IP pendant 24 heures"
 		],
 		"short": [
@@ -37,9 +37,20 @@
 			"Je traduis maintenant les déclarations de fichiers de dialogue à {0}"
 		]
 	},
+	"translateInstructions": {
+		"default": [
+			"Traduire instructions dans {0}",
+			"Je traduis maintenant les instructions à {0}"
+		]
+	},
 	"dialogNotExist": {
 		"default": [
 			"fichier de dialogue {0} .json n'existait pas. Donc, je l'ai créé"
+		]
+	},
+	"instructionsNotExist": {
+		"default": [
+			"fichier d'instruction {0} .md n'existait pas. Donc, je l'ai créé"
 		]
 	},
 	"talkNotExist": {
@@ -131,6 +142,11 @@
 			"S'il vous plaît désactiver précontrôles dans Paramètres de compétence pour commencer à traduire"
 		]
 	},
+	"results8": {
+		"default": [
+			"Les instructions sont {0} caractères sur une autre instance"
+		]
+	},
 	"expectDelays": {
 		"default": [
 			"Sur la base de ces résultats, le code déclenche volontairement 1 minute retards au besoin pour réduire le blocage des API de Google"
@@ -139,6 +155,16 @@
 	"expectMajorDelays": {
 		"default": [
 			"Sur la base de ces résultats que les compétences dépassera l'allocation de nombre de caractères lunettes par heure. Par conséquent, le code forcera un délai de 1 heure au cours de la traduction"
+		]
+	},
+	"doManually": {
+		"default": [
+			"Désolé mais ce fichier d'instruction va certainement bouleverser Google. S'il vous plaît traduire manuellement. Le nombre de caractères est {0}, la limite est 15 000"
+		]
+	},
+	"skipInstructions": {
+		"default": [
+			"répertoire d'instruction n'existe pas. sauter la traduction d'instructions"
 		]
 	}
 }

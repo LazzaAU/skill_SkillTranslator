@@ -11,7 +11,7 @@
 	},
 	"startTranslate": {
 		"default": [
-			"Facendo che per te ora. NOTA. Sarò utilizzando Google Translate, e attualmente i cant fare file di riduzione dei prezzi",
+			"Facendo che per te ora. NOTA. Sarò utilizzando Google Translate",
 			"Nessun problema. suggerimento PRO. Non si traducono in molte abilità consecutivamente o Google bloccherà il vostro IP per 24 ore"
 		],
 		"short": [
@@ -37,9 +37,20 @@
 			"Ora sto traducendo le esternazioni finestra dei file a {0}"
 		]
 	},
+	"translateInstructions": {
+		"default": [
+			"Traducendo istruzioni in in {0}",
+			"Ora sto traducendo le istruzioni per {0}"
+		]
+	},
 	"dialogNotExist": {
 		"default": [
 			"file di dialogo {0} .json non esisteva. Così ho creato"
+		]
+	},
+	"instructionsNotExist": {
+		"default": [
+			"file di istruzioni {0} .md non esisteva. Così ho creato"
 		]
 	},
 	"talkNotExist": {
@@ -131,6 +142,11 @@
 			"Si prega di spegnere preChecks in Impostazioni di abilità per iniziare a tradurre"
 		]
 	},
+	"results8": {
+		"default": [
+			"Le istruzioni sono lunghe {0} caratteri in un'altra istanza"
+		]
+	},
 	"expectDelays": {
 		"default": [
 			"Sulla base di questi risultati, il codice sarà volutamente innescare 1 minuto ritardi, come richiesto per ridurre i blocchi API di Google"
@@ -139,6 +155,16 @@
 	"expectMajorDelays": {
 		"default": [
 			"Sulla base di questi risultati che l'abilità supererà Goggles conteggio dei caratteri assegno per ora. Pertanto il codice forzerà un ritardo di 1 ora durante traduzione"
+		]
+	},
+	"doManually": {
+		"default": [
+			"Spiacente ma questo file di istruzioni sarà sicuramente sconvolto google. Si prega di tradurlo manualmente. conteggio dei caratteri era {0}, il limite è di 15.000"
+		]
+	},
+	"skipInstructions": {
+		"default": [
+			"elenco di istruzioni non esiste. skipping traduzione di istruzioni"
 		]
 	}
 }

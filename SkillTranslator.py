@@ -36,6 +36,8 @@ class SkillTranslator(AliceSkill):
 		self._synonymCount = 0
 		self._precheckTrigger = 0
 		self._requestTotal = 0
+		self._instructionCount = 0
+		self._developerUse = False
 
 		super().__init__()
 
@@ -46,12 +48,26 @@ class SkillTranslator(AliceSkill):
 			self.logWarning(self.randomTalk(text='invalidLang'))
 			return
 
+		# internal use only
+		if self._developerUse and not self.getConfig('preCheck'):
+			self.logError(f'Nope, i ain\'t gonna do anything until you turn on preCheck')
+			return
+
 		# give user feedback that shes doing it
 		self.endDialog(
 			sessionId=session.sessionId,
 			text=self.randomTalk(text='startTranslate'),
 			siteId=session.siteId
 		)
+
+		# Wait 5 seconds or the above endDialog wont speak until the end of translating on some larger files
+		self.ThreadManager.doLater(
+			interval=5,
+			func=self.runTranslateProcess
+		)
+
+
+	def runTranslateProcess(self):
 
 		# convert language abbreviations
 		self._languageNames = {
@@ -64,6 +80,8 @@ class SkillTranslator(AliceSkill):
 		# do prechecks if this is enabled
 		if self.getConfig('preCheck'):
 			self.logWarning(self.randomTalk(text='precheckHeading'))
+		if self._developerUse:
+			self.logWarning(f'Your in internal developer mode. Things will get written')
 
 		# get the default language of the skill from config
 		self._skillLanguage = self.getConfig('skillLanguage')
@@ -99,20 +117,20 @@ class SkillTranslator(AliceSkill):
 		for activeLanguage in self._supportedLanguages:
 			# precheck Trigger used so counter later on only triggers for first file
 			self._precheckTrigger += 1
-
+			self.translateInstructions(activeLanguage)
 			self.translateTalksfile(activeLanguage)
 			self.translateDialogFile(activeLanguage)
 		self.writeInstallConditions()
 
 
-	def checkFileExists(self, activeLanguage, path, talkFile):
+	def checkFileExists(self, activeLanguage, path, talkFile, fileType):
 		# If language file doesnt exists and preCheck is not enabled then create it
-		if not Path(f'{self._translationPath}/{path}/{activeLanguage}.json').exists() and not self.getConfig('preCheck'):
-			with open(Path(f'{self._translationPath}/{path}/{activeLanguage}.json'), 'x'):
+		if not Path(f'{self._translationPath}/{path}/{activeLanguage}{fileType}').exists() and not self.getConfig('preCheck'):
+			with open(Path(f'{self._translationPath}/{path}/{activeLanguage}{fileType}'), 'x'):
 				self.logInfo(self.randomTalk(text=talkFile, replace=[activeLanguage]))
 
 		# if language file doesn't exist and preCheck is on, then just tell the user it will be created but don't create it (prevents later error)
-		elif not Path(f'{self._translationPath}/{path}/{activeLanguage}.json').exists() and self.getConfig('preCheck'):
+		elif not Path(f'{self._translationPath}/{path}/{activeLanguage}{fileType}').exists() and self.getConfig('preCheck'):
 			self.logInfo(self.randomTalk(text=talkFile, replace=[activeLanguage]))
 
 
@@ -131,7 +149,7 @@ class SkillTranslator(AliceSkill):
 		translator = Translator()
 
 		# Check if we have all the language files. If not make them
-		self.checkFileExists(activeLanguage=activeLanguage, path='talks', talkFile='talkNotExist')
+		self.checkFileExists(activeLanguage=activeLanguage, path='talks', talkFile='talkNotExist', fileType=".json")
 
 		# choose the file to be translated
 		translatedFile = Path(f'{self._translationPath}/talks/{activeLanguage}.json')
@@ -240,7 +258,7 @@ class SkillTranslator(AliceSkill):
 	def translateDialogFile(self, activeLanguage):
 		self.logDebug(self.randomTalk(text='translateDialog', replace=[self._languageNames[activeLanguage]]), )
 		# Check if we have all the language files. If not make them
-		self.checkFileExists(activeLanguage=activeLanguage, path='dialogTemplate', talkFile='dialogNotExist')
+		self.checkFileExists(activeLanguage=activeLanguage, path='dialogTemplate', talkFile='dialogNotExist', fileType='.json')
 
 		# The Language file that the skill was written in
 		file = Path(f'{self._translationPath}/dialogTemplate/{self._skillLanguage}.json')
@@ -255,34 +273,11 @@ class SkillTranslator(AliceSkill):
 
 			dialogList = list()
 			for utterance in item['utterances']:
+				# check safe guards
 				self.characterCountor(text=utterance)
 				self.requestLimitChecker()
-				storeCodeSnippet = list()
-				# make a copy of utterance to manipulate, just coz
-				copyOfUtterance = utterance
 
-				### Extract dialog code ":=>keyValue}" so it doesnt get translated
-
-				# Remove the code string and store in a list
-				for word in copyOfUtterance.split(" "):
-					removedCode = re.search(':=>(.*)}', word)
-					if removedCode:
-						storeCodeSnippet.append(removedCode.group())
-
-				# replace the code in the utterance with :==>
-				for code in storeCodeSnippet:
-					copyOfUtterance = str(copyOfUtterance).replace(code, ':==>')
-
-				if not self.getConfig('preCheck'):
-					translated = translatorUtterance.translate(copyOfUtterance, dest=activeLanguage)
-
-				# put the codedSnippet back in the string
-				while storeCodeSnippet:
-					copyOfUtterance = str(copyOfUtterance).replace(":==>", storeCodeSnippet[0], 1)
-					storeCodeSnippet.pop(0)
-
-				# make utterance the translated string
-				utterance = copyOfUtterance
+				utterance, translatedUtterance = self.removeDialogCodeSnippet(utterance=utterance, translated=translated, activeLanguage=activeLanguage, translatorUtterance=translatorUtterance)
 
 				if self._precheckTrigger == 1:
 					self._dialogCount += len(utterance)
@@ -290,12 +285,55 @@ class SkillTranslator(AliceSkill):
 				self._requestTotal += 1
 
 				if not self.getConfig('preCheck'):
-					dialogList.append(translated.text)
+					dialogList.append(translatedUtterance)
 				else:
+					# Internal debugging aid
+					if self._developerUse:
+						utterance = f'DUMMY RUN - {utterance}'
 					dialogList.append(utterance)
+
 			item['utterances'] = dialogList
-			print(f'dialogList is {dialogList}')
+			# Internal debugging aid
+			if self._developerUse:
+				self.logWarning(f'Request counter = {self._requestLimiter}')
+
 		self.translateSynonyms(activeLanguage=activeLanguage, dialogData=dialogData)
+
+
+	def removeDialogCodeSnippet(self, utterance, translated, activeLanguage, translatorUtterance):
+		### Extract dialog code ":=>keyValue}" so it doesnt get translated
+		storeCodeSnippet = list()
+		# Remove the code string and store in a list
+		for word in utterance.split(" "):
+			removedCode = re.search(':=>(.*)}', word)
+			if removedCode:
+				storeCodeSnippet.append(removedCode.group())
+
+		# replace the code in the utterance with {0}
+		for code in storeCodeSnippet:
+			utterance = str(utterance).replace(code, '{0}')
+
+		if self._developerUse:
+			self.logWarning(f'DevMode - stripped utterance is "{utterance}" ')
+		if not self.getConfig('preCheck'):
+			translated = translatorUtterance.translate(utterance, dest=activeLanguage)
+
+		# put the codedSnippet back in the string
+		translatedUtterance = ""
+		if not self.getConfig('preCheck'):
+			translatedUtterance = str(translated.text)
+		while storeCodeSnippet:
+			if self.getConfig('preCheck'):
+				utterance = str(utterance).replace("{0}", storeCodeSnippet[0], 1)
+			else:
+				translatedUtterance = str(translatedUtterance).replace(" {0}", storeCodeSnippet[0], 1)
+			# Internal debugging aid
+			if self._developerUse:
+				self.logWarning(f'Rebuilding translated Utterance "{utterance}" ')
+
+			storeCodeSnippet.pop(0)
+
+		return utterance, translatedUtterance
 
 
 	def translateSynonyms(self, activeLanguage, dialogData):
@@ -337,6 +375,8 @@ class SkillTranslator(AliceSkill):
 
 		if not self.getConfig('preCheck'):
 			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
+		if self._developerUse:
+			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
 
 
 	def writeInstallConditions(self):
@@ -373,12 +413,69 @@ class SkillTranslator(AliceSkill):
 			self.logInfo(self.randomTalk(text='results1', replace=[totalTalk]))
 			self.logInfo(self.randomTalk(text='results2', replace=[self._dialogCount]))
 			self.logInfo(self.randomTalk(text='results3', replace=[self._synonymCount]))
+			self.logInfo(self.randomTalk(text='results8', replace=[self._instructionCount]), )
 			self.logInfo('')
 			self.logInfo(self.randomTalk(text='results4', replace=[self._characterCounter]))
 			self.logInfo(self.randomTalk(text='results5', replace=[self._requestTotal]))
 			self.logInfo(self.randomTalk(text='results6'))
 			self.logInfo('')
 			self.logInfo(self.randomTalk(text='results7'))
+
+
+	def translateInstructions(self, activeLanguage):
+		if not Path(f'{self._translationPath}/instructions').exists():
+			self.logInfo(self.randomTalk(text='skipInstructions'))
+			return
+		self.logDebug(self.randomTalk(text='translateInstructions', replace=[self._languageNames[activeLanguage]]), )
+		# Check if we have all the language files. If not make them
+		self.checkFileExists(activeLanguage=activeLanguage, path='instructions', talkFile='instructionsNotExist', fileType='.md')
+
+		# The Language file that the skill was written in
+		file = Path(f'{self._translationPath}/instructions/{self._skillLanguage}.md')
+		# The file we are going to translate into
+		translatedPath = Path(f'{self._translationPath}/instructions/{activeLanguage}.md')
+		instructionData = file.read_text()
+
+		# create a new instance
+		translatorInstructions = Translator()
+
+		# do safe guard checks
+		self.characterCountor(text=instructionData)
+		self.requestLimitChecker()
+		instructionCharacterCount = len(instructionData)
+		if self._precheckTrigger == 1:
+			self._instructionCount += instructionCharacterCount
+		self._requestLimiter += 1
+		self._requestTotal += 1
+
+		# if ready to translate do this
+		if not self.getConfig('preCheck'):
+			if instructionCharacterCount >= 14999:
+				self.logWarning(self.randomTalk(text='doManually', replace=[instructionCharacterCount]), )
+			else:
+				translated = translatorInstructions.translate(instructionData, dest=activeLanguage)
+				# remove known translated differences like white space in tags
+				translatedInstructions: str = self.tidyUpInstructionTranslations(text=str(translated.text))
+				# write to file
+				translatedPath.write_text(data=translatedInstructions)
+		else:
+			dummyInstructions: str = self.tidyUpInstructionTranslations(text=str(instructionData))
+			translatedPath.write_text(data=dummyInstructions)
+
+
+	# Used to repair known issues with google translations. EG when they add unwanted whitespace
+	@staticmethod
+	def tidyUpInstructionTranslations(text: str):
+		# i feel there's a smarter way to do this but yet to work it out
+		# IE: do all relaces in the one loop
+		for position, line in enumerate(text.split("  ")):
+			if '</ ' in line:
+				text = line.replace('</ ', '</')
+		for position, line in enumerate(text.split("  ")):
+			if 'color: # ' in line:
+				text = line.replace('color: # ', 'color: #')
+
+		return text
 
 
 	def requestLimitChecker(self):

@@ -50,7 +50,7 @@
 				"ce qui est dans le capot",
 				"hows choses dans le donjon",
 				"qui a dit ça",
-				"{me donner plus: => plus} énoncés"
+				"donnez-moi des énoncés {plus:=>more}"
 			],
 			"slots": [
 				{

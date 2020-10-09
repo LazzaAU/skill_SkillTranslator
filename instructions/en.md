@@ -1,53 +1,104 @@
-<span style="color: #ff0000;"><strong>Instructions </span></strong>
+#<span style="color: # ff0000;"><strong>Instructions </ span></ strong>
 
 So you've written a skill and want to translate it ? Good job, lets get into it then.
 
-On this skill's settings..
+#<span style="color: #0000FF;"><strong>Quick operational steps</span></strong>
 
-##**skillLanguage field**
+**To use this skill**
 
- Enter the language abbreviation that the skill was initially coded in. 
+1. Go to the skill settings
+
+2. Enter the name of the skill you want to translate in **skillTitle** field
+
+3. Click Save
+
+Ask alice to " translate my skill"
+
+#<span style="color: #0000FF;"><strong>Skill Overview </ span></ strong>
+
+- Precheck mode
  
- - EG: de = German, it for Italian etc 
+This will run through the translation process without actually sending translation data to Google.
+It's a dummy run that won't modify any files but give statistic feedback at the end of the process.
 
-Note: there is a current bug that appears if you run translator skill more than once without restarting Alice.
-For some reason yet known you will recieve a language error in this case. Please restart alice to fix the issue
+This mode uses the language file the skill was written in (set via...skill settings >> skillLanguage) to determine statistics on the translation process
+prior to sending that data to Google. That way you can make a informed decision if 
 
-##**skillTitle** 
+1. there are errors in the files that will stop the translation process
 
-Enter the name of the directory of the skill you want to translate.
+2. The files are within Goggle's quota limits or over it's limits and therefore will trigger in built safe guards
 
- - EG: HomeAssistant or Reminder etc 
-    
-    NOTE: to test translation on this skillTranslator skill.... delete all or some of the dialog and talk language files that ARN'T "en.json"
-     then leave the skillTitle field blank and ask alice to "translate my skill" she will translate 
-     this SkillTranslator skill 
+Once run and it shows no errors, turn this mode off to run the skill in Translation mode
+
+
+##**When run in translation mode :**
+
+The skill will translate the talks directory first. If the requests being made to Google exceed the quota it will 
+pause the code for 70 seconds (Pause the skill not Alice) then resume.
+
+The skill will then translate the dialog file and do the same quota safe guards. (Note: If character count 
+for one instance will likely exceed 1500 the code will pause for 1 hour)
+
+During Dialog Template translation the code extracts the :=>Keyvalue} portion of the utterances
+so that the keyValue doesnt get translated and stop the skill from working. It then put's that code backin
+before writing it to file.
+
+Once translated it will then add all 4 languages to the install file.
+
+##**skillPath** field (optional)
+
+- This is handy of you want to translate your skill files that are outside of the skills folder
+
+  - **IE:**
  
- ##**skillPath** (optional)
+    - If you're a skill dev and have a master copy you want to translate, rather than translate a active skill
+that may have custom utterances etc in. 
+
+Type the path **TO** the skill but **NOT** the skillname. (Use the skillTitle field for that)
+
+EG: 
+
+- skillPath = /home/pi/DevelopmentSkills
+- skillTitle = HomeAssistant
+.
+
+##**SkillTitle** field (required)
+
+This field denotes the skill you want to translate
+
+- With this field filled and **NOT** the *skillPath* field as well then the path defaults to the ProjectAlice/skills folder
+- With this field and skillPath field **NOT** filled in then you will translate this skill by default..
+________________________
+
+#Known Bugs
+
+Running the skill once should work as intended but trying to run it twice without restarting Alice will 
+result in a "language not valid" error.
+
+**Example**: 
+
+1. Run the precheck mode and let the skill complete it's task
+2. Go to settings and turn off preCheck mode
+3. Run the translation process and ALice will show in the logs that the language set in the settings 
+is "invalid" despite it not being changed.
+
+To fix:
+
+1. Restart Alice and run the translation mode again
+
+- Side note:
+
+ if you do happen to get this error..
  
- Add the path to the directory of the skill manually. Exclude the skill name in this path but include
-   it in- skillTitle 
+ ```json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)```
  
- - EG: SkillPath field = C:/Documents/ProjectFiles/Skills
-    and skillTitle field = Reminder  
-    
-NOTE: If this path is not set then it defaults to the Alice skills directory 
-
-NOTE #2, Currently a manual path only looks at path's on the pi, not via a SSH directory on your desktop PC
-
-**Click Save**
-
-Then ask Alice to "translate my skill"
-
-and that's it :)
+ Then Goggle has just blocked your IP from translating files and you'll have to wait until the following midnight pacific time for it t to be unblocked  
 
 
-##**preChecks**
+**What the skill won't do**
 
-The preeChecks button in the skill settings will allow you to analyze the files in the skill you want to translate.
+Currently the skill will not translate markdown files such as these instructions. That's a future feature to be added
 
-It'll give feedback translation request count, character count etc so that you can make a informed decision
-before trying to actually translate the file. It will also allow you to see if the process will be error free prior to sending requests to Google
+Enjoy translating 
 
-If preCheck is enabled it will NOT overwrite or translate anything so it is Google friendly and won't change any files
-Once happy turn it off and translate the skill.
+ 

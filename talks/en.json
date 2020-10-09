@@ -11,7 +11,7 @@
 	},
 	"startTranslate": {
 		"default": [
-			"Doing that for you now. NOTE. I'll be using google translate, and currently i cant do markdown files ",
+			"Doing that for you now. NOTE. I'll be using google translate",
 			"No problem. Pro tip. Dont translate to many skills consecutively or google will block your IP for 24 hours"
 		],
 		"short": [
@@ -37,9 +37,20 @@
 			"I'm now translating the dialog file utterances to {0} "
 		]
 	},
+	"translateInstructions": {
+		"default": [
+			"Translating instructions in into {0}",
+			"I'm now translating the instructions to {0} "
+		]
+	},
 	"dialogNotExist": {
 		"default": [
 			"Dialog file {0}.json did not exist. So I created it"
+		]
+	},
+	"instructionsNotExist": {
+		"default": [
+			"instruction file {0}.md did not exist. So I created it"
 		]
 	},
 	"talkNotExist": {
@@ -132,6 +143,11 @@
 			"Please turn off preChecks in skill Settings to start Translating"
 		]
 	},
+	"results8": {
+		"default": [
+			"Instructions are {0} characters long on another instance"
+		]
+	},
 	"expectDelays": {
 		"default": [
 			"Based on these results, the code will purposely trigger 1 minute delays as required to reduce API blocking from google"
@@ -140,6 +156,16 @@
 	"expectMajorDelays": {
 		"default": [
 			"Based on these results that skill will exceed Googles charactor count allowance per  hour. Therefore the code will force a delay of 1 hour during translating"
+		]
+	},
+	"doManually": {
+		"default": [
+			"Sorry but that instruction file will definately upset google. Please translate it manually. Character count was {0}, limit is 15,000"
+		]
+	},
+	"skipInstructions": {
+		"default": [
+			"instruction directory does not exist. skipping instruction translation"
 		]
 	}
 }

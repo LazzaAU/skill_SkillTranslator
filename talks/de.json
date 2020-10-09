@@ -11,7 +11,7 @@
 	},
 	"startTranslate": {
 		"default": [
-			"Dadurch, dass für Sie jetzt. HINWEIS. Ich werde mit Google übersetzen, und zur Zeit kann ich nicht Abschlag Dateien tun",
+			"Dadurch, dass für Sie jetzt. HINWEIS. Ich werde mit Google übersetzen",
 			"Kein Problem. Pro Spitze. Sie nicht zu viele Fähigkeiten übersetzen nacheinander oder Google wird Ihre IP für 24 Stunden blockiert"
 		],
 		"short": [
@@ -37,9 +37,20 @@
 			"Ich übersetze jetzt die Dialogdatei Äußerungen zu {0}"
 		]
 	},
+	"translateInstructions": {
+		"default": [
+			"Übersetzen von Anweisungen in in {0}",
+			"Ich übersetze jetzt die Anweisungen auf {0}"
+		]
+	},
 	"dialogNotExist": {
 		"default": [
 			"Dialog Datei {0} .json gab es nicht. Also habe ich es"
+		]
+	},
+	"instructionsNotExist": {
+		"default": [
+			"Anweisungsdatei {0} .MD nicht existierte. Also habe ich es"
 		]
 	},
 	"talkNotExist": {
@@ -131,6 +142,11 @@
 			"Bitte schalten Sie nun vor dem Tauchgang in Geschicklichkeit Einstellungen off Translating zu starten"
 		]
 	},
+	"results8": {
+		"default": [
+			"Anweisungen sind {0} Zeichen lang auf eine andere Instanz"
+		]
+	},
 	"expectDelays": {
 		"default": [
 			"Basierend auf diesen Ergebnissen, wird der Code absichtlich 1 Minute Verzögerungen auslösen wie erforderlich API Blockierung von Google zu reduzieren,"
@@ -139,6 +155,16 @@
 	"expectMajorDelays": {
 		"default": [
 			"Basierend auf diesen Ergebnissen wird die Fähigkeit Goggles Zeichenzahl Zulage pro Stunde nicht überschreiten. Daher wird der Code eine Verzögerung von 1 Stunde zwingen, während übersetzen"
+		]
+	},
+	"doManually": {
+		"default": [
+			"Sorry, aber dieser Befehl Datei wird auf jeden Fall Google verärgert. Bitte übersetzen Sie es manuell. Zeichenzahl: {0}, Limit 15.000"
+		]
+	},
+	"skipInstructions": {
+		"default": [
+			"Anweisungsverzeichnis existiert nicht. Überspringen Anweisung Übersetzung"
 		]
 	}
 }

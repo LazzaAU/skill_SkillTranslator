@@ -166,5 +166,13 @@
 		"default": [
 			"répertoire d'instruction n'existe pas. sauter la traduction d'instructions"
 		]
+	},
+	"preCheckResults": {
+		"default": [
+			"S'il vous plaît vérifier votre journal système pour les résultats des contrôles pré"
+		],
+		"short": [
+			"Vérifiez vos journaux"
+		]
 	}
 }

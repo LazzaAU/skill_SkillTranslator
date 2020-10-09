@@ -166,5 +166,13 @@
 		"default": [
 			"elenco di istruzioni non esiste. skipping traduzione di istruzioni"
 		]
+	},
+	"preCheckResults": {
+		"default": [
+			"Si prega di controllare il registro di sistema per i risultati del controllo pre"
+		],
+		"short": [
+			"Controlla i log"
+		]
 	}
 }

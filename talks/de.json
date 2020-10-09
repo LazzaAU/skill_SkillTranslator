@@ -166,5 +166,13 @@
 		"default": [
 			"Anweisungsverzeichnis existiert nicht. Überspringen Anweisung Übersetzung"
 		]
+	},
+	"preCheckResults": {
+		"default": [
+			"Bitte überprüfen Sie Ihre Systemprotokoll für Pre Prüfergebnissen"
+		],
+		"short": [
+			"Überprüfen Sie Ihre Protokolle"
+		]
 	}
 }

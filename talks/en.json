@@ -167,5 +167,13 @@
 		"default": [
 			"instruction directory does not exist. skipping instruction translation"
 		]
+	},
+	"preCheckResults": {
+		"default": [
+			"Please check your system log for pre check results"
+		],
+		"short": [
+			"Check your logs"
+		]
 	}
 }

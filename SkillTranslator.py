@@ -48,7 +48,7 @@ class SkillTranslator(AliceSkill):
 			self.logWarning(self.randomTalk(text='invalidLang'))
 			return
 
-		# internal use only
+		# internal (developer) use only
 		if self._developerUse and not self.getConfig('preCheck'):
 			self.logError(f'Nope, i ain\'t gonna do anything until you turn on preCheck')
 			return
@@ -117,9 +117,9 @@ class SkillTranslator(AliceSkill):
 		for activeLanguage in self._supportedLanguages:
 			# precheck Trigger used so counter later on only triggers for first file
 			self._precheckTrigger += 1
-			self.translateInstructions(activeLanguage)
 			self.translateTalksfile(activeLanguage)
 			self.translateDialogFile(activeLanguage)
+			self.translateInstructions(activeLanguage)
 		self.writeInstallConditions()
 
 
@@ -135,7 +135,7 @@ class SkillTranslator(AliceSkill):
 
 
 	# There are three options to account for in the talks file.
-	# User codes with default keys and short , or just default keys or no keys (as a list)
+	# User codes with default keys and short keys , or just default keys or no keys (as a list)
 	# This below method gets broken up into three sections for sonar readabilty acceptance
 	def translateTalksfile(self, activeLanguage):
 		self.logDebug(self.randomTalk(text='translateTalks', replace=[self._languageNames[activeLanguage]]), )
@@ -154,10 +154,12 @@ class SkillTranslator(AliceSkill):
 		# choose the file to be translated
 		translatedFile = Path(f'{self._translationPath}/talks/{activeLanguage}.json')
 
+		# Get the value from the talks file
 		for talkValue in talksData.items():
 			defaultList = list()
 
 			if isinstance(talkValue[1], dict):
+
 				self.processTalksFileDictionary(talkValue=talkValue, translator=translator, activeLanguage=activeLanguage, defaultList=defaultList)
 				talksData[talkValue[0]] = self._translatedData
 
@@ -170,29 +172,21 @@ class SkillTranslator(AliceSkill):
 			translatedFile.write_text(json.dumps(talksData, ensure_ascii=False, indent=4))
 
 
-	def processTalksFileDictionary(self, talkValue, translator, activeLanguage, defaultList):
-		translated = translator.__class__  # i'm guessing this is correct, just want to decalre it ?
+	def processTalksFileDictionary(self, talkValue, translator, activeLanguage: str, defaultList: list):
+		"""
+		enumerate each line of the talk file and process as required
+
+		:param talkValue: The string from talks file currently being processed
+		:param translator: The Translator instance
+		:param activeLanguage: The active language thats being process
+		:param defaultList: stores the translated data in a list
+		:return: either stores dict to self._translatedData or moves on to process short dictionary values
+		"""
+		# The value of the dictionary - the key
 		talkDictionary = dict(talkValue[1])
 
 		for i, message in enumerate(talkDictionary['default']):
-			# do safe guard checks
-			self.characterCountor(text=message)
-			self.requestLimitChecker()
-			# If not doing a preCheck then request the translation
-			if not self.getConfig('preCheck'):
-				translated = translator.translate(message, dest=activeLanguage)
-
-			# Start counting talks file characters
-			if self._precheckTrigger == 1:
-				self._talkDefaultCount += len(message)
-			# Start counting requests
-			self._requestLimiter += 1
-			self._requestTotal += 1
-			# If not preChecks then add translations to a list
-			if not self.getConfig('preCheck'):
-				defaultList.append(translated.text)
-			else:
-				defaultList.append(message)
+			defaultList = self.doCommonTasks(text=message, activeLanguage=activeLanguage, transInstance=translator, translatedList=defaultList, triggeredFrom='talk')
 
 		if not 'short' in dict(talkDictionary).keys():
 			self._translatedData = {
@@ -203,26 +197,56 @@ class SkillTranslator(AliceSkill):
 			self.processTalksFileShortKey(value=talkDictionary, translator=translator, activeLanguage=activeLanguage, defaultList=defaultList)
 
 
+	def doCommonTasks(self, text: str, activeLanguage: str, transInstance, translatedList: list, triggeredFrom):
+		"""
+		Do the common tasks between several of the methods
+
+		:param text: The active line of code to translate
+		:param activeLanguage: the current language that's being processed
+		:param transInstance: A instance of the translator
+		:param translatedList: The list for storing the translated values
+		:param triggeredFrom: What triggered this code, options= talk, dialog, synnoyms
+		:return: Translated values (or non translated values if in preCheck mode)
+		"""
+		translated = transInstance.__class__  # i'm guessing this is correct, just want to declare it ?
+
+		# do safe guard checks
+		self.characterCountor(text=text)
+		self.requestLimitChecker()
+
+		# If not doing a preCheck then request the translation
+		if not self.getConfig('preCheck'):
+			translated = transInstance.translate(text, dest=activeLanguage)
+
+		# Start counting file characters
+		if self._precheckTrigger == 1:
+			if triggeredFrom == 'talk':
+				self._talkDefaultCount += len(text)
+			elif triggeredFrom == 'dialog':
+				self._dialogCount += len(text)
+			elif triggeredFrom == 'synonym':
+				self._synonymCount += len(text)
+			elif triggeredFrom == 'talkShort':
+				self._talkShortCount += len(text)
+
+		# Start counting requests
+		self._requestLimiter += 1
+		self._requestTotal += 1
+
+		# If not preChecks then add translations to a list
+		if not self.getConfig('preCheck'):
+			translatedList.append(translated.text)
+		else:
+			translatedList.append(text)
+
+		return translatedList
+
+
 	def processTalksFileShortKey(self, value, translator, activeLanguage, defaultList):
-		translated = translator.__class__  # i'm guessing this is correct, just want to decalre it ?
 		shortList = list()
 
 		for message in value['short']:
-
-			self.characterCountor(text=message)
-			self.requestLimitChecker()
-
-			if not self.getConfig('preCheck'):
-				translated = translator.translate(message, dest=activeLanguage)
-
-			if self._precheckTrigger == 1:
-				self._talkShortCount += len(message)
-			self._requestLimiter += 1
-			self._requestTotal += 1
-			if not self.getConfig('preCheck'):
-				shortList.append(translated.text)
-			else:
-				shortList.append(message)
+			shortList = self.doCommonTasks(text=message, activeLanguage=activeLanguage, transInstance=translator, translatedList=shortList, triggeredFrom='talkShort')
 
 		self._translatedData = {
 			'default': defaultList,
@@ -232,25 +256,10 @@ class SkillTranslator(AliceSkill):
 
 	# if the talks file item is a list not a dictionary
 	def processTalksFileLists(self, talk, translator, activeLanguage):
-		translated = translator.__class__  # i'm guessing this is correct, just want to decalre it ?
 		talkList = list()
 
 		for message in talk[1]:
-			self.characterCountor(text=message)
-			self.requestLimitChecker()
-
-			if not self.getConfig('preCheck'):
-				translated = translator.translate(message, dest=activeLanguage)
-
-			if self._precheckTrigger == 1:
-				self._talkShortCount += len(message)
-			self._requestLimiter += 1
-			self._requestTotal += 1
-
-			if not self.getConfig('preCheck'):
-				talkList.append(translated.text)
-			else:
-				talkList.append(message)
+			talkList = self.doCommonTasks(text=message, activeLanguage=activeLanguage, transInstance=translator, translatedList=talkList, triggeredFrom='talkShort')
 
 		return talkList
 
@@ -344,7 +353,6 @@ class SkillTranslator(AliceSkill):
 
 		# create a new instance
 		translatorSyn = Translator()
-		translated = translatorSyn.__class__
 
 		for i, item in enumerate(dialogData['slotTypes']):
 
@@ -353,20 +361,7 @@ class SkillTranslator(AliceSkill):
 				# Using try in case user has empty Synonym lists (index out of range errors)
 				try:
 					for synonym in slotValue['synonyms']:
-						self.characterCountor(text=synonym)
-						self.requestLimitChecker()
-
-						if not self.getConfig('preCheck'):
-							translated = translatorSyn.translate(synonym, dest=activeLanguage)
-
-						if self._precheckTrigger == 1:
-							self._synonymCount += len(synonym)
-						self._requestLimiter += 1
-						self._requestTotal += 1
-						if not self.getConfig('preCheck'):
-							synList.append(translated.text)
-						else:
-							synList.append(synonym)
+						synList = self.doCommonTasks(text=synonym, activeLanguage=activeLanguage, transInstance=translatorSyn, translatedList=synList, triggeredFrom='synonym')
 
 					item['values'][0]['synonyms'] = synList
 
@@ -400,14 +395,19 @@ class SkillTranslator(AliceSkill):
 			)
 
 		if self.getConfig('preCheck'):
+			# say to check syslog results
 			self.say(
-				text='Please check your system log for pre check results'
+				text=self.randomTalk(text='preCheckResults'),
 			)
+			# the combined talk file character count
 			totalTalk = self._talkDefaultCount + self._talkShortCount
+
+			# delay warnings if quota will be exceeded
 			if self._requestTotal > 550:
 				self.logWarning(self.randomTalk(text='expectDelays'))
 			if totalTalk >= 14900 or self._dialogCount >= 14900 or self._synonymCount >= 14900:
 				self.logWarning(self.randomTalk(text='expectMajorDelays'))
+			# results
 			self.logInfo(self.randomTalk(text='resultsHeading', replace=[self._skillName]))
 			self.logInfo(f'')
 			self.logInfo(self.randomTalk(text='results1', replace=[totalTalk]))
@@ -426,7 +426,9 @@ class SkillTranslator(AliceSkill):
 		if not Path(f'{self._translationPath}/instructions').exists():
 			self.logInfo(self.randomTalk(text='skipInstructions'))
 			return
+
 		self.logDebug(self.randomTalk(text='translateInstructions', replace=[self._languageNames[activeLanguage]]), )
+
 		# Check if we have all the language files. If not make them
 		self.checkFileExists(activeLanguage=activeLanguage, path='instructions', talkFile='instructionsNotExist', fileType='.md')
 
@@ -450,8 +452,10 @@ class SkillTranslator(AliceSkill):
 
 		# if ready to translate do this
 		if not self.getConfig('preCheck'):
-			if instructionCharacterCount >= 14999:
-				self.logWarning(self.randomTalk(text='doManually', replace=[instructionCharacterCount]), )
+			# dont translate if charactor count is too large
+			if instructionCharacterCount >= 14900:
+				self.logWarning(self.randomTalk(text='doManually', replace=[instructionCharacterCount]))
+
 			else:
 				translated = translatorInstructions.translate(instructionData, dest=activeLanguage)
 				# remove known translated differences like white space in tags
@@ -460,14 +464,17 @@ class SkillTranslator(AliceSkill):
 				translatedPath.write_text(data=translatedInstructions)
 		else:
 			dummyInstructions: str = self.tidyUpInstructionTranslations(text=str(instructionData))
-			translatedPath.write_text(data=dummyInstructions)
+			if self._developerUse:
+				translatedPath.write_text(data=dummyInstructions)
 
 
 	# Used to repair known issues with google translations. EG when they add unwanted whitespace
 	@staticmethod
 	def tidyUpInstructionTranslations(text: str):
-		# i feel there's a smarter way to do this but yet to work it out
-		# IE: do all relaces in the one loop
+
+		# todo i feel there's a smarter way to do this but yet to work it out
+		# IE: do all replaces in the one loop
+
 		for position, line in enumerate(text.split("  ")):
 			if '</ ' in line:
 				text = line.replace('</ ', '</')

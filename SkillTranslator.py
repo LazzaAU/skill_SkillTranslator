@@ -146,6 +146,7 @@ class SkillTranslator(AliceSkill):
 					)
 					return
 			else:
+				self.translateTalksfile(activeLanguage)
 				self.translateDialogFile(activeLanguage)
 				self.translateInstructions(activeLanguage)
 

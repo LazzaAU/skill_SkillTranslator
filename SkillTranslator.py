@@ -37,7 +37,7 @@ class SkillTranslator(AliceSkill):
 		self._precheckTrigger = 0
 		self._requestTotal = 0
 		self._instructionCount = 0
-		self._developerUse = True
+		self._developerUse = False
 		self._translateThis = ""
 
 		super().__init__()

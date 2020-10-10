@@ -37,7 +37,7 @@ class SkillTranslator(AliceSkill):
 		self._precheckTrigger = 0
 		self._requestTotal = 0
 		self._instructionCount = 0
-		self._developerUse = False
+		self._developerUse = True
 		self._translateThis = ""
 
 		super().__init__()
@@ -508,17 +508,16 @@ class SkillTranslator(AliceSkill):
 	@staticmethod
 	def tidyUpInstructionTranslations(text: str):
 
-		# todo i feel there's a smarter way to do this but yet to work it out
-		# IE: do all replaces in the one loop
+		# todo i feel there's a smarter way to do this to make it more future friendly but yet to work it out
+		newText = ""
+		for position, line in enumerate(text.split("\n")):
+			if '</ ' in line or 'color: # ' in line:
+				modifiedLine = line.replace('</ ', '</').replace('color: # ', 'color: #')
+				newText = f'{newText}\n{modifiedLine}'
+			else:
+				newText = f'{newText}\n{line}'
 
-		for position, line in enumerate(text.split("  ")):
-			if '</ ' in line:
-				text = line.replace('</ ', '</')
-		for position, line in enumerate(text.split("  ")):
-			if 'color: # ' in line:
-				text = line.replace('color: # ', 'color: #')
-
-		return text
+		return newText
 
 
 	def requestLimitChecker(self):

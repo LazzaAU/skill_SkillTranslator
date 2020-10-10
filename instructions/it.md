@@ -1,3 +1,4 @@
+
 # <Span style = "color: #ff0000;"> <strong> Istruzioni </span> </strong>
 
 Quindi hai scritto un abilità e vuole tradurlo? Buon lavoro, consente di ottenere in poi.
@@ -49,3 +50,69 @@ Una volta tradotto sarà poi aggiungere tutte le 4 lingue per il file di install
 
 - Questo è utile di che si desidera tradurre i file di abilità che si trovano al di fuori della cartella competenze
 
+  - ** IE: **
+ 
+    - Se sei uno sviluppatore di abilità e hanno una copia master che si desidera tradurre, piuttosto che tradurre una competenza attiva
+che possono avere su espressioni ecc in.
+
+Digitare il percorso ** a ** l'abilità, ma ** non ** lo skillname. (Utilizzare il campo skillTitle per questo)
+
+PER ESEMPIO:
+
+- skillPath = / home / PI / DevelopmentSkills
+- skillTitle = HomeAssistant
+.
+
+## ** ** SkillTitle campo (richiesto)
+
+Questo campo denota l'abilità che si desidera tradurre
+
+- Con questo campo di pieni e ** non ** il * * skillPath campo così poi le impostazioni predefinite percorso della cartella ProjectAlice / competenze
+- Con questo campo e campo skillPath ** non ** compilato allora si avrà tradurre questa abilità di default ..
+_
+## ** ** translateOnlyThis
+
+Per questo campo ...
+
+- Empty = tradurrà tutti i file necessari (default)
+
+- Inserire una delle seguenti operazioni per tradurre solo quella cartella (opzionale)
+ - colloqui
+ - dialogo
+ - Istruzioni_______________________
+
+Bugs #Known
+
+Esecuzione l'abilità una volta dovrebbe funzionare come previsto, ma il tentativo di eseguire due volte senza riavviare Alice sarà
+tradursi in una "lingua non valida" errore.
+
+**Esempio**:
+
+1. Eseguire la modalità di controllo preliminare e lasciare che l'abilità completarlo del compito
+2. Vai a impostazioni e disattivare la modalità di controllo preliminare
+3. Eseguire il processo di traduzione e Alice mostrerà nei log che il set di lingua nelle impostazioni
+è "non valido" nonostante non sia cambiato.
+
+Aggiustare:
+
+1. Riavviare Alice ed eseguire di nuovo la modalità di traduzione
+
+- Nota a margine:
+
+ se vi capita di ottenere questo errore costantemente ..
+ 
+ `` `Json.decoder.JSONDecodeError: Valore Aspetta: linea 1 colonna 1 (char 0)` ``
+ 
+ Poi potenzialmente, Goggle ha appena bloccato il vostro IP dai file di traduzione e si dovrà attendere fino al prossimo mezzanotte ora del Pacifico per esso t per essere sbloccato
+
+------------------
+
+Google translate tende ad amare l'aggiunta di spazi in cui la spaziatura non era prima. Anche se questa abilità trys per la cattura
+alcune di queste occasioni si possono trovare che quando si traduce le istruzioni cartella che se si dispone di tag nella Markdown
+che potrebbe essere necessario prendere manualmente alcuni spazi bianchi per averlo visualizzare correttamente.
+
+** Ciò che l'abilità non farà **
+
+Attualmente l'abilità non tradurre i file di riduzione dei prezzi, come queste istruzioni. Questa è una caratteristica futuro da aggiungere
+
+Godetevi traduzione

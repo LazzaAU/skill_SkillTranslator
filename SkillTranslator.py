@@ -15,7 +15,9 @@ class SkillTranslator(AliceSkill):
 	Description: Translates your skill into other languages
 
 	There is 2 time.sleep() function in the code. They may not trigger in alot of cases but are there
-	 to help reduce the chances of google IP blocking
+	 to help reduce the chances of google IP blocking.
+	 self._developerUse is only triggered manually by the skill dev (by setting to True). and used
+	 for doing dummy runs on certain code in english without annoying google.
 	"""
 
 

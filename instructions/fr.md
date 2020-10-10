@@ -1,3 +1,4 @@
+
 # <Span style = "color: #FF0000;"> <strong> Instructions </span> </strong>
 
 Donc, vous avez écrit une compétence et que vous voulez le traduire? Bon travail, permet d'obtenir en elle alors.
@@ -49,3 +50,69 @@ Une fois traduit ajoutera ensuite les 4 langues au fichier d'installation.
 
 - Ceci est pratique vous voulez traduire vos fichiers de compétences qui sont en dehors du dossier des compétences
 
+  - **C'EST À DIRE:**
+ 
+    - Si vous êtes une compétence dev et un maître copie que vous voulez traduire, plutôt que de traduire une compétence active
+qui peuvent avoir coutume énoncés etc dans.
+
+Tapez le chemin ** ** A la compétence, mais ** PAS ** la skillname. (Utiliser le champ skillTitle pour cela)
+
+PAR EXEMPLE:
+
+- Skillpath = / home / pi / DevelopmentSkills
+- skillTitle = HomeAssistant
+.
+
+## ** SkillTitle champ ** (obligatoire)
+
+Ce champ indique la compétence que vous voulez traduire
+
+- Avec ce champ rempli et ** ** PAS le * Skillpath * champ et puis les paramètres par défaut de chemin vers le ProjectAlice / dossier compétences
+- Avec ce domaine et sur le terrain Skillpath ** PAS ** Complété vous traduirez cette compétence par défaut ..
+_
+## ** ** translateOnlyThis
+
+Pour ce domaine ...
+
+- Vide = traduirai tous les fichiers requis (par défaut)
+
+- Entrez l'un des éléments suivants pour traduire uniquement ce dossier (facultatif)
+ - des pourparlers
+ - dialogue
+ - instructions_______________________
+
+Bugs #Known
+
+L'exécution de la compétence une fois devrait fonctionner comme prévu, mais d'essayer de l'exécuter deux fois sans redémarrer Alice
+résultat d'une erreur « langue non valide ».
+
+**Exemple**:
+
+1. Lancez le mode precheck et laissez la compétence exécution de la tâche de ce
+2. Accédez aux paramètres et désactiver le mode PreCheck
+3. Exécutez le processus de traduction et ALICE montrera dans les journaux que l'ensemble de la langue dans les paramètres
+est « invalide » malgré elle pas changé.
+
+Pour résoudre:
+
+1. Redémarrez Alice et exécuter le mode de traduction à nouveau
+
+- Note de côté:
+
+ si vous ne vous arrive d'obtenir cette erreur régulièrement ..
+ 
+ `` `Json.decoder.JSONDecodeError: valeur Grossesse: ligne 1 colonne 1 (char 0)` ``
+ 
+ Ensuite, potentiellement, Goggle vient bloquer votre adresse IP à partir de fichiers traduction et vous devrez attendre jusqu'à ce que le temps du Pacifique de minuit suivant pour qu'il soit débloquée t
+
+------------------
+
+Google translate a tendance à aimer en ajoutant des espaces où les espaces n'était pas auparavant. Bien que cette compétence à la capture trys
+certaines de ces occasions, vous pouvez constater que lors de la traduction des instructions dossier que si vous avez des balises dans le démarquage
+que vous pourriez avoir à prendre manuellement certains espaces blancs pour avoir afficher correctement.
+
+** Qu'est-ce que la compétence ne fera pas **
+
+Actuellement, la compétence ne se traduira pas des fichiers Markdown tels que ces instructions. C'est une caractéristique de l'avenir à ajouter
+
+Profitez de la traduction

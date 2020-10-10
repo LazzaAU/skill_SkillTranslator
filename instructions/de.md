@@ -1,3 +1,4 @@
+
 # <Span style = "color: #ff0000;"> <strong> Anleitung </span> </strong>
 
 Sie haben also eine Fähigkeit geschrieben und wollen es übersetzen? Gute Arbeit, kann dann in sie erhalten.
@@ -49,3 +50,69 @@ Sobald es übersetzt werden dann alle vier Sprachen in die Datei installieren hi
 
 - Das ist praktisch von Ihnen Ihre Fähigkeiten Dateien zu übersetzen, die außerhalb des Fähigkeit Ordners
 
+  - ** IE: **
+ 
+    - Wenn Sie eine Fertigkeit Entwickler und haben einen Master sind kopieren Sie übersetzen möchten, anstatt eine aktive Fähigkeit zu übersetzen
+das haben benutzerdefinierte können Äußerungen etc in.
+
+Geben Sie den Pfad ** TO ** die Fertigkeit aber ** NICHT ** die skillname. (Mit dem skillTitle Feld für diese)
+
+Z.B:
+
+- skillPath = / home / pi / DevelopmentSkills
+- skillTitle = Homeassistant
+.
+
+## ** ** SkillTitle Feld (erforderlich)
+
+Dieses Feld bezeichnet die Fähigkeit, die Sie übersetzen
+
+- Mit diesem Feld gefüllt und ** NICHT ** Das * skillPath * Feld und dann dem Pfad standardmäßig auf den ProjectAlice / Fähigkeiten Ordner
+- Mit diesem Feld und skillPath Feld ** NICHT ** ausgefüllt dann werden Sie diese Fähigkeit standardmäßig übersetzen ..
+_
+## ** ** translateOnlyThis
+
+Für diesen Bereich ...
+
+- Nicht ausgefüllt = Werden alle benötigten Dateien (Standard) übersetzen
+
+- eine der folgenden Geben Sie nur diesen Ordner (optional) zu übersetzen
+ - Gespräche
+ - Dialog
+ - instructions_______________________
+
+#Known Bugs
+
+Laufen die Fähigkeit einmal sollte wie beabsichtigt funktionieren, aber versuchen, es zu laufen zweimal ohne Alice Neustart wird
+führen zu einer „Sprache ungültig“ Fehler.
+
+**Beispiel**:
+
+1. precheck Modus starten und lassen Sie die Fähigkeit es Aufgabe abzuschließen
+2. Gehen Sie zu Einstellungen und Ausschalten PreCheck Modus
+3. den Übersetzungsprozess starten und ALice in den Protokollen wird zeigen, dass die eingestellte Sprache in den Einstellungen
+„ungültig“ obwohl es nicht geändert wird.
+
+Reparieren:
+
+1. Starten Sie Alice und führen Sie erneut den Übersetzungsmodus
+
+- Randnotiz:
+
+ wenn Sie geschehen, um diesen Fehler konsequent zu bekommen ..
+ 
+ `` `Json.decoder.JSONDecodeError: Erwartung Wert: Zeile 1 Spalte 1 (char 0)` ``
+ 
+ Dann möglicherweise, Goggle wird blockiert nur Ihre IP von übersetzen Dateien und Sie werden warten müssen, bis die folgende Mitternacht pazifischer Zeit für sie t nicht blockiert sein
+
+------------------
+
+Google übersetzen neigt Hinzufügen Leerzeichen zu lieben, wo Leerzeichen nicht vorher war. Obwohl diese Fähigkeit Trys zu capture
+einige dieser Gelegenheiten können Sie feststellen, dass beim Übersetzen Sie den Anweisungen Ordner, wenn Sie Tags im Abschlags
+dass müssen Sie manuell einige weißen Räume nehmen können es richtig angezeigt zu haben.
+
+** Was die Fertigkeit nicht tun **
+
+Derzeit ist die Fähigkeit nicht Abschlag Dateien übersetzen, wie diese Anweisungen. Das ist eine Zukunft Feature hinzugefügt werden
+
+genießen Sie übersetzen

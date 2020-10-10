@@ -18,6 +18,7 @@ class SkillTranslator(AliceSkill):
 	 to help reduce the chances of google IP blocking.
 	 self._developerUse is only triggered manually by the skill dev (by setting to True). and used
 	 for doing dummy runs on certain code in english without annoying google.
+
 	"""
 
 
@@ -25,6 +26,7 @@ class SkillTranslator(AliceSkill):
 
 		self._translatedData = dict()
 		self._supportedLanguages = ['en', 'de', 'it', 'fr']
+		self._translatedLanguages = ['en', 'de', 'it', 'fr']
 		self._skillLanguage = ""
 		self._skillName = ""
 		self._translationPath = Path
@@ -47,9 +49,6 @@ class SkillTranslator(AliceSkill):
 
 	@IntentHandler('TranslateSkill')
 	def translateSkill(self, session: DialogSession, **_kwargs):
-		if not self.getConfig('skillLanguage') or not self.getConfig('skillLanguage') in self._supportedLanguages:
-			self.logWarning(self.randomTalk(text='invalidLang'))
-			return
 
 		# internal (developer) use only
 		if self._developerUse and not self.getConfig('preCheck'):
@@ -87,9 +86,15 @@ class SkillTranslator(AliceSkill):
 			self.logWarning(f'Your in internal developer mode. Things will get written')
 
 		# get the default language of the skill from config
+
 		self._skillLanguage = self.getConfig('skillLanguage')
-		# list of supported languages
-		self._supportedLanguages.remove(self._skillLanguage)
+
+		# Remove the sillLanguage from the translatedLanguage list
+		index = self._supportedLanguages.index(self._skillLanguage)
+		numberOfSupportedLanguages = len(self._supportedLanguages)
+
+		if len(self._translatedLanguages) == numberOfSupportedLanguages:
+			self._translatedLanguages.pop(index)
 
 		# set the skill to process as this skill if nothing configured in settings
 		if not self.getConfig('skillTitle'):
@@ -137,7 +142,7 @@ class SkillTranslator(AliceSkill):
 
 		self._translateThis = self.getConfig('translateOnlyThis')
 
-		for activeLanguage in self._supportedLanguages:
+		for activeLanguage in self._translatedLanguages:
 			# precheck Trigger used so counter later on only triggers for first file
 			self._precheckTrigger += 1
 			if self._translateThis and not self.getConfig('precheck'):
@@ -414,11 +419,10 @@ class SkillTranslator(AliceSkill):
 		# Lets update the install file language conditions
 		file = Path(f'{self._translationPath}/{self._skillName}.install')
 		installData = json.loads(file.read_text())
-		supportedLanguages = ['en', 'de', 'it', 'fr']
 
 		for i, item in enumerate(installData['conditions']):
 			if 'lang' in item:
-				installData['conditions']['lang'] = supportedLanguages
+				installData['conditions']['lang'] = self._supportedLanguages
 
 				if not self.getConfig('preCheck'):
 					file.write_text(json.dumps(installData, ensure_ascii=False, indent=4))

@@ -80,21 +80,10 @@ For this field...
  - dialog
  - instructions_______________________
 
-#Known Bugs
+#Tips
 
-Running the skill once should work as intended but trying to run it twice without restarting Alice will 
-result in a "language not valid" error.
-
-**Example**: 
-
-1. Run the precheck mode and let the skill complete it's task
-2. Go to settings and turn off preCheck mode
-3. Run the translation process and ALice will show in the logs that the language set in the settings 
-is "invalid" despite it not being changed.
-
-To fix:
-
-1. Restart Alice and run the translation mode again
+Currently.. if you run the skill in one language and then run the skill in another language you may strike a error.
+Restart Alice if you are switching the default languages between attempts.
 
 - Side note:
 

@@ -1,9 +1,15 @@
 {
 	"skillLanguage": {
 		"defaultValue": "en",
-		"dataType": "string",
+		"dataType": "list",
 		"isSensitive": false,
-		"description": "Denotes default language skill was written in"
+		"values": {
+			"English": "en",
+			"Français": "fr",
+			"Deutsch": "de",
+			"Italian": "it"
+		},
+		"description": "Choose language skil was written in"
 	},
 	"skillTitle": {
 		"defaultValue": "",
@@ -15,7 +21,7 @@
 		"defaultValue": "",
 		"dataType": "string",
 		"isSensitive": false,
-		"description": "The skill Directory. If blank alice skill directory used"
+		"description": "The skill Directory. If blank the alice skill directory is used"
 	},
 	"preCheck": {
 		"defaultValue": true,
@@ -24,9 +30,15 @@
 		"description": "Allows pre checks on the file"
 	},
 	"translateOnlyThis": {
-		"defaultValue": "",
-		"dataType": "string",
+		"defaultValue": "All folders",
+		"dataType": "list",
 		"isSensitive": false,
-		"description": "Allows translation of only one folder"
+		"values": {
+			"All folders": "",
+			"Talks folder": "talks",
+			"Dialog folder": "dialog",
+			"Instructions folder": "instructions"
+		},
+		"description": "Choose what folder to translate"
 	}
 }

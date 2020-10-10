@@ -37,7 +37,7 @@ class SkillTranslator(AliceSkill):
 		self._precheckTrigger = 0
 		self._requestTotal = 0
 		self._instructionCount = 0
-		self._developerUse = False
+		self._developerUse = True
 		self._translateThis = ""
 
 		super().__init__()
@@ -526,8 +526,9 @@ class SkillTranslator(AliceSkill):
 		 requests per minute
 		"""
 		seconds: float = 70
-
-		if self._requestLimiter == 550:
+		# 600 is apparently the limit but was blocked at below 550
+		# so have set the limit to 480 before triggering the 70 second timer
+		if self._requestLimiter == 480:
 
 			self.logWarning(self.randomTalk(text='breather', replace=[seconds]))
 			time.sleep(seconds)

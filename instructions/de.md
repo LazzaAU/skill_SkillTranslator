@@ -81,21 +81,10 @@ Für diesen Bereich ...
  - Dialog
  - instructions_______________________
 
-#Known Bugs
+#Tips
 
-Laufen die Fähigkeit einmal sollte wie beabsichtigt funktionieren, aber versuchen, es zu laufen zweimal ohne Alice Neustart wird
-führen zu einer „Sprache ungültig“ Fehler.
-
-**Beispiel**:
-
-1. precheck Modus starten und lassen Sie die Fähigkeit es Aufgabe abzuschließen
-2. Gehen Sie zu Einstellungen und Ausschalten PreCheck Modus
-3. den Übersetzungsprozess starten und ALice in den Protokollen wird zeigen, dass die eingestellte Sprache in den Einstellungen
-„ungültig“ obwohl es nicht geändert wird.
-
-Reparieren:
-
-1. Starten Sie Alice und führen Sie erneut den Übersetzungsmodus
+Derzeit .. wenn Sie die Fähigkeit in einer Sprache ausführen und dann die Fähigkeit, in einer anderen Sprache ausführen können Sie einen Fehler schlagen.
+Neu starten Alice, wenn Sie die Standardsprachen zwischen den Versuchen wechseln.
 
 - Randnotiz:
 

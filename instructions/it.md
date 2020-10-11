@@ -81,21 +81,10 @@ Per questo campo ...
  - dialogo
  - Istruzioni_______________________
 
-Bugs #Known
+#Suggerimenti
 
-Esecuzione l'abilità una volta dovrebbe funzionare come previsto, ma il tentativo di eseguire due volte senza riavviare Alice sarà
-tradursi in una "lingua non valida" errore.
-
-**Esempio**:
-
-1. Eseguire la modalità di controllo preliminare e lasciare che l'abilità completarlo del compito
-2. Vai a impostazioni e disattivare la modalità di controllo preliminare
-3. Eseguire il processo di traduzione e Alice mostrerà nei log che il set di lingua nelle impostazioni
-è "non valido" nonostante non sia cambiato.
-
-Aggiustare:
-
-1. Riavviare Alice ed eseguire di nuovo la modalità di traduzione
+Attualmente .. se si esegue l'abilità in una lingua e quindi si esegue l'abilità in un'altra lingua si può trovare un errore.
+Riavvia Alice se si passa le lingue predefinite tra i tentativi.
 
 - Nota a margine:
 

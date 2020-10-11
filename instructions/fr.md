@@ -81,21 +81,10 @@ Pour ce domaine ...
  - dialogue
  - instructions_______________________
 
-Bugs #Known
+#Conseils
 
-L'exécution de la compétence une fois devrait fonctionner comme prévu, mais d'essayer de l'exécuter deux fois sans redémarrer Alice
-résultat d'une erreur « langue non valide ».
-
-**Exemple**:
-
-1. Lancez le mode precheck et laissez la compétence exécution de la tâche de ce
-2. Accédez aux paramètres et désactiver le mode PreCheck
-3. Exécutez le processus de traduction et ALICE montrera dans les journaux que l'ensemble de la langue dans les paramètres
-est « invalide » malgré elle pas changé.
-
-Pour résoudre:
-
-1. Redémarrez Alice et exécuter le mode de traduction à nouveau
+À l'heure actuelle .. si vous avez la compétence dans une langue, puis exécuter la compétence dans une autre langue que vous pouvez trouver une erreur.
+Redémarrer Alice si vous changez les langues par défaut entre les tentatives.
 
 - Note de côté:
 

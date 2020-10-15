@@ -4,7 +4,7 @@
     "icon": "fas fa-language",
     "category": "assistance",
     "author": "Lazza",
-    "maintainers": [],
+    "maintainers": ["Psycho"],
     "desc": "Translate your skill into other supported languages",
     "aliceMinVersion": "1.0.0-b3",
     "systemRequirements": [

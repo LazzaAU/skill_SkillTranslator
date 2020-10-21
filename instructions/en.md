@@ -78,7 +78,10 @@ For this field...
 - Enter one of the following to translate ONLY that folder (optional)
  - talks
  - dialog
- - instructions_______________________
+ - instructions
+ - Sample files
+ 
+ _______________________
 
 #Tips
 
@@ -103,6 +106,10 @@ that you may have to manually take out some white spaces to have it display prop
 
 Currently the skill will not translate markdown files such as these instructions. That's a future feature to be added
 
+NOTE: the accuracy of the translations is not guaranteed to be correct. We rely on google being able to also understand 
+the context of the speech. After translation via this skill it will require manual verification from a @translator in
+the discord channel
+ 
 Enjoy translating 
 
  

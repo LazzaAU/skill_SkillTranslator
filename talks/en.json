@@ -37,6 +37,12 @@
 			"I'm now translating the dialog file utterances to {0} "
 		]
 	},
+	"translateSamples": {
+		"default": [
+			"Translating samples in the dialog file into {0}",
+			"I'm now translating the sample file to {0} "
+		]
+	},
 	"translateInstructions": {
 		"default": [
 			"Translating instructions in into {0}",
@@ -46,6 +52,11 @@
 	"dialogNotExist": {
 		"default": [
 			"Dialog file {0}.json did not exist. So I created it"
+		]
+	},
+	"sampleNotExist": {
+		"default": [
+			"Sample file {0}.sample did not exist. So I created it"
 		]
 	},
 	"instructionsNotExist": {
@@ -146,6 +157,11 @@
 	"results8": {
 		"default": [
 			"Instructions are {0} characters long on another instance"
+		]
+	},
+	"results9": {
+		"default": [
+			"Samples are {0} characters long on another instance"
 		]
 	},
 	"expectDelays": {

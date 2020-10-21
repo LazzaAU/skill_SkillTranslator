@@ -1,65 +1,65 @@
 {
-	"skill": "SkillTranslator",
-	"slotTypes": [
-		{
-			"name": "More",
-			"matchingStrictness": null,
-			"automaticallyExtensible": true,
-			"useSynonyms": true,
-			"values": [
-				{
-					"value": "more",
-					"synonyms": [
-						"plus",
-						"beaucoup plus",
-						"mega plus"
-					]
-				}
-			]
-		},
-		{
-			"name": "less",
-			"matchingStrictness": null,
-			"automaticallyExtensible": true,
-			"useSynonyms": true,
-			"values": [
-				{
-					"value": "less",
-					"synonyms": [
-						"peu moins",
-						"juste un peu moins",
-						"beaucoup moins"
-					]
-				}
-			]
-		}
-	],
-	"intents": [
-		{
-			"name": "TranslateSkill",
-			"enabledByDefault": true,
-			"utterances": [
-				"traduire mes compétences",
-				"traduire une compétence connue"
-			]
-		},
-		{
-			"name": "transTestIntent",
-			"enabledByDefault": false,
-			"utterances": [
-				"ce qui est dans le capot",
-				"hows choses dans le donjon",
-				"qui a dit ça",
-				"donnez-moi des énoncés {plus:=>more}"
-			],
-			"slots": [
-				{
-					"name": "more",
-					"required": false,
-					"type": "More",
-					"missingQuestion": ""
-				}
-			]
-		}
-	]
+    "skill": "SkillTranslator",
+    "slotTypes": [
+        {
+            "name": "More",
+            "matchingStrictness": null,
+            "automaticallyExtensible": true,
+            "useSynonyms": true,
+            "values": [
+                {
+                    "value": "more",
+                    "synonyms": [
+                        "plus",
+                        "beaucoup plus",
+                        "mega plus"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "less",
+            "matchingStrictness": null,
+            "automaticallyExtensible": true,
+            "useSynonyms": true,
+            "values": [
+                {
+                    "value": "less",
+                    "synonyms": [
+                        "peu moins",
+                        "juste un peu moins",
+                        "beaucoup moins"
+                    ]
+                }
+            ]
+        }
+    ],
+    "intents": [
+        {
+            "name": "TranslateSkill",
+            "enabledByDefault": true,
+            "utterances": [
+                "traduire mes compétences",
+                "traduire une compétence connue"
+            ]
+        },
+        {
+            "name": "transTestIntent",
+            "enabledByDefault": false,
+            "utterances": [
+                "ce qui est dans le capot",
+                "hows choses dans le donjon",
+                "qui a dit ça",
+                "donnez-moi des énoncés {plus:=>more}"
+            ],
+            "slots": [
+                {
+                    "name": "more",
+                    "required": false,
+                    "type": "More",
+                    "missingQuestion": ""
+                }
+            ]
+        }
+    ]
 }

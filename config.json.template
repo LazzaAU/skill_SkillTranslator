@@ -37,7 +37,8 @@
 			"All folders": "",
 			"Talks folder": "talks",
 			"Dialog folder": "dialog",
-			"Instructions folder": "instructions"
+			"Instructions folder": "instructions",
+			"Samples files": "samples"
 		},
 		"description": "Choose what folder to translate"
 	}

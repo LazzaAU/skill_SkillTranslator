@@ -1,65 +1,65 @@
 {
-	"skill": "SkillTranslator",
-	"slotTypes": [
-		{
-			"name": "More",
-			"matchingStrictness": null,
-			"automaticallyExtensible": true,
-			"useSynonyms": true,
-			"values": [
-				{
-					"value": "more",
-					"synonyms": [
-						"Mehr",
-						"viel mehr",
-						"mega mehr"
-					]
-				}
-			]
-		},
-		{
-			"name": "less",
-			"matchingStrictness": null,
-			"automaticallyExtensible": true,
-			"useSynonyms": true,
-			"values": [
-				{
-					"value": "less",
-					"synonyms": [
-						"etwas weniger",
-						"nur ein bisschen weniger",
-						"viel weniger"
-					]
-				}
-			]
-		}
-	],
-	"intents": [
-		{
-			"name": "TranslateSkill",
-			"enabledByDefault": true,
-			"utterances": [
-				"übersetzen meine Fähigkeiten",
-				"übersetzen eine bekannte Fertigkeit"
-			]
-		},
-		{
-			"name": "transTestIntent",
-			"enabledByDefault": false,
-			"utterances": [
-				"was in der Motorhaube",
-				"Hows Dinge im Kerker",
-				"Wer hat das gesagt",
-				"gib mir {mehr:=>more} Äußerungen"
-			],
-			"slots": [
-				{
-					"name": "more",
-					"required": false,
-					"type": "More",
-					"missingQuestion": ""
-				}
-			]
-		}
-	]
+    "skill": "SkillTranslator",
+    "slotTypes": [
+        {
+            "name": "More",
+            "matchingStrictness": null,
+            "automaticallyExtensible": true,
+            "useSynonyms": true,
+            "values": [
+                {
+                    "value": "more",
+                    "synonyms": [
+                        "Mehr",
+                        "viel mehr",
+                        "mega mehr"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "less",
+            "matchingStrictness": null,
+            "automaticallyExtensible": true,
+            "useSynonyms": true,
+            "values": [
+                {
+                    "value": "less",
+                    "synonyms": [
+                        "etwas weniger",
+                        "nur ein bisschen weniger",
+                        "viel weniger"
+                    ]
+                }
+            ]
+        }
+    ],
+    "intents": [
+        {
+            "name": "TranslateSkill",
+            "enabledByDefault": true,
+            "utterances": [
+                "übersetzen meine Fähigkeiten",
+                "übersetzen eine bekannte Fertigkeit"
+            ]
+        },
+        {
+            "name": "transTestIntent",
+            "enabledByDefault": false,
+            "utterances": [
+                "was in der Motorhaube",
+                "Hows Dinge im Kerker",
+                "Wer hat das gesagt",
+                "gib mir {mehr:=>more} Äußerungen"
+            ],
+            "slots": [
+                {
+                    "name": "more",
+                    "required": false,
+                    "type": "More",
+                    "missingQuestion": ""
+                }
+            ]
+        }
+    ]
 }

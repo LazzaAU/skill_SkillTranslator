@@ -1,188 +1,204 @@
 {
-	"sayCompleted": {
-		"default": [
-			"Abgeschlossene Übersetzung der {0} Geschick in Höhe von {1} Zeichen übersetzt. Abraten für mindestens eine Stunde eine andere Fähigkeit übersetzen zu reduzieren Chancen auf Google Ihre IP für 24 Stunden blockiert",
-			"{0} Fähigkeit Übersetzung fertig mit insgesamt {1} Zeichen verarbeitet. Bitte warten Sie mindestens eine Stunde, für größere Fähigkeiten. bevor Sie eine andere Übersetzung versucht, oder Google könnte Ihre Ip für 24 Stunden blockiert"
-		],
-		"short": [
-			"alle abgeschlossen",
-			"Übersetzung fertig"
-		]
-	},
-	"startTranslate": {
-		"default": [
-			"Dadurch, dass für Sie jetzt. HINWEIS. Ich werde mit Google übersetzen",
-			"Kein Problem. Pro Spitze. Sie nicht zu viele Fähigkeiten übersetzen nacheinander oder Google wird Ihre IP für 24 Stunden blockiert"
-		],
-		"short": [
-			"in Ordnung",
-			"erledigt"
-		]
-	},
-	"translateTalks": {
-		"default": [
-			"Übersetzen von Gesprächen Datei in {0}",
-			"Ich übersetze jetzt die Gespräche Datei {0}"
-		]
-	},
-	"breather": {
-		"default": [
-			"nimmt einen Bruch für {0} Sekunden den Atem zu fangen. Wird wieder aufgenommen, kurz",
-			"Delaying Übersetzung für {0} Sekunden reduzieren API Grenzen"
-		]
-	},
-	"translateDialog": {
-		"default": [
-			"Übersetzen von Äußerungen in der Dialogdatei in {0}",
-			"Ich übersetze jetzt die Dialogdatei Äußerungen zu {0}"
-		]
-	},
-	"translateInstructions": {
-		"default": [
-			"Übersetzen von Anweisungen in in {0}",
-			"Ich übersetze jetzt die Anweisungen auf {0}"
-		]
-	},
-	"dialogNotExist": {
-		"default": [
-			"Dialog Datei {0} .json gab es nicht. Also habe ich es"
-		]
-	},
-	"instructionsNotExist": {
-		"default": [
-			"Anweisungsdatei {0} .MD nicht existierte. Also habe ich es"
-		]
-	},
-	"talkNotExist": {
-		"default": [
-			"Diskussion Datei {0} .json gab es nicht. Also habe ich es"
-		]
-	},
-	"missingSkill": {
-		"default": [
-			"Nicht gefunden {0}. Bitte überprüfen Sie die Schreibweise",
-			"{0} scheint nicht gültig zu sein, überprüfen Sie bitte Ihre Rechtschreibung"
-		]
-	},
-	"invalidLang": {
-		"default": [
-			"Geschicklichkeits Sprache in den Einstellungen ist nicht gültig. Zur Auswahl stehen entweder en, de, fr oder"
-		]
-	},
-	"path": {
-		"default": [
-			"Mit dem Pfad {0}",
-			"Übersetzung Pfad {0}"
-		]
-	},
-	"translatingSkill": {
-		"default": [
-			"Translating {0} Geschick ...."
-		]
-	},
-	"translateSyn": {
-		"default": [
-			"Übersetzen von Synonymen in Dialogdatei in {0}",
-			"Ich übersetze jetzt die Dialogdatei, um Synonyme zu {0}"
-		],
-		"short": []
-	},
-	"updateInstall": {
-		"default": [
-			"Jetzt aktualisieren Sie die Datei installieren",
-			"Aktualisieren von Installationsdatei"
-		]
-	},
-	"majorLimit": {
-		"default": [
-			"Woooah. Verarbeitete {1} Zeichen sind in der Nähe der Google-Quote. Ich muss Stoppverarbeitung für {0} Sekunden oder Google blockiert Ihre IP",
-			"Pausieren der Übersetzung, da man fast auf dem Charakter Quote von 15k mit einer Zählung von {1} ist. Pausieren für {0} Sekunden"
-		]
-	},
-	"precheckHeading": [
-		"Nun vor dem Tauchgang aktiviert ist. HINWEIS: Keine Datei Schreiben auftreten."
-	],
-	"resultsHeading": {
-		"default": [
-			"Pre Prüfungen abgeschlossen für {0} Geschick .... Statistiken sind wie folgt"
-		]
-	},
-	"results1": {
-		"default": [
-			"Talk Datei {0} Zeichen lang auf einer Instanz"
-		]
-	},
-	"results2": {
-		"default": [
-			"Aussprüche sind {0} Zeichen lang auf eine andere Instanz"
-		]
-	},
-	"results3": {
-		"default": [
-			"Synonyme sind {0} Zeichen lang auf eine andere Instanz"
-		]
-	},
-	"results4": {
-		"default": [
-			"es gibt eine Zeichenzahl insgesamt {0}"
-		]
-	},
-	"results5": {
-		"default": [
-			"und es würde {0} Anfragen"
-		]
-	},
-	"results6": {
-		"default": [
-			"Grenzwerte sind 15K für Zeichen (pro Instanz?) Und maximal 600 Anfragen pro Minute"
-		]
-	},
-	"results7": {
-		"default": [
-			"Bitte schalten Sie nun vor dem Tauchgang in Geschicklichkeit Einstellungen off Translating zu starten"
-		]
-	},
-	"results8": {
-		"default": [
-			"Anweisungen sind {0} Zeichen lang auf eine andere Instanz"
-		]
-	},
-	"expectDelays": {
-		"default": [
-			"Basierend auf diesen Ergebnissen, wird der Code absichtlich 1 Minute Verzögerungen auslösen wie erforderlich API Blockierung von Google zu reduzieren,"
-		]
-	},
-	"expectMajorDelays": {
-		"default": [
-			"Basierend auf diesen Ergebnissen wird die Fähigkeit Goggles Zeichenzahl Zulage pro Stunde nicht überschreiten. Daher wird der Code eine Verzögerung von 1 Stunde zwingen, während übersetzen"
-		]
-	},
-	"doManually": {
-		"default": [
-			"Sorry, aber dieser Befehl Datei wird auf jeden Fall Google verärgert. Bitte übersetzen Sie es manuell. Zeichenzahl: {0}, Limit 15.000"
-		]
-	},
-	"skipInstructions": {
-		"default": [
-			"Anweisungsverzeichnis existiert nicht. Überspringen Anweisung Übersetzung"
-		]
-	},
-	"preCheckResults": {
-		"default": [
-			"Bitte überprüfen Sie Ihre Systemprotokoll für Pre Prüfergebnissen"
-		],
-		"short": [
-			"Überprüfen Sie Ihre Protokolle"
-		]
-	},
-	"notValidFolder": {
-		"default": [
-			"{0} ist kein gültiger Ordner. bitte entweder den Wert ‚spricht‘, ‚Dialog‘ oder ‚Anweisungen‘ verwenden"
-		]
-	},
-	"translatingOnlyThis": {
-		"default": [
-			"Übersetzen Sie NUR das Verzeichnis {0}, aber immer noch voller Ergebnisse angezeigt"
-		]
-	}
+    "sayCompleted": {
+        "default": [
+            "Abgeschlossene Übersetzung der {0} Geschick in Höhe von {1} Zeichen übersetzt. Abraten für mindestens eine Stunde eine andere Fähigkeit übersetzen zu reduzieren Chancen auf Google Ihre IP für 24 Stunden blockiert",
+            "{0} Fähigkeit Übersetzung fertig mit insgesamt {1} Zeichen verarbeitet. Bitte warten Sie mindestens eine Stunde, für größere Fähigkeiten. bevor Sie eine andere Übersetzung versucht, oder Google könnte Ihre Ip für 24 Stunden blockiert"
+        ],
+        "short": [
+            "alle abgeschlossen",
+            "Übersetzung fertig"
+        ]
+    },
+    "startTranslate": {
+        "default": [
+            "Dadurch, dass für Sie jetzt. HINWEIS. Ich werde mit Google übersetzen",
+            "Kein Problem. Pro Spitze. Sie nicht zu viele Fähigkeiten übersetzen nacheinander oder Google wird Ihre IP für 24 Stunden blockiert"
+        ],
+        "short": [
+            "in Ordnung",
+            "erledigt"
+        ]
+    },
+    "translateTalks": {
+        "default": [
+            "Übersetzen von Gesprächen Datei in {0}",
+            "Ich übersetze jetzt die Gespräche Datei {0}"
+        ]
+    },
+    "breather": {
+        "default": [
+            "nimmt einen Bruch für {0} Sekunden den Atem zu fangen. Wird wieder aufgenommen, kurz",
+            "Delaying Übersetzung für {0} Sekunden reduzieren API Grenzen"
+        ]
+    },
+    "translateDialog": {
+        "default": [
+            "Übersetzen von Äußerungen in der Dialogdatei in {0}",
+            "Ich übersetze jetzt die Dialogdatei Äußerungen zu {0}"
+        ]
+    },
+    "translateSamples": {
+        "default": [
+            "Übersetzen von Proben im Dialog Datei in {0}",
+            "Ich übersetze jetzt die Beispieldatei auf {0}"
+        ]
+    },
+    "translateInstructions": {
+        "default": [
+            "Übersetzen von Anweisungen in in {0}",
+            "Ich übersetze jetzt die Anweisungen auf {0}"
+        ]
+    },
+    "dialogNotExist": {
+        "default": [
+            "Dialog Datei {0} .json gab es nicht. Also habe ich es"
+        ]
+    },
+    "sampleNotExist": {
+        "default": [
+            "Beispieldatei {0} .sample gab es nicht. Also habe ich es"
+        ]
+    },
+    "instructionsNotExist": {
+        "default": [
+            "Anweisungsdatei {0} .MD nicht existierte. Also habe ich es"
+        ]
+    },
+    "talkNotExist": {
+        "default": [
+            "Diskussion Datei {0} .json gab es nicht. Also habe ich es"
+        ]
+    },
+    "missingSkill": {
+        "default": [
+            "Nicht gefunden {0}. Bitte überprüfen Sie die Schreibweise",
+            "{0} scheint nicht gültig zu sein, überprüfen Sie bitte Ihre Rechtschreibung"
+        ]
+    },
+    "invalidLang": {
+        "default": [
+            "Geschicklichkeits Sprache in den Einstellungen ist nicht gültig. Zur Auswahl stehen entweder en, de, fr oder"
+        ]
+    },
+    "path": {
+        "default": [
+            "Mit dem Pfad {0}",
+            "Übersetzung Pfad {0}"
+        ]
+    },
+    "translatingSkill": {
+        "default": [
+            "Translating {0} Geschick ...."
+        ]
+    },
+    "translateSyn": {
+        "default": [
+            "Übersetzen von Synonymen in Dialogdatei in {0}",
+            "Ich übersetze jetzt die Dialogdatei, um Synonyme zu {0}"
+        ],
+        "short": []
+    },
+    "updateInstall": {
+        "default": [
+            "Jetzt aktualisieren Sie die Datei installieren",
+            "Aktualisieren von Installationsdatei"
+        ]
+    },
+    "majorLimit": {
+        "default": [
+            "Woooah. Verarbeitete {1} Zeichen sind in der Nähe der Google-Quote. Ich muss Stoppverarbeitung für {0} Sekunden oder Google blockiert Ihre IP",
+            "Pausieren der Übersetzung, da man fast auf dem Charakter Quote von 15k mit einer Zählung von {1} ist. Pausieren für {0} Sekunden"
+        ]
+    },
+    "precheckHeading": [
+        "Nun vor dem Tauchgang aktiviert ist. HINWEIS: Keine Datei Schreiben auftreten."
+    ],
+    "resultsHeading": {
+        "default": [
+            "Pre Prüfungen abgeschlossen für {0} Geschick .... Statistiken sind wie folgt"
+        ]
+    },
+    "results1": {
+        "default": [
+            "Talk Datei {0} Zeichen lang auf einer Instanz"
+        ]
+    },
+    "results2": {
+        "default": [
+            "Aussprüche sind {0} Zeichen lang auf eine andere Instanz"
+        ]
+    },
+    "results3": {
+        "default": [
+            "Synonyme sind {0} Zeichen lang auf eine andere Instanz"
+        ]
+    },
+    "results4": {
+        "default": [
+            "es gibt eine Zeichenzahl insgesamt {0}"
+        ]
+    },
+    "results5": {
+        "default": [
+            "und es würde {0} Anfragen"
+        ]
+    },
+    "results6": {
+        "default": [
+            "Grenzwerte sind 15K für Zeichen (pro Instanz?) Und maximal 600 Anfragen pro Minute"
+        ]
+    },
+    "results7": {
+        "default": [
+            "Bitte schalten Sie nun vor dem Tauchgang in Geschicklichkeit Einstellungen off Translating zu starten"
+        ]
+    },
+    "results8": {
+        "default": [
+            "Anweisungen sind {0} Zeichen lang auf eine andere Instanz"
+        ]
+    },
+    "results9": {
+        "default": [
+            "Die Proben sind {0} Zeichen lang auf eine andere Instanz"
+        ]
+    },
+    "expectDelays": {
+        "default": [
+            "Basierend auf diesen Ergebnissen, wird der Code absichtlich 1 Minute Verzögerungen auslösen wie erforderlich API Blockierung von Google zu reduzieren,"
+        ]
+    },
+    "expectMajorDelays": {
+        "default": [
+            "Basierend auf diesen Ergebnissen wird die Fähigkeit Goggles Zeichenzahl Zulage pro Stunde nicht überschreiten. Daher wird der Code eine Verzögerung von 1 Stunde zwingen, während übersetzen"
+        ]
+    },
+    "doManually": {
+        "default": [
+            "Sorry, aber dieser Befehl Datei wird auf jeden Fall Google verärgert. Bitte übersetzen Sie es manuell. Zeichenzahl: {0}, Limit 15.000"
+        ]
+    },
+    "skipInstructions": {
+        "default": [
+            "Anweisungsverzeichnis existiert nicht. Überspringen Anweisung Übersetzung"
+        ]
+    },
+    "preCheckResults": {
+        "default": [
+            "Bitte überprüfen Sie Ihre Systemprotokoll für Pre Prüfergebnissen"
+        ],
+        "short": [
+            "Überprüfen Sie Ihre Protokolle"
+        ]
+    },
+    "notValidFolder": {
+        "default": [
+            "{0} ist kein gültiger Ordner. bitte entweder den Wert ‚spricht‘, ‚Dialog‘ oder ‚Anweisungen‘ verwenden"
+        ]
+    },
+    "translatingOnlyThis": {
+        "default": [
+            "Übersetzen Sie NUR das Verzeichnis {0} ....."
+        ]
+    }
 }

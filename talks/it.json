@@ -1,188 +1,204 @@
 {
-	"sayCompleted": {
-		"default": [
-			"Completato Traduzione del {0} abilità per un totale di {1} caratteri tradotto. Consigliamo di non tradurre un'altra abilità per almeno un'ora per ridurre la probabilità di Google bloccando il tuo IP per 24 ore",
-			"{0} traduzione giocata finito con un totale di {1} caratteri trasformati. Si prega di attendere almeno un'ora, per le abilità più grandi. prima di tentare un'altra traduzione, o Google potrebbe bloccare il vostro IP per 24 ore"
-		],
-		"short": [
-			"tutto completato",
-			"Traduzione finito"
-		]
-	},
-	"startTranslate": {
-		"default": [
-			"Facendo che per te ora. NOTA. Sarò utilizzando Google Translate",
-			"Nessun problema. suggerimento PRO. Non si traducono in molte abilità consecutivamente o Google bloccherà il vostro IP per 24 ore"
-		],
-		"short": [
-			"ok",
-			"fatto"
-		]
-	},
-	"translateTalks": {
-		"default": [
-			"Traducendo file di colloqui in {0}",
-			"Ora sto traducendo il file trattative per {0}"
-		]
-	},
-	"breather": {
-		"default": [
-			"Basta prendere una pausa per {0} secondi per riprendere fiato. Riprenderà a breve",
-			"Ritardare traduzione per {0} secondi per contribuire a ridurre i limiti di API"
-		]
-	},
-	"translateDialog": {
-		"default": [
-			"Tradurre espressioni nel file finestra di dialogo in {0}",
-			"Ora sto traducendo le esternazioni finestra dei file a {0}"
-		]
-	},
-	"translateInstructions": {
-		"default": [
-			"Traducendo istruzioni in in {0}",
-			"Ora sto traducendo le istruzioni per {0}"
-		]
-	},
-	"dialogNotExist": {
-		"default": [
-			"file di dialogo {0} .json non esisteva. Così ho creato"
-		]
-	},
-	"instructionsNotExist": {
-		"default": [
-			"file di istruzioni {0} .md non esisteva. Così ho creato"
-		]
-	},
-	"talkNotExist": {
-		"default": [
-			"file di conversazione {0} .json non esisteva. Così ho creato"
-		]
-	},
-	"missingSkill": {
-		"default": [
-			"Non riesci a trovare {0}. Si prega di controllare l'ortografia",
-			"{0} non sembra essere valido, Si prega di controllare l'ortografia"
-		]
-	},
-	"invalidLang": {
-		"default": [
-			"Abilità lingua nelle impostazioni non è valido. Le scelte sono o it, de, fr o"
-		]
-	},
-	"path": {
-		"default": [
-			"Utilizzando il percorso {0}",
-			"Traduzione percorso è {0}"
-		]
-	},
-	"translatingSkill": {
-		"default": [
-			"Traducendo {0} abilità ...."
-		]
-	},
-	"translateSyn": {
-		"default": [
-			"Traducendo i sinonimi nel file finestra di dialogo in {0}",
-			"Ora sto traducendo i sinonimi finestra dei file a {0}"
-		],
-		"short": []
-	},
-	"updateInstall": {
-		"default": [
-			"Ora l'aggiornamento del file di installazione",
-			"Aggiornamento installare il file"
-		]
-	},
-	"majorLimit": {
-		"default": [
-			"Woooah. Trasformati {1} caratteri si trova nei pressi delle quote di Google. Ho bisogno di elaborazione di arresto per {0} secondi o Google bloccherà il tuo IP",
-			"Mettere in pausa la traduzione come sei quasi alla quota carattere di 15k con un conteggio di {1}. Fermandosi per {0} secondi"
-		]
-	},
-	"precheckHeading": [
-		"PreChecks sono abilitati. NOTA: si verificherà la scrittura di file No."
-	],
-	"resultsHeading": {
-		"default": [
-			"Controlli pre completati per {0} abilità .... Le statistiche sono le seguenti"
-		]
-	},
-	"results1": {
-		"default": [
-			"file di colloqui è lungo {0} caratteri su un caso"
-		]
-	},
-	"results2": {
-		"default": [
-			"Esternazioni sono lunghe {0} caratteri in un'altra istanza"
-		]
-	},
-	"results3": {
-		"default": [
-			"Sinonimi sono lunghe {0} caratteri in un'altra istanza"
-		]
-	},
-	"results4": {
-		"default": [
-			"c'è un totale conteggio di carattere {0}"
-		]
-	},
-	"results5": {
-		"default": [
-			"e non ci sarebbe {0} richieste"
-		]
-	},
-	"results6": {
-		"default": [
-			"I limiti sono 15K per i personaggi (per esempio?) E un massimo di 600 richieste al minuto"
-		]
-	},
-	"results7": {
-		"default": [
-			"Si prega di spegnere preChecks in Impostazioni di abilità per iniziare a tradurre"
-		]
-	},
-	"results8": {
-		"default": [
-			"Le istruzioni sono lunghe {0} caratteri in un'altra istanza"
-		]
-	},
-	"expectDelays": {
-		"default": [
-			"Sulla base di questi risultati, il codice sarà volutamente innescare 1 minuto ritardi, come richiesto per ridurre i blocchi API di Google"
-		]
-	},
-	"expectMajorDelays": {
-		"default": [
-			"Sulla base di questi risultati che l'abilità supererà Goggles conteggio dei caratteri assegno per ora. Pertanto il codice forzerà un ritardo di 1 ora durante traduzione"
-		]
-	},
-	"doManually": {
-		"default": [
-			"Spiacente ma questo file di istruzioni sarà sicuramente sconvolto google. Si prega di tradurlo manualmente. conteggio dei caratteri era {0}, il limite è di 15.000"
-		]
-	},
-	"skipInstructions": {
-		"default": [
-			"elenco di istruzioni non esiste. skipping traduzione di istruzioni"
-		]
-	},
-	"preCheckResults": {
-		"default": [
-			"Si prega di controllare il registro di sistema per i risultati del controllo pre"
-		],
-		"short": [
-			"Controlla i log"
-		]
-	},
-	"notValidFolder": {
-		"default": [
-			"{0} non è una cartella valida. si prega di utilizzare un valore di entrambi i 'colloqui', 'dialogo' o 'istruzioni'"
-		]
-	},
-	"translatingOnlyThis": {
-		"default": [
-			"Traducendo solo la directory {0} ma ancora visualizzare i risultati completi"
-		]
-	}
+    "sayCompleted": {
+        "default": [
+            "Completato Traduzione del {0} abilità per un totale di {1} caratteri tradotto. Consigliamo di non tradurre un'altra abilità per almeno un'ora per ridurre la probabilità di Google bloccando il tuo IP per 24 ore",
+            "{0} traduzione giocata finito con un totale di {1} caratteri trasformati. Si prega di attendere almeno un'ora, per le abilità più grandi. prima di tentare un'altra traduzione, o Google potrebbe bloccare il vostro IP per 24 ore"
+        ],
+        "short": [
+            "tutto completato",
+            "Traduzione finito"
+        ]
+    },
+    "startTranslate": {
+        "default": [
+            "Facendo che per te ora. NOTA. Sarò utilizzando Google Translate",
+            "Nessun problema. suggerimento PRO. Non si traducono in molte abilità consecutivamente o Google bloccherà il vostro IP per 24 ore"
+        ],
+        "short": [
+            "ok",
+            "fatto"
+        ]
+    },
+    "translateTalks": {
+        "default": [
+            "Traducendo file di colloqui in {0}",
+            "Ora sto traducendo il file trattative per {0}"
+        ]
+    },
+    "breather": {
+        "default": [
+            "Basta prendere una pausa per {0} secondi per riprendere fiato. Riprenderà a breve",
+            "Ritardare traduzione per {0} secondi per contribuire a ridurre i limiti di API"
+        ]
+    },
+    "translateDialog": {
+        "default": [
+            "Tradurre espressioni nel file finestra di dialogo in {0}",
+            "Ora sto traducendo le esternazioni finestra dei file a {0}"
+        ]
+    },
+    "translateSamples": {
+        "default": [
+            "Traducendo campioni nel file finestra di dialogo in {0}",
+            "Ora sto traducendo il file di esempio a {0}"
+        ]
+    },
+    "translateInstructions": {
+        "default": [
+            "Traducendo istruzioni in in {0}",
+            "Ora sto traducendo le istruzioni per {0}"
+        ]
+    },
+    "dialogNotExist": {
+        "default": [
+            "file di dialogo {0} .json non esisteva. Così ho creato"
+        ]
+    },
+    "sampleNotExist": {
+        "default": [
+            "Esempio di file {0} .Sample non esisteva. Così ho creato"
+        ]
+    },
+    "instructionsNotExist": {
+        "default": [
+            "file di istruzioni {0} .md non esisteva. Così ho creato"
+        ]
+    },
+    "talkNotExist": {
+        "default": [
+            "file di conversazione {0} .json non esisteva. Così ho creato"
+        ]
+    },
+    "missingSkill": {
+        "default": [
+            "Non riesci a trovare {0}. Si prega di controllare l'ortografia",
+            "{0} non sembra essere valido, Si prega di controllare l'ortografia"
+        ]
+    },
+    "invalidLang": {
+        "default": [
+            "Abilità lingua nelle impostazioni non è valido. Le scelte sono o it, de, fr o"
+        ]
+    },
+    "path": {
+        "default": [
+            "Utilizzando il percorso {0}",
+            "Traduzione percorso è {0}"
+        ]
+    },
+    "translatingSkill": {
+        "default": [
+            "Traducendo {0} abilità ...."
+        ]
+    },
+    "translateSyn": {
+        "default": [
+            "Traducendo i sinonimi nel file finestra di dialogo in {0}",
+            "Ora sto traducendo i sinonimi finestra dei file a {0}"
+        ],
+        "short": []
+    },
+    "updateInstall": {
+        "default": [
+            "Ora l'aggiornamento del file di installazione",
+            "Aggiornamento installare il file"
+        ]
+    },
+    "majorLimit": {
+        "default": [
+            "Woooah. Trasformati {1} caratteri si trova nei pressi delle quote di Google. Ho bisogno di elaborazione di arresto per {0} secondi o Google bloccherà il tuo IP",
+            "Mettere in pausa la traduzione come sei quasi alla quota carattere di 15k con un conteggio di {1}. Fermandosi per {0} secondi"
+        ]
+    },
+    "precheckHeading": [
+        "PreChecks sono abilitati. NOTA: si verificherà la scrittura di file No."
+    ],
+    "resultsHeading": {
+        "default": [
+            "Controlli pre completati per {0} abilità .... Le statistiche sono le seguenti"
+        ]
+    },
+    "results1": {
+        "default": [
+            "file di colloqui è lungo {0} caratteri su un caso"
+        ]
+    },
+    "results2": {
+        "default": [
+            "Esternazioni sono lunghe {0} caratteri in un'altra istanza"
+        ]
+    },
+    "results3": {
+        "default": [
+            "Sinonimi sono lunghe {0} caratteri in un'altra istanza"
+        ]
+    },
+    "results4": {
+        "default": [
+            "c'è un totale conteggio di carattere {0}"
+        ]
+    },
+    "results5": {
+        "default": [
+            "e non ci sarebbe {0} richieste"
+        ]
+    },
+    "results6": {
+        "default": [
+            "I limiti sono 15K per i personaggi (per esempio?) E un massimo di 600 richieste al minuto"
+        ]
+    },
+    "results7": {
+        "default": [
+            "Si prega di spegnere preChecks in Impostazioni di abilità per iniziare a tradurre"
+        ]
+    },
+    "results8": {
+        "default": [
+            "Le istruzioni sono lunghe {0} caratteri in un'altra istanza"
+        ]
+    },
+    "results9": {
+        "default": [
+            "I campioni sono lunghe {0} caratteri in un'altra istanza"
+        ]
+    },
+    "expectDelays": {
+        "default": [
+            "Sulla base di questi risultati, il codice sarà volutamente innescare 1 minuto ritardi, come richiesto per ridurre i blocchi API di Google"
+        ]
+    },
+    "expectMajorDelays": {
+        "default": [
+            "Sulla base di questi risultati che l'abilità supererà Goggles conteggio dei caratteri assegno per ora. Pertanto il codice forzerà un ritardo di 1 ora durante traduzione"
+        ]
+    },
+    "doManually": {
+        "default": [
+            "Spiacente ma questo file di istruzioni sarà sicuramente sconvolto google. Si prega di tradurlo manualmente. conteggio dei caratteri era {0}, il limite è di 15.000"
+        ]
+    },
+    "skipInstructions": {
+        "default": [
+            "elenco di istruzioni non esiste. skipping traduzione di istruzioni"
+        ]
+    },
+    "preCheckResults": {
+        "default": [
+            "Si prega di controllare il registro di sistema per i risultati del controllo pre"
+        ],
+        "short": [
+            "Controlla i log"
+        ]
+    },
+    "notValidFolder": {
+        "default": [
+            "{0} non è una cartella valida. si prega di utilizzare un valore di entrambi i 'colloqui', 'dialogo' o 'istruzioni'"
+        ]
+    },
+    "translatingOnlyThis": {
+        "default": [
+            "Traducendo solo la directory {0} ....."
+        ]
+    }
 }

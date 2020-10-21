@@ -79,7 +79,10 @@ Per questo campo ...
 - Inserire una delle seguenti operazioni per tradurre solo quella cartella (opzionale)
  - colloqui
  - dialogo
- - Istruzioni_______________________
+ - Istruzioni
+ - File di esempio
+ 
+ _______________________
 
 #Suggerimenti
 
@@ -104,4 +107,8 @@ che potrebbe essere necessario prendere manualmente alcuni spazi bianchi per ave
 
 Attualmente l'abilità non tradurre i file di riduzione dei prezzi, come queste istruzioni. Questa è una caratteristica futuro da aggiungere
 
+NOTA: l'accuratezza delle traduzioni non è garantito per essere corretti. Ci affidiamo a Google di essere in grado di capire anche
+contesto del discorso. Dopo la traduzione tramite questa abilità sarà necessario la verifica manuale da un @translator in
+il canale discordia
+ 
 Godetevi traduzione

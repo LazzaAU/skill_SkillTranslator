@@ -453,9 +453,9 @@ class SkillTranslator(AliceSkill):
 
 			else:
 				translated = translatorSample.translate(sampleData, dest=activeLanguage)
-
+				fixedTranslationSyntax = translated.text.replace('«', '"').replace('„', '"')
 				# write to file
-				translatedPath.write_text(data=translated.text)
+				translatedPath.write_text(data=fixedTranslationSyntax)
 		else:
 			if self._developerUse:
 				translatedPath.write_text(data=sampleData)

@@ -81,7 +81,16 @@ Pour ce domaine ...
  - dialogue
  - instructions
  - Exemples de fichiers
- 
+
+## ** ** ignoreLanguages
+
+Disons que vous savez que la traduction allemand et français a été fait manuellement par un @translator dans la discorde.
+de sorte que vous voulez traduire vos compétences, mais excluez la traduction allemande et française. Eh bien, vous pouvez le faire avec la
+
+** ** champ ignoreLanguages. Dans le senario ci-dessus vous suffit d'entrer dans ce domaine
+`` `, de fr```
+
+S'il vous plaît noter: langues séparées par une virgule
  _______________________
 
 #Conseils

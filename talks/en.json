@@ -45,7 +45,7 @@
 	},
 	"translateInstructions": {
 		"default": [
-			"Translating instructions in into {0}",
+			"Translating instructions into {0}",
 			"I'm now translating the instructions to {0} "
 		]
 	},

@@ -9,7 +9,13 @@
 			"Deutsch": "de",
 			"Italian": "it"
 		},
-		"description": "Choose language skil was written in"
+		"description": "Choose language skill was written in"
+	},
+	"ignoreLanguages": {
+		"defaultValue": "",
+		"dataType": "string",
+		"isSensitive": false,
+		"description": "Choose languages to ignore if any"
 	},
 	"skillTitle": {
 		"defaultValue": "",

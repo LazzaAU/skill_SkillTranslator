@@ -80,7 +80,16 @@ For this field...
  - dialog
  - instructions
  - Sample files
- 
+
+## **ignoreLanguages**
+
+Let's say you know that german and french translation has been done manually by a @translator in discord.
+so you want to translate your skill but exclude the german and french translation. Well you can do that with the
+
+**ignoreLanguages** field. In the above senario you would just enter into that field
+```de, fr```
+
+Please note: seperate languages with a comma
  _______________________
 
 #Tips

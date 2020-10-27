@@ -98,6 +98,13 @@ class SkillTranslator(AliceSkill):
 		if len(self._translatedLanguages) == numberOfSupportedLanguages:
 			self._translatedLanguages.pop(index)
 
+		# remove languages user chooses to ignore
+		if self.getConfig("ignoreLanguages"):
+			for lang in self.getConfig("ignoreLanguages").split(","):
+				index = self._translatedLanguages.index(lang)
+				if lang in self._translatedLanguages:
+					self._translatedLanguages.pop(index)
+
 		# set the skill to process as this skill if nothing configured in settings
 		if not self.getConfig('skillTitle'):
 			self._skillName = self.name
@@ -546,7 +553,7 @@ class SkillTranslator(AliceSkill):
 				self.logWarning(self.randomTalk(text='doManually', replace=[instructionCharacterCount]))
 
 			else:
-				translated = translatorInstructions.translate(instructionData, dest=activeLanguage)
+				translated = translatorInstructions.translate(text=instructionData, dest=activeLanguage)
 				# remove known translated differences like white space in tags
 				translatedInstructions: str = self.tidyUpInstructionTranslations(text=str(translated.text))
 				# write to file

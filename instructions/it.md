@@ -81,7 +81,16 @@ Per questo campo ...
  - dialogo
  - Istruzioni
  - File di esempio
- 
+
+## ** ** ignoreLanguages
+
+Diciamo che si sa che la traduzione tedesca e francese è stato fatto manualmente da un @translator in discordia.
+in modo che si desidera tradurre la vostra abilità, ma esclude la traduzione tedesco e francese. Ebbene si può fare con il
+
+** ** ignoreLanguages ​​campo. Nella senario sopra si sarebbe solo entrare in quel campo
+`` `de, fr```
+
+Si prega di notare: lingue separate con una virgola
  _______________________
 
 #Suggerimenti

@@ -81,7 +81,16 @@ Für diesen Bereich ...
  - Dialog
  - Anleitung
  - Beispieldateien
- 
+
+## ** ** ignoreLanguages
+
+Angenommen, Sie wissen, dass Deutsch und Französisch Übersetzung manuell durch einen @translator in Zwietracht geschehen ist.
+so dass Sie möchten, dass Ihre Fähigkeit zu übersetzen, aber die Deutsch und Französisch Übersetzung auszuschließen. Nun können Sie das mit dem tun
+
+** ** ignoreLanguages ​​Feld. In der obigen senario würde geben Sie einfach in das Feld
+`` `De, fr```
+
+Bitte beachten Sie: seperate Sprachen mit einem Komma
  _______________________
 
 #Tips

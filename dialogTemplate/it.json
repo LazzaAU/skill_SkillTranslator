@@ -1,65 +1,65 @@
 {
-	"skill": "SkillTranslator",
-	"slotTypes": [
-		{
-			"name": "More",
-			"matchingStrictness": null,
-			"automaticallyExtensible": true,
-			"useSynonyms": true,
-			"values": [
-				{
-					"value": "more",
-					"synonyms": [
-						"Di Più",
-						"molto di piu",
-						"mega more"
-					]
-				}
-			]
-		},
-		{
-			"name": "less",
-			"matchingStrictness": null,
-			"automaticallyExtensible": true,
-			"useSynonyms": true,
-			"values": [
-				{
-					"value": "less",
-					"synonyms": [
-						"un po 'meno",
-						"solo un po 'meno",
-						"molto meno"
-					]
-				}
-			]
-		}
-	],
-	"intents": [
-		{
-			"name": "TranslateSkill",
-			"enabledByDefault": true,
-			"utterances": [
-				"tradurre il mio skill",
-				"tradurre un'abilità noto"
-			]
-		},
-		{
-			"name": "transTestIntent",
-			"enabledByDefault": false,
-			"utterances": [
-				"cosa succede nella cappa",
-				"hows cose nel dungeon",
-				"chi ha detto questo",
-				"dammi {più:=>more} esternazioni"
-			],
-			"slots": [
-				{
-					"name": "more",
-					"required": false,
-					"type": "More",
-					"missingQuestion": ""
-				}
-			]
-		}
-	]
+    "skill": "SkillTranslator",
+    "slotTypes": [
+        {
+            "name": "More",
+            "matchingStrictness": null,
+            "automaticallyExtensible": true,
+            "useSynonyms": true,
+            "values": [
+                {
+                    "value": "more",
+                    "synonyms": [
+                        "Di Più",
+                        "molto di piu",
+                        "mega more"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "less",
+            "matchingStrictness": null,
+            "automaticallyExtensible": true,
+            "useSynonyms": true,
+            "values": [
+                {
+                    "value": "less",
+                    "synonyms": [
+                        "un po 'meno",
+                        "solo un po 'meno",
+                        "molto meno"
+                    ]
+                }
+            ]
+        }
+    ],
+    "intents": [
+        {
+            "name": "TranslateSkill",
+            "enabledByDefault": true,
+            "utterances": [
+                "tradurre il mio skill",
+                "tradurre un'abilità noto"
+            ]
+        },
+        {
+            "name": "transTestIntent",
+            "enabledByDefault": false,
+            "utterances": [
+                "cosa succede nella cappa",
+                "hows cose nel dungeon",
+                "chi ha detto questo",
+                "dammi {più:=>more} esternazioni"
+            ],
+            "slots": [
+                {
+                    "name": "more",
+                    "required": false,
+                    "type": "More",
+                    "missingQuestion": ""
+                }
+            ]
+        }
+    ]
 }

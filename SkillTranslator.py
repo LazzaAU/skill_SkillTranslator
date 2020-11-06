@@ -25,8 +25,8 @@ class SkillTranslator(AliceSkill):
 	def __init__(self):
 
 		self._translatedData = dict()
-		self._supportedLanguages = ['en', 'de', 'it', 'fr']
-		self._translatedLanguages = ['en', 'de', 'it', 'fr']
+		self._supportedLanguages = ['en', 'de', 'it', 'fr', 'pl']
+		self._translatedLanguages = ['en', 'de', 'it', 'fr', 'pl']
 		self._skillLanguage = ""
 		self._skillName = ""
 		self._translationPath = Path
@@ -38,6 +38,7 @@ class SkillTranslator(AliceSkill):
 		self._talkShortCount = 0
 		self._dialogCount = 0
 		self._synonymCount = 0
+		self._sampleCount = 0
 		self._precheckTrigger = 0
 		self._requestTotal = 0
 		self._instructionCount = 0
@@ -76,7 +77,8 @@ class SkillTranslator(AliceSkill):
 			'en': 'English',
 			'de': 'German',
 			'fr': 'French',
-			'it': 'Italian'
+			'it': 'Italian',
+			'pl': 'Polish'
 		}
 
 		# do prechecks if this is enabled
@@ -95,6 +97,13 @@ class SkillTranslator(AliceSkill):
 
 		if len(self._translatedLanguages) == numberOfSupportedLanguages:
 			self._translatedLanguages.pop(index)
+
+		# remove languages user chooses to ignore
+		if self.getConfig("ignoreLanguages"):
+			for lang in self.getConfig("ignoreLanguages").split(","):
+				index = self._translatedLanguages.index(lang)
+				if lang in self._translatedLanguages:
+					self._translatedLanguages.pop(index)
 
 		# set the skill to process as this skill if nothing configured in settings
 		if not self.getConfig('skillTitle'):
@@ -132,6 +141,10 @@ class SkillTranslator(AliceSkill):
 			self.translateInstructions(activeLanguage)
 			self.logInfo(self.randomTalk(text='translatingOnlyThis', replace=[self._translateThis]), )
 			return True
+		elif self._translateThis.lower() == 'samples':
+			self.translateSamples(activeLanguage)
+			self.logInfo(self.randomTalk(text='translatingOnlyThis', replace=[self._translateThis]), )
+			return True
 		else:
 			self.logError(self.randomTalk(text='notValidFolder', replace=[self._translateThis]), )
 			return False
@@ -156,7 +169,7 @@ class SkillTranslator(AliceSkill):
 				self.translateTalksfile(activeLanguage)
 				self.translateDialogFile(activeLanguage)
 				self.translateInstructions(activeLanguage)
-
+				self.translateSamples(activeLanguage)
 		if not self._translateThis:
 			self.writeInstallConditions()
 		else:
@@ -414,6 +427,46 @@ class SkillTranslator(AliceSkill):
 			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
 
 
+	def translateSamples(self, activeLanguage):
+
+		self.logDebug(self.randomTalk(text='translateSamples', replace=[self._languageNames[activeLanguage]]), )
+
+		# Check if we have all the language files. If not make them
+		self.checkFileExists(activeLanguage=activeLanguage, path='dialogTemplate', talkFile='sampleNotExist', fileType='.sample')
+
+		# The Language file that the skill was written in
+		file = Path(f'{self._translationPath}/dialogTemplate/{self._skillLanguage}.sample')
+		# The file we are going to translate into
+		translatedPath = Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.sample')
+		sampleData = file.read_text()
+
+		# create a new instance
+		translatorSample = Translator()
+
+		# do safe guard checks
+		self.characterCountor(text=sampleData)
+		self.requestLimitChecker()
+		sampleCharacterCount = len(sampleData)
+		if self._precheckTrigger == 1:
+			self._sampleCount += sampleCharacterCount
+		self._requestLimiter += 1
+		self._requestTotal += 1
+
+		# if ready to translate do this
+		if not self.getConfig('preCheck'):
+			# dont translate if charactor count is too large
+			if sampleCharacterCount >= 14900:
+				self.logWarning(self.randomTalk(text='doManually', replace=[sampleCharacterCount]))
+
+			else:
+				translated = translatorSample.translate(sampleData, dest=activeLanguage)
+				fixedTranslationSyntax = translated.text.replace('«', '"').replace('„', '"')
+				# write to file
+				translatedPath.write_text(data=fixedTranslationSyntax)
+		else:
+			if self._developerUse:
+				translatedPath.write_text(data=sampleData)
+
 	def writeInstallConditions(self):
 		self.logDebug(self.randomTalk(text='updateInstall'))
 		# Lets update the install file language conditions
@@ -456,6 +509,7 @@ class SkillTranslator(AliceSkill):
 			self.logInfo(self.randomTalk(text='results2', replace=[self._dialogCount]))
 			self.logInfo(self.randomTalk(text='results3', replace=[self._synonymCount]))
 			self.logInfo(self.randomTalk(text='results8', replace=[self._instructionCount]), )
+			self.logInfo(self.randomTalk(text='results9', replace=[self._sampleCount]), )
 			self.logInfo('')
 			self.logInfo(self.randomTalk(text='results4', replace=[self._characterCounter]))
 			self.logInfo(self.randomTalk(text='results5', replace=[self._requestTotal]))
@@ -499,7 +553,7 @@ class SkillTranslator(AliceSkill):
 				self.logWarning(self.randomTalk(text='doManually', replace=[instructionCharacterCount]))
 
 			else:
-				translated = translatorInstructions.translate(instructionData, dest=activeLanguage)
+				translated = translatorInstructions.translate(text=instructionData, dest=activeLanguage)
 				# remove known translated differences like white space in tags
 				translatedInstructions: str = self.tidyUpInstructionTranslations(text=str(translated.text))
 				# write to file

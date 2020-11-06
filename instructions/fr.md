@@ -79,7 +79,19 @@ Pour ce domaine ...
 - Entrez l'un des éléments suivants pour traduire uniquement ce dossier (facultatif)
  - des pourparlers
  - dialogue
- - instructions_______________________
+ - instructions
+ - Exemples de fichiers
+
+## ** ** ignoreLanguages
+
+Disons que vous savez que la traduction allemand et français a été fait manuellement par un @translator dans la discorde.
+de sorte que vous voulez traduire vos compétences, mais excluez la traduction allemande et française. Eh bien, vous pouvez le faire avec la
+
+** ** champ ignoreLanguages. Dans le senario ci-dessus vous suffit d'entrer dans ce domaine
+`` `, de fr```
+
+S'il vous plaît noter: langues séparées par une virgule
+ _______________________
 
 #Conseils
 
@@ -104,4 +116,8 @@ que vous pourriez avoir à prendre manuellement certains espaces blancs pour avo
 
 Actuellement, la compétence ne se traduira pas des fichiers Markdown tels que ces instructions. C'est une caractéristique de l'avenir à ajouter
 
+REMARQUE: n'est pas garanti l'exactitude des traductions correctes. Nous comptons sur google pouvoir comprendre aussi
+le contexte du discours. Après la traduction via cette compétence, il faudra une vérification manuelle d'un @translator dans
+le canal discorde
+ 
 Profitez de la traduction

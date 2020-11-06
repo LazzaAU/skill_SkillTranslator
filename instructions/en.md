@@ -78,7 +78,19 @@ For this field...
 - Enter one of the following to translate ONLY that folder (optional)
  - talks
  - dialog
- - instructions_______________________
+ - instructions
+ - Sample files
+
+## **ignoreLanguages**
+
+Let's say you know that german and french translation has been done manually by a @translator in discord.
+so you want to translate your skill but exclude the german and french translation. Well you can do that with the
+
+**ignoreLanguages** field. In the above senario you would just enter into that field
+```de, fr```
+
+Please note: seperate languages with a comma
+ _______________________
 
 #Tips
 
@@ -103,6 +115,10 @@ that you may have to manually take out some white spaces to have it display prop
 
 Currently the skill will not translate markdown files such as these instructions. That's a future feature to be added
 
+NOTE: the accuracy of the translations is not guaranteed to be correct. We rely on google being able to also understand 
+the context of the speech. After translation via this skill it will require manual verification from a @translator in
+the discord channel
+ 
 Enjoy translating 
 
  

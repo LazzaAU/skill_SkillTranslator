@@ -68,7 +68,7 @@ Z.B:
 Dieses Feld bezeichnet die Fähigkeit, die Sie übersetzen
 
 - Mit diesem Feld gefüllt und ** NICHT ** Das * skillPath * Feld und dann dem Pfad standardmäßig auf den ProjectAlice / Fähigkeiten Ordner
-- Mit diesem Feld und skillPath Feld ** NICHT ** ausgefüllt dann werden Sie diese Fähigkeit standardmäßig übersetzen ..
+- Mit diesem Feld und skillPath Feld ** NICHT ** ausgefüllt, dann wird diese Fähigkeit durch Standard übersetzen ..
 _
 ## ** ** translateOnlyThis
 
@@ -79,7 +79,19 @@ Für diesen Bereich ...
 - eine der folgenden Geben Sie nur diesen Ordner (optional) zu übersetzen
  - Gespräche
  - Dialog
- - instructions_______________________
+ - Anleitung
+ - Beispieldateien
+
+## ** ** ignoreLanguages
+
+Angenommen, Sie wissen, dass Deutsch und Französisch Übersetzung manuell durch einen @translator in Zwietracht geschehen ist.
+so dass Sie möchten, dass Ihre Fähigkeit zu übersetzen, aber die Deutsch und Französisch Übersetzung auszuschließen. Nun können Sie das mit dem tun
+
+** ** ignoreLanguages ​​Feld. In der obigen senario würde geben Sie einfach in das Feld
+`` `De, fr```
+
+Bitte beachten Sie: seperate Sprachen mit einem Komma
+ _______________________
 
 #Tips
 
@@ -104,4 +116,8 @@ dass müssen Sie manuell einige weißen Räume nehmen können es richtig angezei
 
 Derzeit ist die Fähigkeit nicht Abschlag Dateien übersetzen, wie diese Anweisungen. Das ist eine Zukunft Feature hinzugefügt werden
 
+HINWEIS: die Genauigkeit der Übersetzungen ist nicht korrekt sein garantiert. Wir setzen auf Google auch in der Lage zu verstehen,
+der Zusammenhang der Rede. Nach der Übersetzung über diese Fähigkeit wird es manuelle Überprüfung von einem @translator erfordert in
+die Disharmonie Kanal
+ 
 genießen Sie übersetzen

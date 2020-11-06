@@ -79,7 +79,19 @@ Per questo campo ...
 - Inserire una delle seguenti operazioni per tradurre solo quella cartella (opzionale)
  - colloqui
  - dialogo
- - Istruzioni_______________________
+ - Istruzioni
+ - File di esempio
+
+## ** ** ignoreLanguages
+
+Diciamo che si sa che la traduzione tedesca e francese è stato fatto manualmente da un @translator in discordia.
+in modo che si desidera tradurre la vostra abilità, ma esclude la traduzione tedesco e francese. Ebbene si può fare con il
+
+** ** ignoreLanguages ​​campo. Nella senario sopra si sarebbe solo entrare in quel campo
+`` `de, fr```
+
+Si prega di notare: lingue separate con una virgola
+ _______________________
 
 #Suggerimenti
 
@@ -104,4 +116,8 @@ che potrebbe essere necessario prendere manualmente alcuni spazi bianchi per ave
 
 Attualmente l'abilità non tradurre i file di riduzione dei prezzi, come queste istruzioni. Questa è una caratteristica futuro da aggiungere
 
+NOTA: l'accuratezza delle traduzioni non è garantito per essere corretti. Ci affidiamo a Google di essere in grado di capire anche
+contesto del discorso. Dopo la traduzione tramite questa abilità sarà necessario la verifica manuale da un @translator in
+il canale discordia
+ 
 Godetevi traduzione

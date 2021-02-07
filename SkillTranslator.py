@@ -60,7 +60,7 @@ class SkillTranslator(AliceSkill):
 		self.endDialog(
 			sessionId=session.sessionId,
 			text=self.randomTalk(text='startTranslate'),
-			siteId=session.siteId
+			deviceUid=session.deviceUid
 		)
 
 		# Wait 5 seconds or the above endDialog wont speak until the end of translating on some larger files

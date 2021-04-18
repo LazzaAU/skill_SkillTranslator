@@ -1,8 +1,8 @@
-##Instructions
+## Instructions
 
 So you've written a skill and want to translate it ? Good job, lets get into it then.
 
-##Quick operational steps
+## Quick operational steps
 
 **To use this skill**
 
@@ -14,7 +14,7 @@ So you've written a skill and want to translate it ? Good job, lets get into it 
 
 Ask alice to " translate my skill"
 
-##Skill Overview
+## Skill Overview
 
 - Precheck mode
  
@@ -31,7 +31,7 @@ prior to sending that data to Google. That way you can make a informed decision 
 Once run and it shows no errors, turn this mode off to run the skill in Translation mode
 
 
-##**When run in translation mode :**
+## **When run in translation mode :**
 
 The skill will translate the talks directory first. If the requests being made to Google exceed the quota it will 
 pause the code for 70 seconds (Pause the skill not Alice) then resume.
@@ -45,7 +45,7 @@ before writing it to file.
 
 Once translated it will then add all 4 languages to the install file.
 
-##**skillPath** field (optional)
+## **skillPath** field (optional)
 
 - This is handy of you want to translate your skill files that are outside of the skills folder
 
@@ -62,14 +62,14 @@ EG:
 - skillTitle = HomeAssistant
 .
 
-##**SkillTitle** field (required)
+## **SkillTitle** field (required)
 
 This field denotes the skill you want to translate
 
 - With this field filled and **NOT** the *skillPath* field as well then the path defaults to the ProjectAlice/skills folder
 - With this field and skillPath field **NOT** filled in then you will translate this skill by default..
 _
-##**translateOnlyThis**
+## **translateOnlyThis**
 
 For this field...
 
@@ -92,7 +92,7 @@ so you want to translate your skill but exclude the german and french translatio
 Please note: seperate languages with a comma
  _______________________
 
-#Tips
+## Tips
 
 Currently.. if you run the skill in one language and then run the skill in another language you may strike a error.
 Restart Alice if you are switching the default languages between attempts.

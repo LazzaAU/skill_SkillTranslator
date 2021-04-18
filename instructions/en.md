@@ -1,8 +1,8 @@
-#<span style="color: #ff0000;"><strong>Instructions </span></strong>
+##Instructions
 
 So you've written a skill and want to translate it ? Good job, lets get into it then.
 
-#<span style="color: #0000FF;"><strong>Quick operational steps</span></strong>
+##Quick operational steps
 
 **To use this skill**
 
@@ -14,7 +14,7 @@ So you've written a skill and want to translate it ? Good job, lets get into it 
 
 Ask alice to " translate my skill"
 
-#<span style="color: #0000FF;"><strong>Skill Overview </span></strong>
+##Skill Overview
 
 - Precheck mode
  

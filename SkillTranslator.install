@@ -14,14 +14,16 @@
         ""
     ],
     "pipRequirements": [
-        "googletrans"
+        "googletrans==3.1.0a0"
     ],
     "conditions": {
         "lang": [
             "en",
             "fr",
             "de",
-            "it"
+            "it",
+			"pl",
+			"pt"
         ],
         "online": true,
         "asrArbitraryCapture": true

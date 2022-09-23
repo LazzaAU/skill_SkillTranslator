@@ -25,8 +25,8 @@ class SkillTranslator(AliceSkill):
 	def __init__(self):
 
 		self._translatedData = dict()
-		self._supportedLanguages = ['en', 'de', 'it', 'fr', 'pl']
-		self._translatedLanguages = ['en', 'de', 'it', 'fr', 'pl']
+		self._supportedLanguages = ['en', 'de', 'it', 'fr', 'pl', 'pt']
+		self._translatedLanguages = ['en', 'de', 'it', 'fr', 'pl', 'pt']
 		self._skillLanguage = ""
 		self._skillName = ""
 		self._translationPath = Path
@@ -56,14 +56,14 @@ class SkillTranslator(AliceSkill):
 			self.logError(f'Nope, i ain\'t gonna do anything until you turn on preCheck')
 			return
 
-		# give user feedback that shes doing it
+		# give user feedback that she's doing it
 		self.endDialog(
 			sessionId=session.sessionId,
 			text=self.randomTalk(text='startTranslate'),
 			deviceUid=session.deviceUid
 		)
 
-		# Wait 5 seconds or the above endDialog wont speak until the end of translating on some larger files
+		# Wait 5 seconds or the above endDialog won't speak until the end of translating on some larger files
 		self.ThreadManager.doLater(
 			interval=5,
 			func=self.runTranslateProcess
@@ -78,14 +78,15 @@ class SkillTranslator(AliceSkill):
 			'de': 'German',
 			'fr': 'French',
 			'it': 'Italian',
-			'pl': 'Polish'
+			'pl': 'Polish',
+			'pt': 'Portuguese'
 		}
 
-		# do prechecks if this is enabled
+		# Do precheck if this is enabled
 		if self.getConfig('preCheck'):
 			self.logWarning(self.randomTalk(text='precheckHeading'))
 		if self._developerUse:
-			self.logWarning(f'Your in internal developer mode. Things will get written')
+			self.logWarning(f"You're in internal developer mode. Things will get written")
 
 		# get the default language of the skill from config
 
@@ -105,7 +106,7 @@ class SkillTranslator(AliceSkill):
 				if lang in self._translatedLanguages:
 					self._translatedLanguages.pop(index)
 
-		# set the skill to process as this skill if nothing configured in settings
+		# set the skill to process this skill if nothing is configured in the settings
 		if not self.getConfig('skillTitle'):
 			self._skillName = self.name
 		else:
@@ -169,7 +170,7 @@ class SkillTranslator(AliceSkill):
 				self.translateTalksfile(activeLanguage)
 				self.translateDialogFile(activeLanguage)
 				self.translateInstructions(activeLanguage)
-				self.translateSamples(activeLanguage)
+				#self.translateSamples(activeLanguage)
 		if not self._translateThis:
 			self.writeInstallConditions()
 		else:
@@ -177,7 +178,7 @@ class SkillTranslator(AliceSkill):
 
 
 	def checkFileExists(self, activeLanguage, path, talkFile, fileType):
-		# If language file doesnt exists and preCheck is not enabled then create it
+		# If language file doesn't exist and preCheck is not enabled then create it
 		if not Path(f'{self._translationPath}/{path}/{activeLanguage}{fileType}').exists() and not self.getConfig('preCheck'):
 			with open(Path(f'{self._translationPath}/{path}/{activeLanguage}{fileType}'), 'x'):
 				self.logInfo(self.randomTalk(text=talkFile, replace=[activeLanguage]))
@@ -199,7 +200,7 @@ class SkillTranslator(AliceSkill):
 		talksData = json.loads(file.read_text())
 
 		# create instance of translator
-		translator = Translator()
+		translator = Translator(service_urls=['translate.googleapis.com'])
 
 		# Check if we have all the language files. If not make them
 		self.checkFileExists(activeLanguage=activeLanguage, path='talks', talkFile='talkNotExist', fileType=".json")
@@ -228,11 +229,10 @@ class SkillTranslator(AliceSkill):
 	def processTalksFileDictionary(self, talkValue, translator, activeLanguage: str, defaultList: list):
 		"""
 		enumerate each line of the talk file and process as required
-
 		:param talkValue: The string from talks file currently being processed
 		:param translator: The Translator instance
-		:param activeLanguage: The active language thats being process
-		:param defaultList: stores the translated data in a list
+		:param activeLanguage: The active language that's being processed
+		:param defaultList: Stores the translated data in a list
 		:return: either stores dict to self._translatedData or moves on to process short dictionary values
 		"""
 		# The value of the dictionary - the key
@@ -253,7 +253,6 @@ class SkillTranslator(AliceSkill):
 	def doCommonTasks(self, text: str, activeLanguage: str, transInstance, translatedList: list, triggeredFrom):
 		"""
 		Do the common tasks between several of the methods
-
 		:param text: The active line of code to translate
 		:param activeLanguage: the current language that's being processed
 		:param transInstance: A instance of the translator
@@ -261,9 +260,9 @@ class SkillTranslator(AliceSkill):
 		:param triggeredFrom: What triggered this code, options= talk, dialog, synnoyms
 		:return: Translated values (or non translated values if in preCheck mode)
 		"""
-		translated = transInstance.__class__  # i'm guessing this is correct, just want to declare it ?
+		translated = transInstance.__class__  # I'm guessing this is correct, just want to declare it ?
 
-		# do safe guard checks
+		# Do safeguard checks
 		self.characterCountor(text=text)
 		self.requestLimitChecker()
 
@@ -328,14 +327,14 @@ class SkillTranslator(AliceSkill):
 
 		dialogData = json.loads(file.read_text())
 		# create a new instance
-		translatorUtterance = Translator()
+		translatorUtterance = Translator(service_urls=['translate.googleapis.com'])
 		translated = translatorUtterance.__class__
 
 		for i, item in enumerate(dialogData['intents']):
 
 			dialogList = list()
 			for utterance in item['utterances']:
-				# check safe guards
+				# Check safeguards
 				self.characterCountor(text=utterance)
 				self.requestLimitChecker()
 
@@ -388,7 +387,7 @@ class SkillTranslator(AliceSkill):
 			if self.getConfig('preCheck'):
 				utterance = str(utterance).replace("{0}", storeCodeSnippet[0], 1)
 			else:
-				translatedUtterance = str(translatedUtterance).replace(" {0}", storeCodeSnippet[0], 1)
+				translatedUtterance = str(translatedUtterance).replace("{0}", storeCodeSnippet[0], 1)
 			# Internal debugging aid
 			if self._developerUse:
 				self.logWarning(f'Rebuilding translated Utterance "{utterance}" ')
@@ -405,27 +404,57 @@ class SkillTranslator(AliceSkill):
 		translatedFile = Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json')
 
 		# create a new instance
-		translatorSyn = Translator()
+		translatorSyn = Translator(service_urls=['translate.googleapis.com'])
 
+		# Let's translate the values before synonyms
 		for i, item in enumerate(dialogData['slotTypes']):
-
+			dictList = list()
 			synList = list()
-			for slotValue in item['values']:
-				# Using try in case user has empty Synonym lists (index out of range errors)
-				try:
-					for synonym in slotValue['synonyms']:
+			translatedValue = list()
+
+			listOfSlotValues = item.get('values', list())
+			counter = 0
+			for dictItem in listOfSlotValues:
+
+				translatableValue : str = dictItem['value']
+				translatedValue = self.doCommonTasks(text=translatableValue, activeLanguage=activeLanguage, transInstance=translatorSyn, translatedList=translatedValue, triggeredFrom='synonym')
+
+				if self._developerUse:
+					translatedValue = ["I'm a Translated Value"]
+				synList = list()
+				for synonym in dictItem['synonyms']:
+					try:
 						synList = self.doCommonTasks(text=synonym, activeLanguage=activeLanguage, transInstance=translatorSyn, translatedList=synList, triggeredFrom='synonym')
+					except:
+						continue
+				valueList = {
+					'value': translatedValue[0],
+					'synonyms': synList
+				}
+				# Add new values to a temporary dictionary
+				dictList.append(valueList)
+				translatedValue = list()
+				print(f"dict list is {dictList}")
+			# Update the slotType with translated slot values
+			dialogData['slotTypes'][i]['values'] = dictList
+			print(f"just written to dialogData")
+			# Using 'try' in case user has empty Synonym lists (index out of range errors)
+			#try:
+			#	for synonym in item['synonyms']:
+					# Now let's translate any synonyms
+			#		synList = self.doCommonTasks(text=synonym, activeLanguage=activeLanguage, transInstance=translatorSyn, translatedList=synList, triggeredFrom='synonym')
+			#		print(f"syn list is {synList}")
+			#		item['values'][0]['synonyms'] = synList
 
-					item['values'][0]['synonyms'] = synList
-
-				except:
-					continue
+			#except:
+			#	continue
 
 		if not self.getConfig('preCheck'):
 			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
 		if self._developerUse:
 			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
 
+		self.translateSamples(activeLanguage)
 
 	def translateSamples(self, activeLanguage):
 
@@ -441,9 +470,9 @@ class SkillTranslator(AliceSkill):
 		sampleData = file.read_text()
 
 		# create a new instance
-		translatorSample = Translator()
+		translatorSample = Translator(service_urls=['translate.googleapis.com'])
 
-		# do safe guard checks
+		# Do safeguard checks
 		self.characterCountor(text=sampleData)
 		self.requestLimitChecker()
 		sampleCharacterCount = len(sampleData)
@@ -454,12 +483,13 @@ class SkillTranslator(AliceSkill):
 
 		# if ready to translate do this
 		if not self.getConfig('preCheck'):
-			# dont translate if charactor count is too large
+			# Don't translate if charactor count is too large
 			if sampleCharacterCount >= 14900:
 				self.logWarning(self.randomTalk(text='doManually', replace=[sampleCharacterCount]))
 
 			else:
 				translated = translatorSample.translate(sampleData, dest=activeLanguage)
+
 				fixedTranslationSyntax = translated.text.replace('«', '"').replace('„', '"')
 				# write to file
 				translatedPath.write_text(data=fixedTranslationSyntax)
@@ -469,7 +499,7 @@ class SkillTranslator(AliceSkill):
 
 	def writeInstallConditions(self):
 		self.logDebug(self.randomTalk(text='updateInstall'))
-		# Lets update the install file language conditions
+		# Let's update the install-file language conditions
 		file = Path(f'{self._translationPath}/{self._skillName}.install')
 		installData = json.loads(file.read_text())
 
@@ -535,9 +565,9 @@ class SkillTranslator(AliceSkill):
 		instructionData = file.read_text()
 
 		# create a new instance
-		translatorInstructions = Translator()
+		translatorInstructions = Translator(service_urls=['translate.googleapis.com'])
 
-		# do safe guard checks
+		# Do safe guardchecks
 		self.characterCountor(text=instructionData)
 		self.requestLimitChecker()
 		instructionCharacterCount = len(instructionData)
@@ -548,7 +578,7 @@ class SkillTranslator(AliceSkill):
 
 		# if ready to translate do this
 		if not self.getConfig('preCheck'):
-			# dont translate if charactor count is too large
+			# Don't translate if charactor count is too large
 			if instructionCharacterCount >= 14900:
 				self.logWarning(self.randomTalk(text='doManually', replace=[instructionCharacterCount]))
 
@@ -564,7 +594,7 @@ class SkillTranslator(AliceSkill):
 				translatedPath.write_text(data=dummyInstructions)
 
 
-	# Used to repair known issues with google translations. EG when they add unwanted whitespace
+	# Used to repair known issues with Google translations. EG when they add unwanted whitespace
 	@staticmethod
 	def tidyUpInstructionTranslations(text: str):
 
@@ -587,7 +617,7 @@ class SkillTranslator(AliceSkill):
 		"""
 		seconds: float = 70
 		# 600 is apparently the limit but was blocked at below 550
-		# so have set the limit to 480 before triggering the 70 second timer
+		# so have set the limit to 480 before triggering the 70-second timer
 		if self._requestLimiter == 480:
 
 			self.logWarning(self.randomTalk(text='breather', replace=[seconds]))

@@ -7,7 +7,9 @@
 			"English": "en",
 			"Français": "fr",
 			"Deutsch": "de",
-			"Italian": "it"
+			"Italian": "it",
+			"Polish": "pl",
+			"Portuguese": "pt"
 		},
 		"description": "Choose language skill was written in"
 	},

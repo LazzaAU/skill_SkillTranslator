@@ -93,8 +93,8 @@
 	},
 	"translateSyn": {
 		"default": [
-			"Translating synonyms in the dialog file into {0}",
-			"I'm now translating the dialog file synonyms to {0} "
+			"Translating synonyms and values in the dialog file into {0}",
+			"I'm now translating the dialog file synonyms/values to {0} "
 		],
 		"short": [
 		]

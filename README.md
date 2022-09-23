@@ -7,10 +7,13 @@ Translate your skill into other languages
 - Author: Lazza
 - Maintainers: 
 - Alice minimum Version: 1.0.0-b3
-- Languages:
-    en
-    fr
-    de
-    it
+  - Languages:
+      en
+      fr
+      de
+      it
+      pl
+  	  pt
 
-A skill used for translating a existing skill
+A skill used for translating an existing skill. It uses google translator, so it's of a 
+reasonable translation but always pays to get the translation checked manually for higher accuracy.

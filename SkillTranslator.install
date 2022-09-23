@@ -1,7 +1,7 @@
 {
     "name": "SkillTranslator",
     "speakableName": "translate a skill",
-    "version": "1.1.8",
+    "version": "1.2.8",
     "icon": "fas fa-language",
     "category": "assistance",
     "author": "Lazza",
@@ -14,14 +14,16 @@
         ""
     ],
     "pipRequirements": [
-        "googletrans"
+        "googletrans==3.1.0a0"
     ],
     "conditions": {
         "lang": [
             "en",
             "fr",
             "de",
-            "it"
+            "it",
+			"pl",
+			"pt"
         ],
         "online": true,
         "asrArbitraryCapture": true

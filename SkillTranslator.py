@@ -44,6 +44,7 @@ class SkillTranslator(AliceSkill):
 		self._instructionCount = 0
 		self._developerUse = False
 		self._translateThis = ""
+		self._googleApi = 'translate.googleapis.com'
 
 		super().__init__()
 
@@ -200,7 +201,7 @@ class SkillTranslator(AliceSkill):
 		talksData = json.loads(file.read_text())
 
 		# create instance of translator
-		translator = Translator(service_urls=['translate.googleapis.com'])
+		translator = Translator(service_urls=[self._googleApi])
 
 		# Check if we have all the language files. If not make them
 		self.checkFileExists(activeLanguage=activeLanguage, path='talks', talkFile='talkNotExist', fileType=".json")
@@ -327,7 +328,7 @@ class SkillTranslator(AliceSkill):
 
 		dialogData = json.loads(file.read_text())
 		# create a new instance
-		translatorUtterance = Translator(service_urls=['translate.googleapis.com'])
+		translatorUtterance = Translator(service_urls=[self._googleApi])
 		translated = translatorUtterance.__class__
 
 		for i, item in enumerate(dialogData['intents']):
@@ -404,7 +405,7 @@ class SkillTranslator(AliceSkill):
 		translatedFile = Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json')
 
 		# create a new instance
-		translatorSyn = Translator(service_urls=['translate.googleapis.com'])
+		translatorSyn = Translator(service_urls=[self._googleApi])
 
 		# Let's translate the values before synonyms
 		for i, item in enumerate(dialogData['slotTypes']):
@@ -461,7 +462,7 @@ class SkillTranslator(AliceSkill):
 		sampleData = file.read_text()
 
 		# create a new instance
-		translatorSample = Translator(service_urls=['translate.googleapis.com'])
+		translatorSample = Translator(service_urls=[self._googleApi])
 
 		# Do safeguard checks
 		self.characterCountor(text=sampleData)
@@ -556,7 +557,7 @@ class SkillTranslator(AliceSkill):
 		instructionData = file.read_text()
 
 		# create a new instance
-		translatorInstructions = Translator(service_urls=['translate.googleapis.com'])
+		translatorInstructions = Translator(service_urls=[self._googleApi])
 
 		# Do safe guardchecks
 		self.characterCountor(text=instructionData)

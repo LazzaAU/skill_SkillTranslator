@@ -409,11 +409,10 @@ class SkillTranslator(AliceSkill):
 		# Let's translate the values before synonyms
 		for i, item in enumerate(dialogData['slotTypes']):
 			dictList = list()
-			synList = list()
 			translatedValue = list()
 
 			listOfSlotValues = item.get('values', list())
-			counter = 0
+
 			for dictItem in listOfSlotValues:
 
 				translatableValue : str = dictItem['value']
@@ -421,12 +420,15 @@ class SkillTranslator(AliceSkill):
 
 				if self._developerUse:
 					translatedValue = ["I'm a Translated Value"]
+
+				# Now let's translate synonyms
 				synList = list()
 				for synonym in dictItem['synonyms']:
 					try:
 						synList = self.doCommonTasks(text=synonym, activeLanguage=activeLanguage, transInstance=translatorSyn, translatedList=synList, triggeredFrom='synonym')
 					except:
 						continue
+
 				valueList = {
 					'value': translatedValue[0],
 					'synonyms': synList
@@ -434,20 +436,9 @@ class SkillTranslator(AliceSkill):
 				# Add new values to a temporary dictionary
 				dictList.append(valueList)
 				translatedValue = list()
-				print(f"dict list is {dictList}")
-			# Update the slotType with translated slot values
-			dialogData['slotTypes'][i]['values'] = dictList
-			print(f"just written to dialogData")
-			# Using 'try' in case user has empty Synonym lists (index out of range errors)
-			#try:
-			#	for synonym in item['synonyms']:
-					# Now let's translate any synonyms
-			#		synList = self.doCommonTasks(text=synonym, activeLanguage=activeLanguage, transInstance=translatorSyn, translatedList=synList, triggeredFrom='synonym')
-			#		print(f"syn list is {synList}")
-			#		item['values'][0]['synonyms'] = synList
 
-			#except:
-			#	continue
+			# Update the slotType with translated slot values and synonyms
+			dialogData['slotTypes'][i]['values'] = dictList
 
 		if not self.getConfig('preCheck'):
 			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))

@@ -404,7 +404,7 @@ class SkillTranslator(AliceSkill):
 		# The language file we are going to translate into
 		translatedFile = Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json')
 
-		# create a new instance
+		# create a new translate instance
 		translatorSyn = Translator()
 		translated = translatorSyn.__class__
 

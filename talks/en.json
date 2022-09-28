@@ -97,6 +97,7 @@
 			"I'm now translating the dialog file synonyms/values to {0} "
 		],
 		"short": [
+			"translating synonyms into {0}"
 		]
 	},
 	"updateInstall": {

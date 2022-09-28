@@ -407,7 +407,7 @@ class SkillTranslator(AliceSkill):
 		# create a new instance
 		translatorSyn = Translator(service_urls=[self._googleApi])
 
-		# Let's translate the values before synonyms
+		# Let's translate the values and add it to the synonym list
 		for i, item in enumerate(dialogData['slotTypes']):
 			dictList = list()
 			translatedValue = list()
@@ -430,8 +430,12 @@ class SkillTranslator(AliceSkill):
 					except:
 						continue
 
+				# Translate the "value" and append it to the synonyms
+				synList.append(translatedValue[0])
+
+				# update the Value/Synonym dictionary
 				valueList = {
-					'value': translatedValue[0],
+					'value': translatableValue,
 					'synonyms': synList
 				}
 				# Add new values to a temporary dictionary

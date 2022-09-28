@@ -404,43 +404,53 @@ class SkillTranslator(AliceSkill):
 		# The language file we are going to translate into
 		translatedFile = Path(f'{self._translationPath}/dialogTemplate/{activeLanguage}.json')
 
-		# create a new translate instance
-		translatorSyn = Translator()
-		translated = translatorSyn.__class__
+		# create a new instance
+		translatorSyn = Translator(service_urls=[self._googleApi])
 
+		# Let's translate the values and add it to the synonym list
 		for i, item in enumerate(dialogData['slotTypes']):
+			dictList = list()
+			translatedValue = list()
 
-			synList = list()
-			for slotValue in item['values']:
-				# Using try in case user has empty Synonym lists (index out of range errors)
-				try:
-					for synonym in slotValue['synonyms']:
-						self.characterCountor(text=synonym)
-						self.requestLimitChecker()
+			listOfSlotValues = item.get('values', list())
 
-						if not self.getConfig('preCheck'):
-							translated = translatorSyn.translate(synonym, dest=activeLanguage)
+			for dictItem in listOfSlotValues:
 
-						if self._precheckTrigger == 1:
-							self._synonymCount += len(synonym)
-						self._requestLimiter += 1
-						self._requestTotal += 1
-						if not self.getConfig('preCheck'):
-							synList.append(translated.text)
-						else:
-							synList.append(synonym)
+				translatableValue : str = dictItem['value']
+				translatedValue = self.doCommonTasks(text=translatableValue, activeLanguage=activeLanguage, transInstance=translatorSyn, translatedList=translatedValue, triggeredFrom='synonym')
+
+				if self._developerUse:
+					translatedValue = ["I'm a Translated Value"]
+
+				# Now let's translate synonyms
+				synList = list()
+				for synonym in dictItem['synonyms']:
+					try:
 						synList = self.doCommonTasks(text=synonym, activeLanguage=activeLanguage, transInstance=translatorSyn, translatedList=synList, triggeredFrom='synonym')
+					except:
+						continue
 
-					item['values'][0]['synonyms'] = synList
+				# Translate the "value" and append it to the synonyms
+				synList.append(translatedValue[0])
 
-				except:
-					continue
+				# update the Value/Synonym dictionary
+				valueList = {
+					'value': translatableValue,
+					'synonyms': synList
+				}
+				# Add new values to a temporary dictionary
+				dictList.append(valueList)
+				translatedValue = list()
+
+			# Update the slotType with translated slot values and synonyms
+			dialogData['slotTypes'][i]['values'] = dictList
 
 		if not self.getConfig('preCheck'):
 			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
 		if self._developerUse:
 			translatedFile.write_text(json.dumps(dialogData, ensure_ascii=False, indent=4))
 
+		self.translateSamples(activeLanguage)
 
 	def translateSamples(self, activeLanguage):
 
